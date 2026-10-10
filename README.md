@@ -1,5 +1,7 @@
 # Benjamin Poitou — Portfolio
 
+[![CI](https://github.com/poitouBenjamin/portfolio-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/poitouBenjamin/portfolio-v2/actions/workflows/ci.yml)
+
 Site vitrine de **Benjamin Poitou**, développeur fullstack JS freelance (Paris · remote).
 
 ![Aperçu du hero](docs/preview.png)
