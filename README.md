@@ -22,6 +22,7 @@ Site vitrine de **Benjamin Poitou**, développeur fullstack JS freelance (Paris 
 - **Accessibilité.** `prefers-reduced-motion` coupe les animations et le défilement fluide. Le carrousel suit la sémantique `tablist`/`tabpanel` et se pilote au clavier. Le curseur et l'effet magnétique ne s'activent qu'avec une souris (`pointer: fine`).
 - **Robustesse.** Chaque effet renvoie une fonction de nettoyage (listeners, contexte GSAP, ressources GPU), pour un fonctionnement correct en StrictMode.
 - **Bilingue.** Le français est servi sur `/` et l'anglais sur `/en`, tous deux pré-rendus en statique. Les textes vivent dans [`messages/`](messages), et les clés sont typées à partir de `fr.json` : une clé manquante ou mal orthographiée casse la compilation. La détection automatique de langue est désactivée, pour qu'un navigateur anglophone puisse toujours revenir au français.
+- **Brief projet.** `/brief` propose un questionnaire en 5 étapes pour cadrer le besoin client : contexte, existant, fonctionnalités, budget et délais. Un même schéma zod ([`lib/brief.ts`](lib/brief.ts)) valide chaque étape côté client et toute la requête côté serveur. La route [`app/api/brief`](app/api/brief/route.ts) envoie un email via Resend, avec `Reply-To` sur le client. Anti-spam : champ piège invisible et délai minimum de remplissage. Le brouillon est conservé en `sessionStorage`.
 - **Contenu centralisé.** Les données indépendantes de la langue (liens, stack, logos) sont dans [`lib/site.ts`](lib/site.ts).
 
 ## Structure
@@ -31,11 +32,14 @@ app/
   [locale]/
     layout.tsx        polices, métadonnées localisées, montage des interactions
     page.tsx          sections de la landing (Server Component)
+    brief/page.tsx    page du brief projet
+  api/brief/route.ts  validation et envoi du brief par email
   globals.css         tokens du thème et effets (grain, halo, bandeau)
 components/
   HeroScene.tsx       montage paresseux de la scène 3D
   Interactions.tsx    défilement fluide, apparitions, curseur
   SkillsCarousel.tsx  carrousel de compétences accessible
+  BriefForm.tsx       formulaire de brief en plusieurs étapes
 i18n/
   routing.ts          langues, langue par défaut, préfixes d'URL
   request.ts          chargement des messages par requête
@@ -43,6 +47,7 @@ messages/
   fr.json, en.json    traductions
 lib/
   site.ts             données indépendantes de la langue
+  brief.ts            étapes, options et schéma zod du brief
   hero-scene.ts       scène Three.js et shaders
   interactions.ts     GSAP, ScrollTrigger, Lenis
 proxy.ts              routage par langue (next-intl)
@@ -64,6 +69,18 @@ npm run dev        # http://localhost:3000
 | `npm run typecheck`    | vérification TypeScript          |
 | `npm run format`       | formatage Prettier               |
 | `npm run format:check` | vérifie le formatage sans écrire |
+
+## Variables d'environnement
+
+Copier `.env.example` en `.env.local`, puis renseigner :
+
+| Variable         | Rôle                                                                           |
+| ---------------- | ------------------------------------------------------------------------------ |
+| `RESEND_API_KEY` | clé API [Resend](https://resend.com) pour l'envoi du brief                     |
+| `BRIEF_TO`       | destinataire (optionnel, par défaut l'email de `lib/site.ts`)                  |
+| `BRIEF_FROM`     | expéditeur (optionnel, il faut un domaine vérifié chez Resend pour le changer) |
+
+Sans clé, en développement, le brief est affiché dans la console du serveur. En production, l'API répond 503.
 
 ## Workflow
 
