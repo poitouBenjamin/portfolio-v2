@@ -13,8 +13,8 @@
     "method": "Process",
     "about": "About",
     "stack": "Stack",
-    "contact": "Get in touch",
-    "switchLocale": "Lire en français"
+    "switchLocale": "Lire en français",
+    "startProject": "Start a project"
   },
   "Hero": {
     "line1": "Web apps that are",
@@ -23,7 +23,8 @@
     "line3": "& maintainable.",
     "intro": "I’m <strong>{name}</strong>. An engineer turned developer, I’ve been turning business needs into web products for {years} years.",
     "call": "Call me",
-    "write": "Email me"
+    "write": "Email me",
+    "brief": "Describe my project"
   },
   "Marquee": ["Web applications", "APIs & back-end", "Redesigns", "Maintenance", "Interactive maps", "Performance"],
   "Services": {

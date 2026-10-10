@@ -13,8 +13,8 @@
     "method": "Méthode",
     "about": "À propos",
     "stack": "Stack",
-    "contact": "Me contacter",
-    "switchLocale": "Read in English"
+    "switchLocale": "Read in English",
+    "startProject": "Démarrer un projet"
   },
   "Hero": {
     "line1": "Des applis web",
@@ -23,7 +23,8 @@
     "line3": "& maintenables.",
     "intro": "Je suis <strong>{name}</strong>. Ingénieur devenu développeur, je transforme vos besoins en produits web depuis {years} ans.",
     "call": "M’appeler",
-    "write": "M’écrire"
+    "write": "M’écrire",
+    "brief": "Décrire mon projet"
   },
   "Marquee": ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"],
   "Services": {
