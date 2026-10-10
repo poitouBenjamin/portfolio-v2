@@ -7,8 +7,8 @@ export const profile = {
   location: "Paris · remote",
   status: "Freelance",
   years: 6,
-  email: "poitoubenjamin@gmail.com",
-  phone: "+33 6 00 00 00 00", // TODO: vrai numéro
+  email: "poitou.benjamin.dev@gmail.com",
+  phone: "+33 6 80 64 42 13",
   github: "https://github.com/", // TODO: URL GitHub
   linkedin: "https://www.linkedin.com/", // TODO: URL LinkedIn
 };
