@@ -85,11 +85,11 @@ export default function Home({ params }: PageProps<"/[locale]">) {
               {otherLocale}
             </a>
             <a
-              href="#contact"
+              href={localePath(locale, "/brief")}
               data-magnetic
               className="rounded-full bg-acid px-5 py-2.5 text-sm font-semibold text-void transition hover:bg-white"
             >
-              {t("Nav.contact")}
+              {t("Nav.startProject")}
             </a>
           </div>
         </div>
@@ -143,6 +143,10 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 </a>
                 <a href={mail} data-magnetic className={btnGhost}>
                   {t("Hero.write")}
+                </a>
+                <a href={localePath(locale, "/brief")} data-magnetic className={`${btnGhost} group`}>
+                  {t("Hero.brief")}{" "}
+                  <span className="inline-block text-acid transition-transform group-hover:translate-x-1">→</span>
                 </a>
               </div>
             </div>
