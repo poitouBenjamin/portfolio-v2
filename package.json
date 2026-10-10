@@ -24,7 +24,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
-  "description": "Portfolio de Benjamin Poitou, développeur fullstack JS freelance.",
+  "description": "Portfolio de Benjamin Poitou, dÃ©veloppeur fullstack JS freelance.",
   "engines": {
     "node": ">=20"
   }
