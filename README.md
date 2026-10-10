@@ -4,6 +4,8 @@
 
 Site vitrine de **Benjamin Poitou**, développeur fullstack JS freelance (Paris · remote).
 
+**En ligne : [poitou.digital](https://poitou.digital)** · [version anglaise](https://poitou.digital/en)
+
 ![Aperçu du hero](docs/preview.png)
 
 ## Stack
@@ -83,6 +85,10 @@ Copier `.env.example` en `.env.local`, puis renseigner :
 | `BRIEF_FROM`     | expéditeur (optionnel, il faut un domaine vérifié chez Resend pour le changer) |
 
 Sans clé, en développement, le brief est affiché dans la console du serveur. En production, l'API répond 503.
+
+## Déploiement
+
+Hébergé sur [Vercel](https://vercel.com). Les variables d'environnement de production (`RESEND_API_KEY`, `BRIEF_TO`, `BRIEF_FROM`) sont définies dans les réglages du projet Vercel, jamais dans le repo.
 
 ## Workflow
 
