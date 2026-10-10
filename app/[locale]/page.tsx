@@ -1,17 +1,14 @@
+import { notFound } from "next/navigation";
+import { hasLocale, useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { use } from "react";
 import HeroScene from "@/components/HeroScene";
 import SkillsCarousel from "@/components/SkillsCarousel";
-import { profile, bio, services, projects, method, skills } from "@/lib/site";
+import { routing } from "@/i18n/routing";
+import { profile, projects, skills } from "@/lib/site";
 
 const tel = `tel:${profile.phone.replace(/\s/g, "")}`;
 const mail = `mailto:${profile.email}`;
-const nav = [
-  ["Services", "#services"],
-  ["Projets", "#projets"],
-  ["Méthode", "#methode"],
-  ["À propos", "#a-propos"],
-  ["Stack", "#devs"],
-];
-const marquee = ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"];
 // Une ambiance de couleur par projet, faute de captures d'écran
 const covers = [
   "radial-gradient(60% 80% at 20% 30%, #8b6cff 0%, transparent 60%), radial-gradient(50% 70% at 80% 70%, #ff6ba8 0%, transparent 60%), #120d1f",
@@ -19,7 +16,6 @@ const covers = [
   "radial-gradient(60% 80% at 30% 70%, #2bd2ff 0%, transparent 60%), radial-gradient(50% 60% at 80% 20%, #3b5bff 0%, transparent 60%), #07121c",
   "radial-gradient(60% 80% at 70% 70%, #c8ff4d 0%, transparent 55%), radial-gradient(50% 60% at 20% 20%, #1fd39a 0%, transparent 60%), #0b140a",
 ];
-const bioWords = bio.join(" ").split(" ");
 const pad = (n: number) => String(n).padStart(2, "0");
 
 const btnPrimary = "rounded-full bg-acid px-7 py-4 font-semibold text-void transition hover:bg-white";
@@ -37,7 +33,29 @@ function SectionHead({ label, children, accent }: { label: string; children: Rea
   );
 }
 
-export default function Home() {
+export default function Home({ params }: PageProps<"/[locale]">) {
+  const { locale } = use(params);
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+  const t = useTranslations();
+
+  // Le français est servi à la racine, l'anglais sous /en
+  const otherLocale = routing.locales.find((l) => l !== locale)!;
+  const otherHref = otherLocale === routing.defaultLocale ? "/" : `/${otherLocale}`;
+
+  const nav = [
+    [t("Nav.services"), "#services"],
+    [t("Nav.projects"), "#projets"],
+    [t("Nav.method"), "#methode"],
+    [t("Nav.about"), "#a-propos"],
+    [t("Nav.stack"), "#devs"],
+  ];
+  const marquee = t.raw("Marquee") as string[];
+  const services = t.raw("Services.items") as { title: string; text: string }[];
+  const method = t.raw("Method.items") as { title: string; text: string }[];
+  const bioWords = t("About.bio").split(" ");
+  const categories = skills.map((c) => ({ ...c, title: t(`Devs.categories.${c.id}`) }));
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-40 bg-gradient-to-b from-void via-void/70 to-transparent">
@@ -56,13 +74,25 @@ export default function Home() {
               </a>
             ))}
           </nav>
-          <a
-            href="#contact"
-            data-magnetic
-            className="rounded-full bg-acid px-5 py-2.5 text-sm font-semibold text-void transition hover:bg-white"
-          >
-            Me contacter
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href={otherHref}
+              hrefLang={otherLocale}
+              lang={otherLocale}
+              aria-label={t("Nav.switchLocale")}
+              title={t("Nav.switchLocale")}
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/15 font-mono text-xs font-medium uppercase transition hover:border-acid hover:text-acid"
+            >
+              {otherLocale}
+            </a>
+            <a
+              href="#contact"
+              data-magnetic
+              className="rounded-full bg-acid px-5 py-2.5 text-sm font-semibold text-void transition hover:bg-white"
+            >
+              {t("Nav.contact")}
+            </a>
+          </div>
         </div>
       </header>
 
@@ -81,36 +111,39 @@ export default function Home() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-acid opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-acid" />
               </span>
-              {profile.title} — {profile.location}
+              {t("Profile.title")} — {t("Profile.location")}
             </p>
             <h1
               className="font-display text-[clamp(2.9rem,8.6vw,9rem)] leading-[0.92] font-bold tracking-[-0.04em]"
-              aria-label={profile.tagline}
+              aria-label={t("Metadata.description")}
             >
               <span data-hero-line className="line-mask">
-                <span>Des applis web</span>
+                <span>{t("Hero.line1")}</span>
               </span>
               <span data-hero-line className="line-mask">
                 <span>
-                  <em className={`${serifAccent} text-acid`}>rapides,</em> simples
+                  <em className={`${serifAccent} text-acid`}>{t("Hero.line2Accent")}</em> {t("Hero.line2")}
                 </span>
               </span>
               <span data-hero-line className="line-mask">
-                <span>&amp; maintenables.</span>
+                <span>{t("Hero.line3")}</span>
               </span>
             </h1>
 
             <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-8 md:flex-row md:items-end md:justify-between">
               <p data-hero-fade className="max-w-md text-lg text-muted">
-                Je suis <span className="text-fog">{profile.name}</span>. Ingénieur devenu développeur, je transforme
-                vos besoins en produits web depuis {profile.years} ans.
+                {t.rich("Hero.intro", {
+                  name: profile.name,
+                  years: profile.years,
+                  strong: (chunks) => <span className="text-fog">{chunks}</span>,
+                })}
               </p>
               <div data-hero-fade className="flex flex-wrap gap-3">
                 <a href={tel} data-magnetic className={btnPrimary}>
-                  M’appeler
+                  {t("Hero.call")}
                 </a>
                 <a href={mail} data-magnetic className={btnGhost}>
-                  M’écrire
+                  {t("Hero.write")}
                 </a>
               </div>
             </div>
@@ -138,9 +171,9 @@ export default function Home() {
 
         {/* Services */}
         <section id="services" className="mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
-          <SectionHead label="(01) Services">
+          <SectionHead label={t("Services.label")}>
             <h2 className={sectionTitle}>
-              Ce que je fais <em className={serifAccent}>pour vous</em>
+              {t("Services.title")} <em className={serifAccent}>{t("Services.titleAccent")}</em>
             </h2>
           </SectionHead>
           <ul className="border-t border-white/10">
@@ -158,15 +191,15 @@ export default function Home() {
 
         {/* Projets */}
         <section id="projets" className="mx-auto max-w-[1400px] px-4 pb-28 sm:px-8 sm:pb-40">
-          <SectionHead label="(02) Réalisations">
+          <SectionHead label={t("Projects.label")}>
             <h2 className={sectionTitle}>
-              Des projets <em className={serifAccent}>bien réels</em>
+              {t("Projects.title")} <em className={serifAccent}>{t("Projects.titleAccent")}</em>
             </h2>
           </SectionHead>
           <div className="grid gap-6 lg:grid-cols-2">
             {projects.map((p, i) => (
               <article
-                key={p.name}
+                key={p.id}
                 data-reveal
                 className="spotlight group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface transition-colors duration-500 hover:border-white/25"
               >
@@ -178,22 +211,22 @@ export default function Home() {
                   <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
                     <div className="flex items-start justify-between font-mono text-xs text-white/70">
                       <span>{pad(i + 1)}</span>
-                      {p.status && (
+                      {p.ongoing && (
                         <span className="rounded-full border border-white/30 bg-black/20 px-3 py-1 backdrop-blur">
-                          {p.status}
+                          {t("Projects.ongoing")}
                         </span>
                       )}
                     </div>
                     <h3 className="font-display text-4xl font-bold tracking-[-0.03em] text-white sm:text-6xl">
-                      {p.name}
+                      {t(`Projects.items.${p.id}.name`)}
                     </h3>
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6 sm:p-8">
                   <p className="text-sm font-medium text-acid">{p.client}</p>
-                  <p className="mt-3 text-fog/90">{p.need}</p>
+                  <p className="mt-3 text-fog/90">{t(`Projects.items.${p.id}.need`)}</p>
                   <ul className="mt-5 space-y-2 text-sm text-muted">
-                    {p.done.map((d) => (
+                    {(t.raw(`Projects.items.${p.id}.done`) as string[]).map((d) => (
                       <li key={d} className="flex gap-3">
                         <span className="mt-[0.55em] h-px w-3 shrink-0 bg-acid" />
                         <span>{d}</span>
@@ -202,12 +235,12 @@ export default function Home() {
                   </ul>
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8">
                     <ul className="flex flex-wrap gap-2">
-                      {p.stack.map((t) => (
+                      {p.stack.map((s) => (
                         <li
-                          key={t}
+                          key={s}
                           className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-muted"
                         >
-                          {t}
+                          {s}
                         </li>
                       ))}
                     </ul>
@@ -234,9 +267,9 @@ export default function Home() {
         {/* Méthode */}
         <section id="methode" className="border-y border-white/10 bg-surface">
           <div className="mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
-            <SectionHead label="(03) Méthode">
+            <SectionHead label={t("Method.label")}>
               <h2 className={sectionTitle}>
-                Quatre temps, <em className={serifAccent}>zéro surprise</em>
+                {t("Method.title")} <em className={serifAccent}>{t("Method.titleAccent")}</em>
               </h2>
             </SectionHead>
             <ol className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
@@ -255,12 +288,12 @@ export default function Home() {
         <section id="a-propos" className="mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
           <div className="grid gap-10 md:grid-cols-[1fr_2fr]">
             <div data-reveal>
-              <p className="font-mono text-sm text-muted">(04) À propos</p>
+              <p className="font-mono text-sm text-muted">{t("About.label")}</p>
               <dl className="mt-10 space-y-6">
                 {[
-                  ["Expérience", `${profile.years} ans`],
-                  ["Formation", "Ingénieur méca."],
-                  ["Format", "Freelance"],
+                  [t("About.experience"), t("About.experienceValue", { years: profile.years })],
+                  [t("About.education"), t("About.educationValue")],
+                  [t("About.format"), t("About.formatValue")],
                 ].map(([k, v]) => (
                   <div key={k}>
                     <dt className="font-mono text-xs text-muted uppercase">{k}</dt>
@@ -286,16 +319,22 @@ export default function Home() {
         <section id="devs" className="relative overflow-hidden border-y border-white/10 bg-surface">
           <div className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-violet/20 blur-[120px]" />
           <div className="relative mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
-            <SectionHead label="(05) // pour les devs" accent>
+            <SectionHead label={t("Devs.label")} accent>
               <h2 className={sectionTitle}>
-                Sous le <em className={serifAccent}>capot</em>
+                {t("Devs.title")} <em className={serifAccent}>{t("Devs.titleAccent")}</em>
               </h2>
-              <p className="mt-4 max-w-lg text-muted">
-                Vous êtes développeur, CTO ou vous montez une équipe ? Voici ce avec quoi je travaille au quotidien.
-              </p>
+              <p className="mt-4 max-w-lg text-muted">{t("Devs.intro")}</p>
             </SectionHead>
 
-            <SkillsCarousel categories={skills} />
+            <SkillsCarousel
+              categories={categories}
+              labels={{
+                carousel: t("Devs.carousel"),
+                carouselRole: t("Devs.carouselRole"),
+                previous: t("Devs.previous"),
+                next: t("Devs.next"),
+              }}
+            />
 
             <a
               href={profile.github}
@@ -307,7 +346,7 @@ export default function Home() {
               <svg viewBox="0 0 16 16" className="h-5 w-5" fill="currentColor" aria-hidden="true">
                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
               </svg>
-              Voir mon GitHub
+              {t("Devs.github")}
             </a>
           </div>
         </section>
@@ -317,16 +356,17 @@ export default function Home() {
           <div className="pointer-events-none absolute -bottom-60 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-acid/15 blur-[140px]" />
           <div className="relative mx-auto max-w-[1400px] px-4 pt-28 pb-16 sm:px-8 sm:pt-40">
             <p data-reveal className="font-mono text-sm text-muted">
-              (06) Contact
+              {t("Contact.label")}
             </p>
             <h2
               data-reveal
               className="mt-6 font-display text-[clamp(3.5rem,13vw,13rem)] leading-[0.85] font-bold tracking-[-0.05em]"
             >
-              Parlons<em className={`${serifAccent} text-acid`}>-en.</em>
+              {t("Contact.title")}
+              <em className={`${serifAccent} text-acid`}>{t("Contact.titleAccent")}</em>
             </h2>
             <p data-reveal className="mt-8 max-w-xl text-lg text-muted">
-              Un appel de 20 minutes suffit pour comprendre votre besoin et vous dire comment je peux vous aider.
+              {t("Contact.intro")}
             </p>
             <div data-reveal className="mt-10 flex flex-wrap gap-3">
               <a href={tel} data-magnetic className={btnPrimary}>
@@ -345,10 +385,10 @@ export default function Home() {
                 © {new Date().getFullYear()} {profile.name}
               </p>
               <p>
-                {profile.title} · {profile.location}
+                {t("Profile.title")} · {t("Profile.location")}
               </p>
               <a href="#top" className="transition hover:text-acid">
-                Retour en haut ↑
+                {t("Footer.backToTop")}
               </a>
             </footer>
           </div>

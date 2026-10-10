@@ -1,0 +1,141 @@
+{
+  "Metadata": {
+    "title": "Benjamin Poitou · Fullstack JS Developer",
+    "description": "I turn your needs into fast, simple and maintainable web applications."
+  },
+  "Profile": {
+    "title": "Fullstack JS Developer",
+    "location": "Paris · remote"
+  },
+  "Nav": {
+    "services": "Services",
+    "projects": "Work",
+    "method": "Process",
+    "about": "About",
+    "stack": "Stack",
+    "contact": "Get in touch",
+    "switchLocale": "Lire en français"
+  },
+  "Hero": {
+    "line1": "Web apps that are",
+    "line2Accent": "fast,",
+    "line2": "simple",
+    "line3": "& maintainable.",
+    "intro": "I’m <strong>{name}</strong>. An engineer turned developer, I’ve been turning business needs into web products for {years} years.",
+    "call": "Call me",
+    "write": "Email me"
+  },
+  "Marquee": ["Web applications", "APIs & back-end", "Redesigns", "Maintenance", "Interactive maps", "Performance"],
+  "Services": {
+    "label": "(01) Services",
+    "title": "What I do",
+    "titleAccent": "for you",
+    "items": [
+      {
+        "title": "Custom web applications",
+        "text": "A tool built around your business, from the first screen to launch day."
+      },
+      {
+        "title": "APIs & back-end",
+        "text": "Reliable data and clean integrations with the tools you already use."
+      },
+      {
+        "title": "Redesign & modernization",
+        "text": "Is your site or app showing its age? I bring it up to date without breaking what works."
+      },
+      {
+        "title": "Maintenance & evolution",
+        "text": "Fixes, new features, performance: your product keeps moving forward."
+      }
+    ]
+  },
+  "Projects": {
+    "label": "(02) Work",
+    "title": "Projects that are",
+    "titleAccent": "very real",
+    "ongoing": "Ongoing",
+    "items": {
+      "ami": {
+        "name": "AMI du quartier",
+        "need": "Bring the Marais flagship store to life: invite customers to share geotagged “friendship moments” around the neighborhood, building a bond with the brand and drawing people into the store.",
+        "done": [
+          "Two-level interactive map: neighborhood zones first, then individual places on zoom",
+          "Private addresses anonymized and grouped by street, points of interest pinned individually",
+          "Filters by type of moment, managed from the back office",
+          "Feed that alternates personal, community, AMI-curated and brand content depending on the user’s profile"
+        ]
+      },
+      "fcl": {
+        "name": "Depuis 1926",
+        "need": "Celebrate the club’s 100th anniversary with a site dedicated to its history and its fans.",
+        "done": ["Contributed to building the centenary website"]
+      },
+      "adi": {
+        "name": "ADI Global",
+        "need": "An international website presenting the distributor’s products and services.",
+        "done": ["Contributed to building the website"]
+      },
+      "foncia": {
+        "name": "Real estate transactions",
+        "need": "Build tooling for the real estate sales business of one of Europe’s leading property managers.",
+        "done": ["Developing the real estate transaction module"]
+      }
+    }
+  },
+  "Method": {
+    "label": "(03) Process",
+    "title": "Four steps,",
+    "titleAccent": "no surprises",
+    "items": [
+      { "title": "Listen", "text": "We start from your real need, not a ready-made solution." },
+      {
+        "title": "Understand",
+        "text": "I ask the right questions to clear up any grey areas before writing code."
+      },
+      {
+        "title": "Test",
+        "text": "I pick the right tools and check every feature before shipping it."
+      },
+      { "title": "Deliver", "text": "A clean, documented product where I own every detail." }
+    ]
+  },
+  "About": {
+    "label": "(04) About",
+    "experience": "Experience",
+    "experienceValue": "{years} years",
+    "education": "Background",
+    "educationValue": "Mech. engineer",
+    "format": "Working mode",
+    "formatValue": "Freelance",
+    "bio": "I started out as a mechanical engineer and became a full stack developer because I love building useful things. That path taught me to listen, understand the need, ask the right questions, then deliver a clean product. Based in Paris, my goal comes down to choosing the right tools, testing, and shipping a product where I own every detail."
+  },
+  "Devs": {
+    "label": "(05) // for developers",
+    "title": "Under the",
+    "titleAccent": "hood",
+    "intro": "Are you a developer, a CTO, or building a team? Here’s what I work with every day.",
+    "github": "See my GitHub",
+    "carousel": "Skills",
+    "carouselRole": "carousel",
+    "previous": "Previous category",
+    "next": "Next category",
+    "categories": {
+      "languages": "Languages",
+      "frameworks": "Frameworks & libraries",
+      "databases": "Databases",
+      "cloud": "Cloud & DevOps",
+      "tools": "Tools",
+      "ai": "AI",
+      "design": "Design & CMS"
+    }
+  },
+  "Contact": {
+    "label": "(06) Contact",
+    "title": "Let’s",
+    "titleAccent": " talk.",
+    "intro": "A 20-minute call is all it takes to understand your needs and tell you how I can help."
+  },
+  "Footer": {
+    "backToTop": "Back to top ↑"
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "Metadata": {
+    "title": "Benjamin Poitou · Développeur Fullstack JS",
+    "description": "Je transforme vos besoins en applications web rapides, simples et maintenables."
+  },
+  "Profile": {
+    "title": "Développeur Fullstack JS",
+    "location": "Paris · remote"
+  },
+  "Nav": {
+    "services": "Services",
+    "projects": "Projets",
+    "method": "Méthode",
+    "about": "À propos",
+    "stack": "Stack",
+    "contact": "Me contacter",
+    "switchLocale": "Read in English"
+  },
+  "Hero": {
+    "line1": "Des applis web",
+    "line2Accent": "rapides,",
+    "line2": "simples",
+    "line3": "& maintenables.",
+    "intro": "Je suis <strong>{name}</strong>. Ingénieur devenu développeur, je transforme vos besoins en produits web depuis {years} ans.",
+    "call": "M’appeler",
+    "write": "M’écrire"
+  },
+  "Marquee": ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"],
+  "Services": {
+    "label": "(01) Services",
+    "title": "Ce que je fais",
+    "titleAccent": "pour vous",
+    "items": [
+      {
+        "title": "Applications web sur mesure",
+        "text": "Un outil pensé pour votre métier, du premier écran à la mise en ligne."
+      },
+      {
+        "title": "API et back-end",
+        "text": "Des données fiables, des intégrations propres avec vos outils existants."
+      },
+      {
+        "title": "Refonte et modernisation",
+        "text": "Un site ou une application qui vieillit ? Je le remets à niveau sans tout casser."
+      },
+      {
+        "title": "Maintenance et évolution",
+        "text": "Corrections, nouvelles fonctionnalités, performances : votre produit continue d’avancer."
+      }
+    ]
+  },
+  "Projects": {
+    "label": "(02) Réalisations",
+    "title": "Des projets",
+    "titleAccent": "bien réels",
+    "ongoing": "Mission en cours",
+    "items": {
+      "ami": {
+        "name": "AMI du quartier",
+        "need": "Faire vivre le flagship du Marais : inviter les clients à partager leurs « moments d’amitié » géolocalisés dans le quartier, pour créer du lien avec la marque et ramener du monde en boutique.",
+        "done": [
+          "Carte interactive à deux niveaux : les grandes zones du quartier, puis chaque lieu au zoom",
+          "Adresses privées anonymisées et regroupées par rue, lieux d’intérêt épinglés individuellement",
+          "Filtres par type de moment, pilotés depuis le back-office",
+          "Feed qui alterne contributions perso, communauté, sélection AMI et contenus de la marque selon le profil de l’utilisateur"
+        ]
+      },
+      "fcl": {
+        "name": "Depuis 1926",
+        "need": "Célébrer les 100 ans du club avec un site dédié à son histoire et à ses supporters.",
+        "done": ["Participation au développement du site du centenaire"]
+      },
+      "adi": {
+        "name": "ADI Global",
+        "need": "Un site international pour présenter l’offre et les services du distributeur.",
+        "done": ["Participation au développement du site"]
+      },
+      "foncia": {
+        "name": "Transaction immobilière",
+        "need": "Outiller l’activité de transaction immobilière d’un des leaders européens de la gestion immobilière.",
+        "done": ["Développement de la partie transaction immobilière"]
+      }
+    }
+  },
+  "Method": {
+    "label": "(03) Méthode",
+    "title": "Quatre temps,",
+    "titleAccent": "zéro surprise",
+    "items": [
+      { "title": "Écouter", "text": "On part de votre besoin réel, pas d’une solution toute faite." },
+      {
+        "title": "Comprendre",
+        "text": "Je pose les bonnes questions pour lever les zones d’ombre avant d’écrire du code."
+      },
+      {
+        "title": "Tester",
+        "text": "Je choisis les bons outils et je vérifie chaque fonctionnalité avant de la livrer."
+      },
+      { "title": "Livrer", "text": "Un produit propre, documenté, dont je maîtrise chaque détail." }
+    ]
+  },
+  "About": {
+    "label": "(04) À propos",
+    "experience": "Expérience",
+    "experienceValue": "{years} ans",
+    "education": "Formation",
+    "educationValue": "Ingénieur méca.",
+    "format": "Format",
+    "formatValue": "Freelance",
+    "bio": "D’abord ingénieur en mécanique, je suis devenu développeur full stack par goût de construire des choses utiles. Mon parcours m’a appris à écouter, comprendre le besoin, poser les bonnes questions, puis livrer un produit propre. Basé à Paris, mon objectif se résume à choisir les bons outils, tester, et livrer un produit dont je maîtrise chaque détail."
+  },
+  "Devs": {
+    "label": "(05) // pour les devs",
+    "title": "Sous le",
+    "titleAccent": "capot",
+    "intro": "Vous êtes développeur, CTO ou vous montez une équipe ? Voici ce avec quoi je travaille au quotidien.",
+    "github": "Voir mon GitHub",
+    "carousel": "Compétences",
+    "carouselRole": "carrousel",
+    "previous": "Catégorie précédente",
+    "next": "Catégorie suivante",
+    "categories": {
+      "languages": "Langages",
+      "frameworks": "Frameworks & librairies",
+      "databases": "Bases de données",
+      "cloud": "Cloud & DevOps",
+      "tools": "Outils",
+      "ai": "IA",
+      "design": "Conception & CMS"
+    }
+  },
+  "Contact": {
+    "label": "(06) Contact",
+    "title": "Parlons",
+    "titleAccent": "-en.",
+    "intro": "Un appel de 20 minutes suffit pour comprendre votre besoin et vous dire comment je peux vous aider."
+  },
+  "Footer": {
+    "backToTop": "Retour en haut ↑"
+  }
+}

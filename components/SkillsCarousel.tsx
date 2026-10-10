@@ -1,12 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { skills as Skills } from "@/lib/site";
+import type { Skill } from "@/lib/site";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
+type Labels = { carousel: string; carouselRole: string; previous: string; next: string };
+
 // Une catégorie par diapo, en boucle. Flèches, onglets, clavier ou glisser.
-export default function SkillsCarousel({ categories }: { categories: typeof Skills }) {
+// Les textes arrivent déjà traduits depuis la page (Server Component).
+export default function SkillsCarousel({
+  categories,
+  labels,
+}: {
+  categories: { id: string; title: string; items: Skill[] }[];
+  labels: Labels;
+}) {
   const track = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
 
@@ -34,8 +43,8 @@ export default function SkillsCarousel({ categories }: { categories: typeof Skil
     <div
       data-reveal
       tabIndex={0}
-      aria-roledescription="carrousel"
-      aria-label="Compétences"
+      aria-roledescription={labels.carouselRole}
+      aria-label={labels.carousel}
       onKeyDown={(e) => {
         if (e.key === "ArrowRight") go(index + 1);
         if (e.key === "ArrowLeft") go(index - 1);
@@ -45,7 +54,7 @@ export default function SkillsCarousel({ categories }: { categories: typeof Skil
         <div role="tablist" className="flex flex-wrap gap-2">
           {categories.map((c, i) => (
             <button
-              key={c.title}
+              key={c.id}
               role="tab"
               aria-selected={i === index}
               onClick={() => go(i)}
@@ -59,10 +68,10 @@ export default function SkillsCarousel({ categories }: { categories: typeof Skil
           <span className="font-mono text-sm text-muted">
             {pad(index + 1)} / {pad(categories.length)}
           </span>
-          <button aria-label="Catégorie précédente" onClick={() => go(index - 1)} className={arrow}>
+          <button aria-label={labels.previous} onClick={() => go(index - 1)} className={arrow}>
             ←
           </button>
-          <button aria-label="Catégorie suivante" onClick={() => go(index + 1)} className={arrow}>
+          <button aria-label={labels.next} onClick={() => go(index + 1)} className={arrow}>
             →
           </button>
         </div>
@@ -70,7 +79,7 @@ export default function SkillsCarousel({ categories }: { categories: typeof Skil
 
       <div ref={track} className="carousel-track flex snap-x snap-mandatory overflow-x-auto">
         {categories.map((c) => (
-          <div key={c.title} className="w-full shrink-0 snap-start" role="tabpanel" aria-label={c.title}>
+          <div key={c.id} className="w-full shrink-0 snap-start" role="tabpanel" aria-label={c.title}>
             <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {c.items.map((s) => (
                 <li
