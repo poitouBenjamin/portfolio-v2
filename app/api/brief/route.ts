@@ -85,9 +85,13 @@ function renderEmail(brief: Brief, locale: string) {
     })
     .join("");
 
-  return `<div style="font-family:system-ui,sans-serif;font-size:14px;color:#111;max-width:680px">
+  // Document complet avec charset explicite : certains clients mail ignorent
+  // l'en-tête Content-Type et retombent sur un autre encodage sans cette balise.
+  return `<!doctype html><html lang="fr"><head><meta charset="utf-8"></head><body>
+<div style="font-family:system-ui,sans-serif;font-size:14px;color:#111;max-width:680px">
 <h1 style="font-size:20px">Nouveau brief projet</h1>
 <p style="color:#666">Envoyé depuis la version ${locale === "en" ? "anglaise" : "française"} du site. Répondez directement à cet email pour écrire à ${escape(brief.name)}.</p>
 ${sections}
-</div>`;
+</div>
+</body></html>`;
 }
