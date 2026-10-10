@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
+import { notFound } from "next/navigation";
 import { Inter, Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Interactions from "@/components/Interactions";
-import { profile } from "@/lib/site";
-import "./globals.css";
+import { routing } from "@/i18n/routing";
+import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const interTight = Inter_Tight({
@@ -18,24 +21,41 @@ const instrumentSerif = Instrument_Serif({
 });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains-mono" });
 
-const title = `${profile.name} · ${profile.title}`;
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
-export const metadata: Metadata = {
-  title,
-  description: profile.tagline,
-  openGraph: { title, description: profile.tagline, type: "website" },
-};
+export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Promise<Metadata> {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t("Metadata.title"),
+    description: t("Metadata.description"),
+    openGraph: {
+      title: t("Metadata.title"),
+      description: t("Metadata.description"),
+      type: "website",
+      locale: locale === "fr" ? "fr_FR" : "en_US",
+    },
+  };
+}
 
 export const viewport: Viewport = { themeColor: "#08080a" };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+
   return (
     <html
-      lang="fr"
+      lang={locale}
       className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased">
-        {children}
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
         <div className="grain" aria-hidden="true" />
         <Interactions />
       </body>
