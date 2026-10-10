@@ -4,7 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import HeroScene from "@/components/HeroScene";
 import SkillsCarousel from "@/components/SkillsCarousel";
-import { routing } from "@/i18n/routing";
+import { localePath, routing } from "@/i18n/routing";
 import { profile, projects, skills } from "@/lib/site";
 
 const tel = `tel:${profile.phone.replace(/\s/g, "")}`;
@@ -39,9 +39,8 @@ export default function Home({ params }: PageProps<"/[locale]">) {
   setRequestLocale(locale);
   const t = useTranslations();
 
-  // Le français est servi à la racine, l'anglais sous /en
   const otherLocale = routing.locales.find((l) => l !== locale)!;
-  const otherHref = otherLocale === routing.defaultLocale ? "/" : `/${otherLocale}`;
+  const otherHref = localePath(otherLocale);
 
   const nav = [
     [t("Nav.services"), "#services"],
@@ -368,7 +367,18 @@ export default function Home({ params }: PageProps<"/[locale]">) {
             <p data-reveal className="mt-8 max-w-xl text-lg text-muted">
               {t("Contact.intro")}
             </p>
-            <div data-reveal className="mt-10 flex flex-wrap gap-3">
+            <a
+              data-reveal
+              href={localePath(locale, "/brief")}
+              className="group mt-10 flex max-w-xl items-center justify-between gap-6 rounded-2xl border border-acid/30 bg-acid/5 px-6 py-5 transition hover:border-acid hover:bg-acid/10"
+            >
+              <span>
+                <span className="block text-sm text-muted">{t("Contact.briefLead")}</span>
+                <span className="font-display text-xl font-semibold">{t("Contact.brief")}</span>
+              </span>
+              <span className="text-2xl text-acid transition-transform group-hover:translate-x-1">→</span>
+            </a>
+            <div data-reveal className="mt-6 flex flex-wrap gap-3">
               <a href={tel} data-magnetic className={btnPrimary}>
                 {profile.phone}
               </a>

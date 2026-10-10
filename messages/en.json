@@ -87,7 +87,10 @@
     "title": "Four steps,",
     "titleAccent": "no surprises",
     "items": [
-      { "title": "Listen", "text": "We start from your real need, not a ready-made solution." },
+      {
+        "title": "Listen",
+        "text": "We start from your real need, not a ready-made solution."
+      },
       {
         "title": "Understand",
         "text": "I ask the right questions to clear up any grey areas before writing code."
@@ -96,7 +99,10 @@
         "title": "Test",
         "text": "I pick the right tools and check every feature before shipping it."
       },
-      { "title": "Deliver", "text": "A clean, documented product where I own every detail." }
+      {
+        "title": "Deliver",
+        "text": "A clean, documented product where I own every detail."
+      }
     ]
   },
   "About": {
@@ -133,9 +139,208 @@
     "label": "(06) Contact",
     "title": "Let’s",
     "titleAccent": " talk.",
-    "intro": "A 20-minute call is all it takes to understand your needs and tell you how I can help."
+    "intro": "A 20-minute call is all it takes to understand your needs and tell you how I can help.",
+    "briefLead": "Got a more defined project?",
+    "brief": "Fill in the project brief"
   },
   "Footer": {
     "backToTop": "Back to top ↑"
+  },
+  "Brief": {
+    "metaTitle": "Project brief · Benjamin Poitou",
+    "metaDescription": "Describe your project in a few steps to get a tailored proposal.",
+    "back": "Back to site",
+    "eyebrow": "Project brief",
+    "title": "Tell me about",
+    "titleAccent": "your project",
+    "intro": "About ten minutes to give me the essentials. The more precise your answers, the more precise my proposal. Only fields marked with * are required.",
+    "stepOf": "Step {current} of {total}",
+    "steps": {
+      "you": "About you",
+      "project": "The project",
+      "existing": "What exists",
+      "features": "Features",
+      "budget": "Budget & timeline"
+    },
+    "previous": "Back",
+    "next": "Next",
+    "submit": "Send the brief",
+    "sending": "Sending…",
+    "errors": {
+      "required": "This field is required.",
+      "email": "Invalid email address.",
+      "url": "Invalid URL, it must start with https://.",
+      "consent": "Please accept to send the brief.",
+      "server": "Sending failed. Please try again, or email me directly at {email}."
+    },
+    "success": {
+      "title": "Thanks, got it.",
+      "text": "I’ll read your brief carefully and get back to you within 2 business days.",
+      "back": "Back to site"
+    },
+    "fields": {
+      "name": {
+        "label": "Full name",
+        "placeholder": "Jane Smith"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "jane@company.com"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "+44 7700 900123"
+      },
+      "company": {
+        "label": "Company or organization"
+      },
+      "role": {
+        "label": "Your role",
+        "placeholder": "Founder, marketing lead…"
+      },
+      "contactPreference": {
+        "label": "How would you prefer to be contacted?",
+        "options": {
+          "email": "By email",
+          "phone": "By phone",
+          "video": "Video call"
+        }
+      },
+      "projectType": {
+        "label": "Project type",
+        "options": {
+          "showcase": "Showcase website",
+          "ecommerce": "E-commerce",
+          "webapp": "Web app or SaaS",
+          "redesign": "Redesign of an existing site",
+          "api": "API or back-end",
+          "maintenance": "Maintenance or new features",
+          "other": "Other"
+        }
+      },
+      "description": {
+        "label": "Describe your project",
+        "hint": "The context, the problem to solve, what exists today."
+      },
+      "goals": {
+        "label": "Main goals",
+        "options": {
+          "leads": "Generate leads",
+          "sales": "Sell online",
+          "brand": "Strengthen the brand",
+          "internalTool": "Internal tool",
+          "automation": "Automate a process",
+          "audience": "Build a community"
+        }
+      },
+      "audience": {
+        "label": "Who is the site for?",
+        "hint": "Your users: who they are, which devices they use, what they come for."
+      },
+      "hasWebsite": {
+        "label": "Do you already have a website?",
+        "options": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "currentUrl": {
+        "label": "Current website address",
+        "placeholder": "https://"
+      },
+      "assets": {
+        "label": "What you already have",
+        "options": {
+          "logo": "Logo",
+          "brandGuide": "Brand guidelines",
+          "mockups": "Mockups (Figma…)",
+          "copy": "Copy",
+          "photos": "Photos or videos",
+          "none": "Nothing yet"
+        }
+      },
+      "inspirations": {
+        "label": "Websites you like?",
+        "hint": "Links, and what you like about them: design, tone, features."
+      },
+      "competitors": {
+        "label": "Your competitors",
+        "hint": "Links to their sites, what they do well or not so well."
+      },
+      "features": {
+        "label": "Features you need",
+        "options": {
+          "accounts": "User accounts",
+          "payment": "Online payment",
+          "cms": "Back office to edit content",
+          "multilingual": "Multiple languages",
+          "blog": "Blog or news",
+          "booking": "Appointment booking",
+          "search": "Search and filters",
+          "map": "Interactive map",
+          "integrations": "Connection to your tools (CRM, ERP…)",
+          "analytics": "Visitor analytics"
+        }
+      },
+      "integrationsDetail": {
+        "label": "Tools to connect or specific needs",
+        "hint": "For example HubSpot, Stripe, Google Calendar, an in-house ERP…"
+      },
+      "hosting": {
+        "label": "Do you already have hosting and a domain name?",
+        "options": {
+          "yes": "Yes",
+          "no": "No",
+          "unsure": "Not sure"
+        }
+      },
+      "maintenance": {
+        "label": "Would you like ongoing support after launch?",
+        "options": {
+          "yes": "Yes",
+          "no": "No",
+          "unsure": "Maybe"
+        }
+      },
+      "budget": {
+        "label": "Estimated budget",
+        "options": {
+          "lt5k": "Under €5k",
+          "5to10k": "€5k to €10k",
+          "10to20k": "€10k to €20k",
+          "20to40k": "€20k to €40k",
+          "gt40k": "Over €40k",
+          "unknown": "Not sure yet"
+        }
+      },
+      "deadline": {
+        "label": "Target timeline",
+        "options": {
+          "asap": "As soon as possible",
+          "lt1m": "Under a month",
+          "1to3m": "1 to 3 months",
+          "3to6m": "3 to 6 months",
+          "flexible": "Flexible"
+        }
+      },
+      "deadlineReason": {
+        "label": "A key date to hit?",
+        "placeholder": "Trade show, product launch, season…"
+      },
+      "decisionMaker": {
+        "label": "Who signs off on the project?",
+        "options": {
+          "me": "Me",
+          "shared": "Me and others",
+          "other": "Someone else"
+        }
+      },
+      "notes": {
+        "label": "Anything else?"
+      },
+      "consent": {
+        "label": "I agree that this information may be used to contact me about my project. It is never sold or used for any other purpose."
+      }
+    }
   }
 }

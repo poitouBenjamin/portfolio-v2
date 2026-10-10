@@ -9,3 +9,11 @@ export const routing = defineRouting({
   localePrefix: "as-needed",
   localeDetection: false,
 });
+
+type Locale = (typeof routing.locales)[number];
+
+// URL d'une page dans une langue donnée : localePath("en", "/brief") → "/en/brief"
+export function localePath(locale: Locale, path = "") {
+  const prefix = locale === routing.defaultLocale ? "" : `/${locale}`;
+  return `${prefix}${path}` || "/";
+}
