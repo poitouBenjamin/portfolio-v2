@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #08080a;
+  --color-surface: #111115;
+  --color-raised: #18181d;
+  --color-line: #24242b;
+  --color-fog: #ededf0;
+  --color-muted: #8b8b96;
+  --color-acid: #c8ff4d;
+  --color-violet: #8b6cff;
+}
+
+/* polices chargées par next/font (voir app/layout.tsx) */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+html { background: var(--color-void); color-scheme: dark; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body { background: var(--color-void); color: var(--color-fog); }
+::selection { background: var(--color-acid); color: var(--color-void); }
+section[id] { scroll-margin-top: 5rem; }
+:focus-visible { outline: 2px solid var(--color-acid); outline-offset: 3px; border-radius: 6px; }
+
+/* grain de film par-dessus toute la page */
+.grain {
+  position: fixed; inset: -50%; z-index: 60; pointer-events: none; opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-5%, 3%); }
+  40% { transform: translate(4%, -6%); }
+  60% { transform: translate(-3%, 7%); }
+  80% { transform: translate(6%, -2%); }
+}
+
+/* halo qui suit la souris sur les cartes */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; opacity: 0;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(200 255 77 / 0.09), transparent 60%);
+  transition: opacity 0.4s;
+}
+.spotlight:hover::before { opacity: 1; }
+
+/* bandeau défilant */
+.marquee { display: flex; width: max-content; animation: marquee 32s linear infinite; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* curseur personnalisé (souris uniquement) */
+.cursor {
+  position: fixed; left: 0; top: 0; z-index: 70; pointer-events: none;
+  width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 999px;
+  background: var(--color-fog); mix-blend-mode: difference;
+  transition: width 0.3s, height 0.3s, margin 0.3s;
+}
+.cursor.is-hover { width: 56px; height: 56px; margin: -28px 0 0 -28px; }
+@media (pointer: coarse) { .cursor { display: none; } }
+
+/* texte qui se dévoile ligne par ligne */
+.line-mask { display: block; overflow: hidden; padding-bottom: 0.06em; }
+.line-mask > span { display: block; }
+
+.carousel-track { scrollbar-width: none; }
+.carousel-track::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain, .marquee { animation: none; }
+}
