@@ -53,8 +53,7 @@ export const projects: Project[] = [
   {
     name: "AMI du quartier",
     client: "AMI Paris",
-    need:
-      "Faire vivre le flagship du Marais : inviter les clients à partager leurs « moments d’amitié » géolocalisés dans le quartier, pour créer du lien avec la marque et ramener du monde en boutique.",
+    need: "Faire vivre le flagship du Marais : inviter les clients à partager leurs « moments d’amitié » géolocalisés dans le quartier, pour créer du lien avec la marque et ramener du monde en boutique.",
     done: [
       "Carte interactive à deux niveaux : les grandes zones du quartier, puis chaque lieu au zoom",
       "Adresses privées anonymisées et regroupées par rue, lieux d’intérêt épinglés individuellement",

@@ -47,7 +47,11 @@ export default function Home() {
           </a>
           <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-void/60 p-1 text-sm backdrop-blur-md lg:flex">
             {nav.map(([label, href]) => (
-              <a key={href} href={href} className="rounded-full px-4 py-2 text-muted transition hover:bg-white/5 hover:text-fog">
+              <a
+                key={href}
+                href={href}
+                className="rounded-full px-4 py-2 text-muted transition hover:bg-white/5 hover:text-fog"
+              >
                 {label}
               </a>
             ))}
@@ -98,8 +102,8 @@ export default function Home() {
 
             <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-8 md:flex-row md:items-end md:justify-between">
               <p data-hero-fade className="max-w-md text-lg text-muted">
-                Je suis <span className="text-fog">{profile.name}</span>. Ingénieur devenu développeur, je transforme vos
-                besoins en produits web depuis {profile.years} ans.
+                Je suis <span className="text-fog">{profile.name}</span>. Ingénieur devenu développeur, je transforme
+                vos besoins en produits web depuis {profile.years} ans.
               </p>
               <div data-hero-fade className="flex flex-wrap gap-3">
                 <a href={tel} data-magnetic className={btnPrimary}>
@@ -119,7 +123,10 @@ export default function Home() {
             {[0, 1].map((k) => (
               <div key={k} className="flex shrink-0 items-center">
                 {marquee.map((m) => (
-                  <span key={m} className="flex items-center font-display text-2xl font-semibold tracking-tight sm:text-4xl">
+                  <span
+                    key={m}
+                    className="flex items-center font-display text-2xl font-semibold tracking-tight sm:text-4xl"
+                  >
                     <span className="px-8">{m}</span>
                     <span className="text-acid">✳</span>
                   </span>
@@ -177,7 +184,9 @@ export default function Home() {
                         </span>
                       )}
                     </div>
-                    <h3 className="font-display text-4xl font-bold tracking-[-0.03em] text-white sm:text-6xl">{p.name}</h3>
+                    <h3 className="font-display text-4xl font-bold tracking-[-0.03em] text-white sm:text-6xl">
+                      {p.name}
+                    </h3>
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6 sm:p-8">
@@ -194,7 +203,10 @@ export default function Home() {
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8">
                     <ul className="flex flex-wrap gap-2">
                       {p.stack.map((t) => (
-                        <li key={t} className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-muted">
+                        <li
+                          key={t}
+                          className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-muted"
+                        >
                           {t}
                         </li>
                       ))}
@@ -207,7 +219,9 @@ export default function Home() {
                         className="inline-flex items-center gap-2 text-sm font-medium transition hover:text-acid"
                       >
                         {p.urlLabel}
-                        <span className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
+                        <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                          ↗
+                        </span>
                       </a>
                     )}
                   </div>
@@ -229,7 +243,7 @@ export default function Home() {
               {method.map((m, i) => (
                 <li key={m.title} data-reveal className="spotlight bg-surface p-8">
                   <span className="font-serif text-7xl text-acid italic">{i + 1}</span>
-                  <h3 className="font-display mt-6 text-2xl font-semibold">{m.title}</h3>
+                  <h3 className="mt-6 font-display text-2xl font-semibold">{m.title}</h3>
                   <p className="mt-3 text-muted">{m.text}</p>
                 </li>
               ))}
@@ -307,7 +321,7 @@ export default function Home() {
             </p>
             <h2
               data-reveal
-              className="font-display mt-6 text-[clamp(3.5rem,13vw,13rem)] leading-[0.85] font-bold tracking-[-0.05em]"
+              className="mt-6 font-display text-[clamp(3.5rem,13vw,13rem)] leading-[0.85] font-bold tracking-[-0.05em]"
             >
               Parlons<em className={`${serifAccent} text-acid`}>-en.</em>
             </h2>
