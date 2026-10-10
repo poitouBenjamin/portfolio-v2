@@ -38,12 +38,24 @@ export function initInteractions(): () => void {
     if (reduce) return;
 
     // Titre principal : chaque ligne monte depuis son masque
-    gsap.from("[data-hero-line] > span", { yPercent: 110, duration: 1.2, ease: "expo.out", stagger: 0.09, delay: 0.15 });
+    gsap.from("[data-hero-line] > span", {
+      yPercent: 110,
+      duration: 1.2,
+      ease: "expo.out",
+      stagger: 0.09,
+      delay: 0.15,
+    });
     gsap.from("[data-hero-fade]", { opacity: 0, y: 20, duration: 1, ease: "power3.out", stagger: 0.08, delay: 0.6 });
 
     // Apparitions au scroll
     gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-      gsap.from(el, { opacity: 0, y: 48, duration: 1.1, ease: "expo.out", scrollTrigger: { trigger: el, start: "top 88%" } });
+      gsap.from(el, {
+        opacity: 0,
+        y: 48,
+        duration: 1.1,
+        ease: "expo.out",
+        scrollTrigger: { trigger: el, start: "top 88%" },
+      });
     });
 
     // À propos : les mots s'allument au fil du scroll

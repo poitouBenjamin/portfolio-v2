@@ -5,7 +5,11 @@ import { profile } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-inter-tight" });
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-inter-tight",
+});
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
