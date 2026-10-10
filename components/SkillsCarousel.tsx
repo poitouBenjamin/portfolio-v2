@@ -86,7 +86,7 @@ export default function SkillsCarousel({ categories }: { categories: typeof Skil
                       loading="lazy"
                       width={48}
                       height={48}
-                      className={`h-12 w-12 object-contain ${s.invert ? "invert" : ""}`}
+                      className={`h-12 w-12 object-contain ${s.invert ? "invert" : ""} ${s.mono ? "brightness-0 invert" : ""}`}
                     />
                   ) : (
                     <span className="grid h-12 w-12 place-items-center rounded-xl bg-white/10 font-mono text-sm font-medium">

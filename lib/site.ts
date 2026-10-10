@@ -102,8 +102,9 @@ export const method = [
 const dev = (path: string) => `https://cdn.jsdelivr.net/gh/devicons/devicon@v2.17.0/icons/${path}.svg`;
 const si = (slug: string) => `https://cdn.jsdelivr.net/npm/simple-icons@16.34.0/icons/${slug}.svg`;
 
-// invert: logo monochrome noir, à passer en blanc sur fond sombre
-export type Skill = { name: string; logo?: string; invert?: boolean };
+// invert : logo monochrome noir, à passer en blanc sur fond sombre
+// mono : logo multicolore peu lisible sur fond sombre, affiché en blanc uni
+export type Skill = { name: string; logo?: string; invert?: boolean; mono?: boolean };
 
 export const skills: { title: string; items: Skill[] }[] = [
   {
@@ -140,13 +141,22 @@ export const skills: { title: string; items: Skill[] }[] = [
     ],
   },
   {
-    title: "Outils & déploiement",
+    title: "Cloud & DevOps",
+    items: [
+      { name: "AWS", logo: dev("amazonwebservices/amazonwebservices-original-wordmark"), mono: true },
+      { name: "Docker", logo: dev("docker/docker-original") },
+      { name: "Datadog", logo: dev("datadog/datadog-original"), mono: true },
+      { name: "Review apps" },
+      { name: "Vercel", logo: dev("vercel/vercel-original"), invert: true },
+      { name: "GCP", logo: dev("googlecloud/googlecloud-original") },
+    ],
+  },
+  {
+    title: "Outils",
     items: [
       { name: "VS Code", logo: dev("vscode/vscode-original") },
       { name: "IntelliJ IDEA", logo: dev("intellij/intellij-original") },
       { name: "Git", logo: dev("git/git-original") },
-      { name: "Vercel", logo: dev("vercel/vercel-original"), invert: true },
-      { name: "GCP", logo: dev("googlecloud/googlecloud-original") },
     ],
   },
   {
