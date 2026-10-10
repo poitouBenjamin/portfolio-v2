@@ -6,8 +6,8 @@ export const profile = {
   years: 6,
   email: "poitou.benjamin.dev@gmail.com",
   phone: "+33 6 80 64 42 13",
-  github: "https://github.com/", // TODO: URL GitHub
-  linkedin: "https://www.linkedin.com/", // TODO: URL LinkedIn
+  github: "https://github.com/poitouBenjamin/portfolio-v2",
+  linkedin: "https://www.linkedin.com/in/benjamin-poitou-dev/",
 };
 
 export type Project = {
