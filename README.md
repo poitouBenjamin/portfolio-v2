@@ -88,7 +88,7 @@ Sans clé, en développement, le brief est affiché dans la console du serveur. 
 
 ## Déploiement
 
-Hébergé sur [Vercel](https://vercel.com). Les variables d'environnement de production (`RESEND_API_KEY`, `BRIEF_TO`, `BRIEF_FROM`) sont définies dans les réglages du projet Vercel, jamais dans le repo.
+Hébergé sur [Vercel](https://vercel.com), relié à ce repo : chaque merge sur `main` déploie la production, et chaque Pull Request reçoit sa propre URL de prévisualisation (review app). Les variables d'environnement de production (`RESEND_API_KEY`, `BRIEF_TO`, `BRIEF_FROM`) sont définies dans les réglages du projet Vercel, jamais dans le repo.
 
 ## Workflow
 
