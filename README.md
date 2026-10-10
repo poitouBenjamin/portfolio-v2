@@ -62,4 +62,4 @@ Une branche par changement (`feat/`, `fix/`, `chore/`, `ci/`, `docs/`), des comm
 
 ## Contact
 
-[poitoubenjamin@gmail.com](mailto:poitoubenjamin@gmail.com)
+[poitou.benjamin.dev@gmail.com](mailto:poitou.benjamin.dev@gmail.com)
