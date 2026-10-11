@@ -59,7 +59,7 @@ export type Skill = { name: string; logo?: string; invert?: boolean; mono?: bool
 
 export type SkillCategory = {
   /** Clé dans messages/*.json → Devs.categories */
-  id: "frontend" | "backend" | "devops" | "cms" | "workflow" | "scientific";
+  id: "frontend" | "backend" | "data" | "devops" | "cms" | "workflow" | "scientific";
   items: Skill[];
 };
 
@@ -82,13 +82,22 @@ export const skills: SkillCategory[] = [
     id: "backend",
     items: [
       { name: "Node.js", logo: dev("nodejs/nodejs-original") },
-      { name: "PostgreSQL", logo: dev("postgresql/postgresql-original") },
-      { name: "MySQL", logo: dev("mysql/mysql-original") },
-      { name: "SQL", logo: dev("azuresqldatabase/azuresqldatabase-original") },
+      { name: "Mongoose", logo: dev("mongoose/mongoose-original") },
       { name: "Java", logo: dev("java/java-original") },
       { name: "Spring", logo: dev("spring/spring-original") },
       { name: "Hibernate", logo: dev("hibernate/hibernate-original") },
       { name: "JDBC" },
+    ],
+  },
+  {
+    id: "data",
+    items: [
+      { name: "MongoDB", logo: dev("mongodb/mongodb-original") },
+      { name: "PostgreSQL", logo: dev("postgresql/postgresql-original") },
+      { name: "MySQL", logo: dev("mysql/mysql-original") },
+      { name: "SQL", logo: dev("azuresqldatabase/azuresqldatabase-original") },
+      // Synchronise MongoDB vers Elasticsearch, pas de logo officiel
+      { name: "Monstache" },
     ],
   },
   {

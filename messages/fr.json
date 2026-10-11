@@ -125,7 +125,8 @@
     "next": "Catégorie suivante",
     "categories": {
       "frontend": "Front-end",
-      "backend": "Back-end & données",
+      "backend": "Back-end",
+      "data": "Bases de données",
       "devops": "Cloud & DevOps",
       "cms": "CMS & design",
       "workflow": "Outils & IA",
