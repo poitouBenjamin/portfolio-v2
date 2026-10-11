@@ -20,11 +20,7 @@
     "line1": "Web apps that are",
     "line2Accent": "fast,",
     "line2": "simple",
-    "line3": "& maintainable.",
-    "intro": "I’m <strong>{name}</strong>. An engineer turned developer, I’ve been turning business needs into web products for {years} years.",
-    "call": "Call me",
-    "write": "Email me",
-    "brief": "Describe my project"
+    "line3": "& maintainable."
   },
   "Marquee": ["Web applications", "APIs & back-end", "Redesigns", "Maintenance", "Interactive maps", "Performance"],
   "Services": {

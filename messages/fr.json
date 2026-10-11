@@ -20,11 +20,7 @@
     "line1": "Des applis web",
     "line2Accent": "rapides,",
     "line2": "simples",
-    "line3": "& maintenables.",
-    "intro": "Je suis <strong>{name}</strong>. Ingénieur devenu développeur, je transforme vos besoins en produits web depuis {years} ans.",
-    "call": "M’appeler",
-    "write": "M’écrire",
-    "brief": "Décrire mon projet"
+    "line3": "& maintenables."
   },
   "Marquee": ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"],
   "Services": {

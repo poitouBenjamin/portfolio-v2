@@ -58,11 +58,9 @@ export default function Home({ params }: PageProps<"/[locale]">) {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-40 bg-gradient-to-b from-void via-void/70 to-transparent">
-        <div className="mx-auto flex h-18 max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-8">
-          <a href="#top" className="font-display text-lg font-bold tracking-tight">
-            BP<span className="text-acid">.</span>
-          </a>
-          <nav className="hidden items-center gap-1 rounded-full border border-white/10 bg-void/60 p-1 text-sm backdrop-blur-md lg:flex">
+        {/* 3 colonnes : la nav reste centrée quelle que soit la largeur des actions */}
+        <div className="mx-auto flex h-18 max-w-[1400px] items-center justify-end gap-6 px-4 sm:px-8 lg:grid lg:grid-cols-[1fr_auto_1fr]">
+          <nav className="col-start-2 hidden items-center gap-1 rounded-full border border-white/10 bg-void/60 p-1 text-sm backdrop-blur-md lg:flex">
             {nav.map(([label, href]) => (
               <a
                 key={href}
@@ -73,7 +71,8 @@ export default function Home({ params }: PageProps<"/[locale]">) {
               </a>
             ))}
           </nav>
-          <div className="flex items-center gap-2">
+
+          <div className="col-start-3 flex items-center justify-end gap-2">
             <a
               href={otherHref}
               hrefLang={otherLocale}
@@ -128,28 +127,6 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 <span>{t("Hero.line3")}</span>
               </span>
             </h1>
-
-            <div className="mt-10 flex flex-col gap-8 border-t border-white/10 pt-8 md:flex-row md:items-end md:justify-between">
-              <p data-hero-fade className="max-w-md text-lg text-muted">
-                {t.rich("Hero.intro", {
-                  name: profile.name,
-                  years: profile.years,
-                  strong: (chunks) => <span className="text-fog">{chunks}</span>,
-                })}
-              </p>
-              <div data-hero-fade className="flex flex-wrap gap-3">
-                <a href={tel} data-magnetic className={btnPrimary}>
-                  {t("Hero.call")}
-                </a>
-                <a href={mail} data-magnetic className={btnGhost}>
-                  {t("Hero.write")}
-                </a>
-                <a href={localePath(locale, "/brief")} data-magnetic className={`${btnGhost} group`}>
-                  {t("Hero.brief")}{" "}
-                  <span className="inline-block text-acid transition-transform group-hover:translate-x-1">→</span>
-                </a>
-              </div>
-            </div>
           </div>
         </section>
 
