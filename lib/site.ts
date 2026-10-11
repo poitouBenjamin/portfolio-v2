@@ -15,6 +15,8 @@ export type Project = {
   client: string;
   /** Projet phare : carte pleine largeur en tête de section */
   featured?: boolean;
+  /** Studio avec lequel le projet a été réalisé */
+  studio?: string;
   ongoing?: boolean;
   stack: string[];
   /** Capture du site, dans public/projects */
@@ -28,23 +30,26 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "om",
+    studio: "Velours",
     client: "Olympique de Marseille",
     featured: true,
-    stack: ["Next.js", "Tailwind", "shadcn/ui", "Sanity", "i18n", "Vercel"],
+    stack: ["Next.js", "Tailwind", "shadcn/ui", "Sanity", "Stats Perform", "ReachFive", "i18n", "Vercel"],
     preview: "/projects/om-match.webp",
     url: "https://www.om.fr/",
     urlLabel: "om.fr",
   },
   {
     id: "ami",
+    studio: "Velours",
     client: "AMI Paris",
-    stack: ["Next.js", "Tailwind", "shadcn/ui", "Custom back-office", "i18n", "Vercel"],
+    stack: ["Next.js", "Tailwind", "shadcn/ui", "Sanity", "Custom back-office", "i18n", "Vercel"],
     preview: "/projects/ami.webp",
     url: "https://family.amiparis.com/fr",
     urlLabel: "family.amiparis.com",
   },
   {
     id: "fcl",
+    studio: "Velours",
     client: "FC Lorient",
     stack: ["Next.js", "Tailwind", "shadcn/ui", "WordPress headless", "i18n", "Vercel"],
     preview: "/projects/fcl.webp",
@@ -53,6 +58,7 @@ export const projects: Project[] = [
   },
   {
     id: "pgw",
+    studio: "Velours",
     client: "Paris Games Week",
     stack: ["Next.js", "Tailwind", "shadcn/ui", "Sanity", "i18n", "Vercel"],
     preview: "/projects/pgw.webp",

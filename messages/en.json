@@ -54,18 +54,50 @@
     "ongoing": "Ongoing",
     "items": {
       "om": {
-        "name": "The club’s official website",
-        "need": "News, matches, ticketing, shop, membership offers: the whole OM world on one site. Within the team that built every functional block, I owned the features at the heart of the fan experience.",
+        "name": "A whole club’s digital ecosystem",
+        "need": "Nine months rebuilding om.fr as part of the club’s rebrand: 30+ pages, a design system shared by four teams, headless Sanity and an API-first architecture built to absorb match-night traffic spikes.",
+        "stats": [
+          {
+            "value": "9 months",
+            "label": "full rebuild"
+          },
+          {
+            "value": "−75%",
+            "label": "infrastructure costs"
+          },
+          {
+            "value": "100/100",
+            "label": "Speed Index"
+          },
+          {
+            "value": "8+",
+            "label": "third-party services reconnected"
+          }
+        ],
         "done": [
-          "Match Day block, match page and Live Match to follow every game",
+          "Match Day block, match page and Live Match to follow every game as it happens",
           "Memberships and upsell mechanics towards higher tiers",
-          "Fixtures, results and league table",
+          "Fixtures, results and league table fed by sports data",
           "Content driven from Sanity, with every block mapped to the CMS"
         ]
       },
       "ami": {
         "name": "AMI du quartier",
-        "need": "Bring the Marais flagship store to life: invite customers to share geotagged “friendship moments” around the neighborhood, building a bond with the brand and drawing people into the store.",
+        "need": "Ami Paris celebrates friendship in the neighborhoods it loves. Everyone shares their story (flowers on a Sunday, coffee at the same spot), pinned on a map and browsed like a roll of film rather than a feed.",
+        "stats": [
+          {
+            "value": "2",
+            "label": "map levels"
+          },
+          {
+            "value": "4",
+            "label": "types of moments"
+          },
+          {
+            "value": "FR · EN",
+            "label": "international platform"
+          }
+        ],
         "done": [
           "Two-level interactive map: neighborhood zones first, then individual places on zoom",
           "Private addresses anonymized and grouped by street, points of interest pinned individually",
@@ -74,23 +106,51 @@
         ]
       },
       "fcl": {
-        "name": "Since 1926",
-        "need": "Celebrate the club’s 100th anniversary with a site devoted to its history: legends, kits, goals, matches, timeline and photo library.",
+        "name": "A hundred years of Merlus",
+        "need": "FC Lorient was turning 100. Not just another anniversary site: a tribute to the fans, giving promotions, cup nights and names still quoted twenty years later the weight they carry in their memory.",
+        "stats": [
+          {
+            "value": "1926 → 2026",
+            "label": "a century of history"
+          },
+          {
+            "value": "6",
+            "label": "content types modeled"
+          },
+          {
+            "value": "100%",
+            "label": "run by the club"
+          }
+        ],
         "done": [
           "All the development work: pages, dynamic elements and CSS integration",
-          "Headless WordPress: API connection and mapping of every piece of content to the CMS",
-          "Cache-invalidation webhooks: every change published in WordPress goes live immediately",
-          "Interface copy managed through translation files"
+          "Custom-built animations, micro-interactions and transitions",
+          "Headless WordPress: legends, kits, matches, goals, seasons and photos modeled as schemas",
+          "Cache-invalidation webhooks: every publish goes live immediately"
         ]
       },
       "pgw": {
-        "name": "The show’s website",
-        "need": "The official site of France’s must-attend video game event: programme, practical information and access to ticketing.",
+        "name": "France’s biggest gaming show",
+        "need": "The event’s digital storefront: spark interest, inform fast and drive ticket sales, on desktop and mobile alike, while holding up under traffic spikes from announcements and ticket launches.",
+        "stats": [
+          {
+            "value": "161,000",
+            "label": "visitors in 2025"
+          },
+          {
+            "value": "4 days",
+            "label": "of show"
+          },
+          {
+            "value": "FR · EN",
+            "label": "bilingual site"
+          }
+        ],
         "done": [
           "Pages and dynamic elements, CSS integration",
+          "Animations and micro-interactions true to the gaming world",
           "Headless Sanity: content mapped to the CMS so the team can work on its own",
-          "Cache-invalidation webhooks on every publish",
-          "French / English site through translation files"
+          "Cache-invalidation webhooks on every publish"
         ]
       },
       "foncia": {
@@ -105,7 +165,9 @@
         ]
       }
     },
-    "preview": "Preview of {site}"
+    "preview": "Preview of {site}",
+    "myPart": "My part",
+    "studio": "with {studio}"
   },
   "Method": {
     "label": "(03) Process",

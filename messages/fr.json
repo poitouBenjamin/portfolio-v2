@@ -54,18 +54,50 @@
     "ongoing": "En cours",
     "items": {
       "om": {
-        "name": "Le site officiel du club",
-        "need": "Actualités, matchs, billetterie, boutique, offres membres : tout l’univers de l’OM réuni sur un seul site. Au sein de l’équipe qui a développé l’ensemble des blocs fonctionnels, j’ai pris en charge les features au cœur de l’expérience supporter.",
+        "name": "L’écosystème digital de tout un club",
+        "need": "Neuf mois de refonte complète d’om.fr dans le cadre du rebranding de l’OM : plus de 30 pages, un design system partagé par quatre équipes, Sanity en headless et une architecture API-first taillée pour encaisser les pics de trafic des soirs de match.",
+        "stats": [
+          {
+            "value": "9 mois",
+            "label": "de refonte complète"
+          },
+          {
+            "value": "−75 %",
+            "label": "de coûts d’infrastructure"
+          },
+          {
+            "value": "100/100",
+            "label": "en Speed Index"
+          },
+          {
+            "value": "8+",
+            "label": "services tiers reconnectés"
+          }
+        ],
         "done": [
-          "Bloc Match Day, fiche match et Live Match pour suivre chaque rencontre",
+          "Bloc Match Day, fiche match et Live Match pour vivre chaque rencontre en direct",
           "Memberships et mécanique d’upsell vers les offres supérieures",
-          "Calendrier, résultats et classement",
+          "Calendrier, résultats et classement alimentés par les données sportives",
           "Contenus pilotés depuis Sanity, avec le mapping de chaque bloc vers le CMS"
         ]
       },
       "ami": {
         "name": "AMI du quartier",
-        "need": "Faire vivre le flagship du Marais : inviter les clients à partager leurs « moments d’amitié » géolocalisés dans le quartier, pour créer du lien avec la marque et ramener du monde en boutique.",
+        "need": "Ami Paris célèbre l’amitié dans les quartiers qui lui sont chers. Chacun y dépose son histoire (un bouquet le dimanche, un café toujours au même endroit), épinglée sur une carte et parcourue comme une pellicule photo plutôt qu’un feed.",
+        "stats": [
+          {
+            "value": "2",
+            "label": "niveaux de carte"
+          },
+          {
+            "value": "4",
+            "label": "types de moments"
+          },
+          {
+            "value": "FR · EN",
+            "label": "plateforme internationale"
+          }
+        ],
         "done": [
           "Carte interactive à deux niveaux : les grandes zones du quartier, puis chaque lieu au zoom",
           "Adresses privées anonymisées et regroupées par rue, lieux d’intérêt épinglés individuellement",
@@ -74,23 +106,51 @@
         ]
       },
       "fcl": {
-        "name": "Depuis 1926",
-        "need": "Célébrer les 100 ans du club avec un site consacré à son histoire : personnalités, maillots, buts, matchs, chronologie et photothèque.",
+        "name": "Cent ans de Merlus",
+        "need": "Le FC Lorient fêtait son centenaire. Pas un site anniversaire de plus : un hommage aux supporters, qui donne aux montées, aux soirs de Coupe et aux noms qu’on cite encore vingt ans après le poids qu’ils ont dans leur mémoire.",
+        "stats": [
+          {
+            "value": "1926 → 2026",
+            "label": "un siècle d’histoire"
+          },
+          {
+            "value": "6",
+            "label": "types de contenus modélisés"
+          },
+          {
+            "value": "100 %",
+            "label": "administré par le club"
+          }
+        ],
         "done": [
           "Toute la partie développement : pages, éléments dynamiques et intégration CSS",
-          "WordPress en headless : connexion à l’API et mapping de chaque contenu vers le CMS",
-          "Webhooks d’invalidation du cache : chaque modification publiée dans WordPress est aussitôt en ligne",
-          "Textes de l’interface gérés par fichiers de traduction"
+          "Animations, micro-interactions et transitions développées sur mesure",
+          "WordPress en headless : personnalités, maillots, matchs, buts, saisons et photos modélisés en schémas",
+          "Webhooks d’invalidation du cache : chaque publication est aussitôt en ligne"
         ]
       },
       "pgw": {
-        "name": "Le site du salon",
-        "need": "Le site officiel du rendez-vous incontournable du jeu vidéo en France : programme, informations pratiques et accès à la billetterie.",
+        "name": "Le plus grand salon gaming de France",
+        "need": "La vitrine digitale de l’événement : donner envie, informer vite et convertir vers la billetterie, sur desktop comme sur mobile, en tenant les pics de trafic des annonces et de l’ouverture des ventes.",
+        "stats": [
+          {
+            "value": "161 000",
+            "label": "visiteurs en 2025"
+          },
+          {
+            "value": "4 jours",
+            "label": "de salon"
+          },
+          {
+            "value": "FR · EN",
+            "label": "site bilingue"
+          }
+        ],
         "done": [
           "Développement des pages et des éléments dynamiques, intégration CSS",
+          "Animations et micro-interactions fidèles à l’univers gaming",
           "Sanity en headless : mapping des contenus vers le CMS pour que l’équipe soit autonome",
-          "Webhooks d’invalidation du cache à chaque publication",
-          "Site bilingue français / anglais via fichiers de traduction"
+          "Webhooks d’invalidation du cache à chaque publication"
         ]
       },
       "foncia": {
@@ -105,7 +165,9 @@
         ]
       }
     },
-    "preview": "Aperçu du site {site}"
+    "preview": "Aperçu du site {site}",
+    "myPart": "Ma part",
+    "studio": "avec {studio}"
   },
   "Method": {
     "label": "(03) Méthode",

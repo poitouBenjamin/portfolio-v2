@@ -218,9 +218,9 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                         {p.client}
                       </p>
                     </div>
-                    {p.ongoing && (
-                      <span className="rounded-full border border-white/30 bg-black/20 px-3 py-1 font-mono text-xs text-white/70 backdrop-blur">
-                        {t("Projects.ongoing")}
+                    {(p.ongoing || p.studio) && (
+                      <span className="shrink-0 rounded-full border border-white/30 bg-black/20 px-3 py-1 font-mono text-xs text-white/70 backdrop-blur">
+                        {p.ongoing ? t("Projects.ongoing") : t("Projects.studio", { studio: p.studio ?? "" })}
                       </span>
                     )}
                   </div>
@@ -262,15 +262,31 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                       {t(`Projects.items.${p.id}.name`)}
                     </h3>
                     <p className="mt-3 text-fog/90">{t(`Projects.items.${p.id}.need`)}</p>
+                    {t.has(`Projects.items.${p.id}.stats`) && (
+                      <dl
+                        className={`mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-white/10 py-5 ${p.featured ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}
+                      >
+                        {(t.raw(`Projects.items.${p.id}.stats`) as { value: string; label: string }[]).map((st) => (
+                          <div key={st.label}>
+                            <dt className="sr-only">{st.label}</dt>
+                            <dd className="font-display text-2xl font-semibold tracking-tight text-acid">{st.value}</dd>
+                            <dd className="mt-1 text-xs text-muted">{st.label}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    )}
                   </div>
-                  <ul className={`mt-5 space-y-2 text-sm text-muted ${p.featured ? "lg:mt-0" : ""}`}>
-                    {(t.raw(`Projects.items.${p.id}.done`) as string[]).map((d) => (
-                      <li key={d} className="flex gap-3">
-                        <span className="mt-[0.55em] h-px w-3 shrink-0 bg-acid" />
-                        <span>{d}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className={`mt-6 ${p.featured ? "lg:mt-0" : ""}`}>
+                    <p className="font-mono text-xs tracking-wider text-muted uppercase">{t("Projects.myPart")}</p>
+                    <ul className="mt-3 space-y-2 text-sm text-muted">
+                      {(t.raw(`Projects.items.${p.id}.done`) as string[]).map((d) => (
+                        <li key={d} className="flex gap-3">
+                          <span className="mt-[0.55em] h-px w-3 shrink-0 bg-acid" />
+                          <span>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8 lg:col-span-2">
                     <ul className="flex flex-wrap gap-2">
                       {p.stack.map((s) => (
