@@ -59,7 +59,7 @@ export type Skill = { name: string; logo?: string; invert?: boolean; mono?: bool
 
 export type SkillCategory = {
   /** Clé dans messages/*.json → Devs.categories */
-  id: "frontend" | "backend" | "devops" | "cms" | "workflow" | "engineering";
+  id: "frontend" | "backend" | "devops" | "cms" | "workflow" | "scientific";
   items: Skill[];
 };
 
@@ -123,8 +123,8 @@ export const skills: SkillCategory[] = [
     ],
   },
   {
-    // Héritage de la formation d'ingénieur mécanique
-    id: "engineering",
+    // Calcul scientifique, hérité de la formation d'ingénieur mécanique
+    id: "scientific",
     items: [
       { name: "UML", logo: dev("unifiedmodelinglanguage/unifiedmodelinglanguage-original") },
       { name: "C", logo: dev("c/c-line") },

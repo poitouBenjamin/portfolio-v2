@@ -5,6 +5,7 @@
   },
   "Profile": {
     "title": "Développeur Fullstack JS",
+    "city": "Paris",
     "location": "Paris · remote"
   },
   "Nav": {
@@ -113,7 +114,7 @@
     "bio": "D’abord ingénieur en mécanique, je suis devenu développeur full stack par goût de construire des choses utiles. Mon parcours m’a appris à écouter, comprendre le besoin, poser les bonnes questions, puis livrer un produit propre. Basé à Paris, mon objectif se résume à choisir les bons outils, tester, et livrer un produit dont je maîtrise chaque détail."
   },
   "Devs": {
-    "label": "(05) // pour les devs",
+    "tag": "pour-les-devs",
     "title": "Sous le",
     "titleAccent": "capot",
     "intro": "Vous êtes développeur, CTO ou vous montez une équipe ? Voici ce avec quoi je travaille au quotidien.",
@@ -128,7 +129,7 @@
       "devops": "Cloud & DevOps",
       "cms": "CMS & design",
       "workflow": "Outils & IA",
-      "engineering": "Bagage d’ingénieur"
+      "scientific": "Programmation scientifique"
     }
   },
   "Contact": {

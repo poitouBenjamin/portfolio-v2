@@ -96,7 +96,7 @@ export default function SkillsCarousel({
               {c.items.map((s) => (
                 <li
                   key={s.name}
-                  className="spotlight flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-raised/60 p-2 text-center transition duration-300 hover:-translate-y-1 hover:border-white/25 sm:aspect-[4/3] sm:gap-4 sm:p-4"
+                  className="spotlight flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl border border-white/10 bg-raised/60 p-2 text-center transition duration-300 hover:-translate-y-1 hover:border-white/25 sm:aspect-[4/3] sm:gap-4 sm:p-4 lg:aspect-[16/10]"
                 >
                   {s.logo ? (
                     // SVG distants : <img> suffit, next/image n'apporte rien ici

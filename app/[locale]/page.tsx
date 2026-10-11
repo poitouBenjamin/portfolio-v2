@@ -21,15 +21,33 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const btnPrimary = "rounded-full bg-acid px-7 py-4 font-semibold text-void transition hover:bg-white";
 const btnGhost =
   "rounded-full border border-white/20 px-7 py-4 font-semibold transition hover:border-fog hover:bg-white/5";
-const sectionTitle = "font-display text-4xl font-bold tracking-[-0.03em] sm:text-6xl";
+const sectionTitle = "font-display text-5xl leading-[0.95] font-bold tracking-[-0.04em] sm:text-7xl";
 const serifAccent = "font-serif font-normal tracking-normal";
 
-function SectionHead({ label, children, accent }: { label: string; children: React.ReactNode; accent?: boolean }) {
+function SectionHead({
+  label,
+  children,
+  accent,
+}: {
+  label: React.ReactNode;
+  children: React.ReactNode;
+  accent?: boolean;
+}) {
   return (
-    <div data-reveal className="mb-16 grid gap-6 md:grid-cols-[1fr_2fr]">
-      <p className={`font-mono text-sm ${accent ? "text-acid" : "text-muted"}`}>{label}</p>
+    <div data-reveal className="mb-16 grid gap-6 sm:mb-24 md:grid-cols-[1fr_2fr]">
+      <p className={`pt-3 font-mono text-sm ${accent ? "text-acid" : "text-muted"}`}>{label}</p>
       <div>{children}</div>
     </div>
+  );
+}
+
+// Libellé façon balise HTML pour la section développeurs
+function CodeTag({ name, closing }: { name: string; closing?: boolean }) {
+  return (
+    <span className="text-muted">
+      &lt;{closing && "/"}
+      <span className="text-acid">{name}</span>&gt;
+    </span>
   );
 }
 
@@ -109,7 +127,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-acid opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-acid" />
               </span>
-              {t("Profile.title")} — {t("Profile.location")}
+              {t("Profile.title")} — {t("Profile.city")}
             </p>
             <h1
               className="font-display text-[clamp(2.9rem,8.6vw,9rem)] leading-[0.92] font-bold tracking-[-0.04em]"
@@ -161,7 +179,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
               <li key={s.title} data-reveal className="group border-b border-white/10">
                 <div className="grid gap-3 py-8 transition-all duration-500 group-hover:pl-4 sm:py-10 md:grid-cols-[1fr_2fr_1.2fr] md:items-center">
                   <span className="font-mono text-sm text-muted transition group-hover:text-acid">{pad(i + 1)}</span>
-                  <h3 className="font-display text-3xl font-semibold tracking-tight sm:text-5xl">{s.title}</h3>
+                  <h3 className="font-display text-2xl font-medium tracking-tight sm:text-3xl">{s.title}</h3>
                   <p className="text-muted">{s.text}</p>
                 </div>
               </li>
@@ -197,7 +215,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                         </span>
                       )}
                     </div>
-                    <h3 className="font-display text-4xl font-bold tracking-[-0.03em] text-white sm:text-6xl">
+                    <h3 className="font-display text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
                       {t(`Projects.items.${p.id}.name`)}
                     </h3>
                   </div>
@@ -256,7 +274,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
               {method.map((m, i) => (
                 <li key={m.title} data-reveal className="spotlight bg-surface p-8">
                   <span className="font-serif text-7xl text-acid italic">{i + 1}</span>
-                  <h3 className="mt-6 font-display text-2xl font-semibold">{m.title}</h3>
+                  <h3 className="mt-6 font-display text-xl font-medium">{m.title}</h3>
                   <p className="mt-3 text-muted">{m.text}</p>
                 </li>
               ))}
@@ -277,14 +295,14 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 ].map(([k, v]) => (
                   <div key={k}>
                     <dt className="font-mono text-xs text-muted uppercase">{k}</dt>
-                    <dd className="font-display text-3xl font-bold">{v}</dd>
+                    <dd className="mt-1 font-display text-2xl font-medium">{v}</dd>
                   </div>
                 ))}
               </dl>
             </div>
             <p
               data-scrub-words
-              className="font-display text-2xl leading-snug font-medium tracking-tight sm:text-4xl sm:leading-tight"
+              className="font-display text-2xl leading-snug font-light tracking-tight sm:text-4xl sm:leading-tight"
             >
               {bioWords.map((w, i) => (
                 <span key={i} className="w">
@@ -299,7 +317,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
         <section id="devs" className="relative overflow-hidden border-y border-white/10 bg-surface">
           <div className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-violet/20 blur-[120px]" />
           <div className="relative mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
-            <SectionHead label={t("Devs.label")} accent>
+            <SectionHead label={<CodeTag name={t("Devs.tag")} />} accent>
               <h2 className={sectionTitle}>
                 {t("Devs.title")} <em className={serifAccent}>{t("Devs.titleAccent")}</em>
               </h2>
@@ -328,6 +346,9 @@ export default function Home({ params }: PageProps<"/[locale]">) {
               </svg>
               {t("Devs.github")}
             </a>
+            <p data-reveal className="mt-16 font-mono text-sm" aria-hidden="true">
+              <CodeTag name={t("Devs.tag")} closing />
+            </p>
           </div>
         </section>
 

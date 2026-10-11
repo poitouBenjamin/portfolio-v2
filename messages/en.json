@@ -5,6 +5,7 @@
   },
   "Profile": {
     "title": "Fullstack JS Developer",
+    "city": "Paris",
     "location": "Paris · remote"
   },
   "Nav": {
@@ -113,7 +114,7 @@
     "bio": "I started out as a mechanical engineer and became a full stack developer because I love building useful things. That path taught me to listen, understand the need, ask the right questions, then deliver a clean product. Based in Paris, my goal comes down to choosing the right tools, testing, and shipping a product where I own every detail."
   },
   "Devs": {
-    "label": "(05) // for developers",
+    "tag": "for-developers",
     "title": "Under the",
     "titleAccent": "hood",
     "intro": "Are you a developer, a CTO, or building a team? Here’s what I work with every day.",
@@ -128,7 +129,7 @@
       "devops": "Cloud & DevOps",
       "cms": "CMS & design",
       "workflow": "Tools & AI",
-      "engineering": "Engineering roots"
+      "scientific": "Scientific computing"
     }
   },
   "Contact": {
