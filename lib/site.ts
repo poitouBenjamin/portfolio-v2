@@ -59,79 +59,76 @@ export type Skill = { name: string; logo?: string; invert?: boolean; mono?: bool
 
 export type SkillCategory = {
   /** Clé dans messages/*.json → Devs.categories */
-  id: "languages" | "frameworks" | "databases" | "cloud" | "tools" | "ai" | "design";
+  id: "frontend" | "backend" | "devops" | "cms" | "workflow" | "engineering";
   items: Skill[];
 };
 
+// Regroupé par usage dans un projet plutôt que par type de techno
 export const skills: SkillCategory[] = [
   {
-    id: "languages",
+    id: "frontend",
     items: [
-      { name: "HTML5", logo: dev("html5/html5-original") },
-      { name: "CSS3", logo: dev("css3/css3-original") },
-      { name: "JavaScript ES6+", logo: dev("javascript/javascript-plain") },
       { name: "TypeScript", logo: dev("typescript/typescript-original") },
-      { name: "Java", logo: dev("java/java-original") },
-      { name: "C", logo: dev("c/c-line") },
-      { name: "Matlab", logo: dev("matlab/matlab-original") },
-      { name: "SQL", logo: dev("azuresqldatabase/azuresqldatabase-original") },
-    ],
-  },
-  {
-    id: "frameworks",
-    items: [
-      { name: "Node.js", logo: dev("nodejs/nodejs-original") },
+      { name: "JavaScript ES6+", logo: dev("javascript/javascript-plain") },
       { name: "React", logo: dev("react/react-original") },
       { name: "Next.js", logo: dev("nextjs/nextjs-original"), invert: true },
-      { name: "Spring", logo: dev("spring/spring-original") },
       { name: "Tailwind", logo: dev("tailwindcss/tailwindcss-original") },
       { name: "shadcn/ui", logo: si("shadcnui"), invert: true },
+      { name: "HTML5", logo: dev("html5/html5-original") },
+      { name: "CSS3", logo: dev("css3/css3-original") },
     ],
   },
   {
-    id: "databases",
+    id: "backend",
     items: [
-      { name: "MySQL", logo: dev("mysql/mysql-original") },
+      { name: "Node.js", logo: dev("nodejs/nodejs-original") },
       { name: "PostgreSQL", logo: dev("postgresql/postgresql-original") },
-      { name: "JDBC" },
+      { name: "MySQL", logo: dev("mysql/mysql-original") },
+      { name: "SQL", logo: dev("azuresqldatabase/azuresqldatabase-original") },
+      { name: "Java", logo: dev("java/java-original") },
+      { name: "Spring", logo: dev("spring/spring-original") },
       { name: "Hibernate", logo: dev("hibernate/hibernate-original") },
+      { name: "JDBC" },
     ],
   },
   {
-    id: "cloud",
+    id: "devops",
     items: [
-      { name: "AWS", logo: dev("amazonwebservices/amazonwebservices-original-wordmark"), mono: true },
       { name: "Docker", logo: dev("docker/docker-original") },
+      { name: "AWS", logo: dev("amazonwebservices/amazonwebservices-original-wordmark"), mono: true },
+      { name: "GCP", logo: dev("googlecloud/googlecloud-original") },
+      { name: "Vercel", logo: dev("vercel/vercel-original"), invert: true },
       { name: "Datadog", logo: dev("datadog/datadog-original"), mono: true },
       { name: "Review apps" },
-      { name: "Vercel", logo: dev("vercel/vercel-original"), invert: true },
-      { name: "GCP", logo: dev("googlecloud/googlecloud-original") },
     ],
   },
   {
-    id: "tools",
+    id: "cms",
     items: [
+      { name: "Figma", logo: dev("figma/figma-original") },
+      { name: "Sanity", logo: dev("sanity/sanity-original") },
+      { name: "Prismic", logo: si("prismic"), invert: true },
+      { name: "WordPress", logo: dev("wordpress/wordpress-plain"), invert: true },
+    ],
+  },
+  {
+    id: "workflow",
+    items: [
+      { name: "Git", logo: dev("git/git-original") },
       { name: "VS Code", logo: dev("vscode/vscode-original") },
       { name: "IntelliJ IDEA", logo: dev("intellij/intellij-original") },
-      { name: "Git", logo: dev("git/git-original") },
-    ],
-  },
-  {
-    id: "ai",
-    items: [
-      { name: "GitHub Copilot", logo: si("githubcopilot"), invert: true },
-      { name: "Cursor", logo: si("cursor"), invert: true },
       { name: "Claude Code", logo: si("claude"), invert: true },
+      { name: "Cursor", logo: si("cursor"), invert: true },
+      { name: "GitHub Copilot", logo: si("githubcopilot"), invert: true },
     ],
   },
   {
-    id: "design",
+    // Héritage de la formation d'ingénieur mécanique
+    id: "engineering",
     items: [
       { name: "UML", logo: dev("unifiedmodelinglanguage/unifiedmodelinglanguage-original") },
-      { name: "Prismic", logo: si("prismic"), invert: true },
-      { name: "Sanity", logo: dev("sanity/sanity-original") },
-      { name: "WordPress", logo: dev("wordpress/wordpress-plain"), invert: true },
-      { name: "Figma", logo: dev("figma/figma-original") },
+      { name: "C", logo: dev("c/c-line") },
+      { name: "Matlab", logo: dev("matlab/matlab-original") },
     ],
   },
 ];

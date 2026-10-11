@@ -123,13 +123,12 @@
     "previous": "Previous category",
     "next": "Next category",
     "categories": {
-      "languages": "Languages",
-      "frameworks": "Frameworks & libraries",
-      "databases": "Databases",
-      "cloud": "Cloud & DevOps",
-      "tools": "Tools",
-      "ai": "AI",
-      "design": "Design & CMS"
+      "frontend": "Front-end",
+      "backend": "Back-end & data",
+      "devops": "Cloud & DevOps",
+      "cms": "CMS & design",
+      "workflow": "Tools & AI",
+      "engineering": "Engineering roots"
     }
   },
   "Contact": {
