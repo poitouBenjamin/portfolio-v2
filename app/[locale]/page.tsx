@@ -303,7 +303,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                         href={p.url}
                         target="_blank"
                         rel="noopener"
-                        className="inline-flex items-center gap-2 text-sm font-medium transition hover:text-acid"
+                        className="ml-auto inline-flex items-center gap-2 text-sm font-medium transition hover:text-acid"
                       >
                         {p.urlLabel}
                         <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
