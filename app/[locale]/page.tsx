@@ -121,7 +121,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
           <HeroScene />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-void via-void/70 to-transparent" />
 
-          <div className="relative mx-auto w-full max-w-[1400px] px-4 sm:px-8">
+          <div className="relative w-full px-4 sm:px-8 lg:px-12">
             <p
               data-hero-fade
               className="mb-6 flex items-center gap-3 font-mono text-xs tracking-[0.2em] text-muted uppercase sm:text-sm"
