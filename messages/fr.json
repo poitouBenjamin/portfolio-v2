@@ -5,6 +5,7 @@
   },
   "Profile": {
     "title": "Développeur Fullstack JS",
+    "city": "Paris",
     "location": "Paris · remote"
   },
   "Nav": {
@@ -14,17 +15,13 @@
     "about": "À propos",
     "stack": "Stack",
     "switchLocale": "Read in English",
-    "startProject": "Démarrer un projet"
+    "contact": "Prendre contact"
   },
   "Hero": {
     "line1": "Des applis web",
     "line2Accent": "rapides,",
     "line2": "simples",
-    "line3": "& maintenables.",
-    "intro": "Je suis <strong>{name}</strong>. Ingénieur devenu développeur, je transforme vos besoins en produits web depuis {years} ans.",
-    "call": "M’appeler",
-    "write": "M’écrire",
-    "brief": "Décrire mon projet"
+    "line3": "& maintenables."
   },
   "Marquee": ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"],
   "Services": {
@@ -54,11 +51,53 @@
     "label": "(02) Réalisations",
     "title": "Des projets",
     "titleAccent": "bien réels",
-    "ongoing": "Mission en cours",
+    "ongoing": "En cours",
     "items": {
+      "om": {
+        "name": "L’écosystème digital de tout un club",
+        "need": "Neuf mois de refonte complète d’om.fr dans le cadre du rebranding de l’OM : plus de 30 pages, un design system partagé par quatre équipes, Sanity en headless et une architecture API-first taillée pour encaisser les pics de trafic des soirs de match.",
+        "stats": [
+          {
+            "value": "9 mois",
+            "label": "de refonte complète"
+          },
+          {
+            "value": "−75 %",
+            "label": "de coûts d’infrastructure"
+          },
+          {
+            "value": "100/100",
+            "label": "en Speed Index"
+          },
+          {
+            "value": "8+",
+            "label": "services tiers reconnectés"
+          }
+        ],
+        "done": [
+          "Bloc Match Day, fiche match et Live Match pour vivre chaque rencontre en direct",
+          "Memberships et mécanique d’upsell vers les offres supérieures",
+          "Calendrier, résultats et classement alimentés par les données sportives",
+          "Contenus pilotés depuis Sanity, avec le mapping de chaque bloc vers le CMS"
+        ]
+      },
       "ami": {
         "name": "AMI du quartier",
-        "need": "Faire vivre le flagship du Marais : inviter les clients à partager leurs « moments d’amitié » géolocalisés dans le quartier, pour créer du lien avec la marque et ramener du monde en boutique.",
+        "need": "Ami Paris célèbre l’amitié dans les quartiers qui lui sont chers. Chacun y dépose son histoire (un bouquet le dimanche, un café toujours au même endroit), épinglée sur une carte et parcourue comme une pellicule photo plutôt qu’un feed.",
+        "stats": [
+          {
+            "value": "2",
+            "label": "niveaux de carte"
+          },
+          {
+            "value": "4",
+            "label": "types de moments"
+          },
+          {
+            "value": "FR · EN",
+            "label": "plateforme internationale"
+          }
+        ],
         "done": [
           "Carte interactive à deux niveaux : les grandes zones du quartier, puis chaque lieu au zoom",
           "Adresses privées anonymisées et regroupées par rue, lieux d’intérêt épinglés individuellement",
@@ -67,25 +106,72 @@
         ]
       },
       "fcl": {
-        "name": "Depuis 1926",
-        "need": "Célébrer les 100 ans du club avec un site dédié à son histoire et à ses supporters.",
-        "done": ["Participation au développement du site du centenaire"]
+        "name": "Cent ans de Merlus",
+        "need": "Le FC Lorient fêtait son centenaire. Pas un site anniversaire de plus : un hommage aux supporters, qui donne aux montées, aux soirs de Coupe et aux noms qu’on cite encore vingt ans après le poids qu’ils ont dans leur mémoire.",
+        "stats": [
+          {
+            "value": "1926 → 2026",
+            "label": "un siècle d’histoire"
+          },
+          {
+            "value": "6",
+            "label": "types de contenus modélisés"
+          },
+          {
+            "value": "100 %",
+            "label": "administré par le club"
+          }
+        ],
+        "done": [
+          "Toute la partie développement : pages, éléments dynamiques et intégration CSS",
+          "Animations, micro-interactions et transitions développées sur mesure",
+          "WordPress en headless : personnalités, maillots, matchs, buts, saisons et photos modélisés en schémas",
+          "Webhooks d’invalidation du cache : chaque publication est aussitôt en ligne"
+        ]
       },
-      "adi": {
-        "name": "ADI Global",
-        "need": "Un site international pour présenter l’offre et les services du distributeur.",
-        "done": ["Participation au développement du site"]
+      "pgw": {
+        "name": "Le plus grand salon gaming de France",
+        "need": "La vitrine digitale de l’événement : donner envie, informer vite et convertir vers la billetterie, sur desktop comme sur mobile, en tenant les pics de trafic des annonces et de l’ouverture des ventes.",
+        "stats": [
+          {
+            "value": "161 000",
+            "label": "visiteurs en 2025"
+          },
+          {
+            "value": "4 jours",
+            "label": "de salon"
+          },
+          {
+            "value": "FR · EN",
+            "label": "site bilingue"
+          }
+        ],
+        "done": [
+          "Développement des pages et des éléments dynamiques, intégration CSS",
+          "Animations et micro-interactions fidèles à l’univers gaming",
+          "Sanity en headless : mapping des contenus vers le CMS pour que l’équipe soit autonome",
+          "Webhooks d’invalidation du cache à chaque publication"
+        ]
       },
       "foncia": {
-        "name": "Transaction immobilière",
-        "need": "Outiller l’activité de transaction immobilière d’un des leaders européens de la gestion immobilière.",
-        "done": ["Développement de la partie transaction immobilière"]
+        "name": "ERP transaction immobilière",
+        "need": "L’outil central des équipes de transaction du groupe Foncia : il accompagne tout le cycle de vente et d’achat d’un bien, de la mise en relation jusqu’à la signature.",
+        "done": [
+          "Interfaces React et composants réutilisables, pensés pour rester maintenables à grande échelle",
+          "Services Node.js dans une architecture microservices, lancés et orchestrés avec Docker",
+          "Pipelines GitLab CI et review apps pour valider chaque développement isolément avant le merge",
+          "Recette fonctionnelle et technique (UAT) avant chaque mise en production",
+          "Packages internes publiés sur un registre npm privé (Verdaccio)"
+        ]
       }
-    }
+    },
+    "preview": "Aperçu du site {site}",
+    "myPart": "Ma part",
+    "studio": "avec {studio}"
   },
   "Method": {
     "label": "(03) Méthode",
-    "title": "Quatre temps,",
+    "title": "Cinq temps,",
     "titleAccent": "zéro surprise",
     "items": [
       {
@@ -95,6 +181,10 @@
       {
         "title": "Comprendre",
         "text": "Je pose les bonnes questions pour lever les zones d’ombre avant d’écrire du code."
+      },
+      {
+        "title": "Itérer",
+        "text": "Vous voyez le produit avancer à chaque étape. On l’ajuste ensemble, autant de fois qu’il le faut, jusqu’à ce qu’il colle à votre vision."
       },
       {
         "title": "Tester",
@@ -117,23 +207,23 @@
     "bio": "D’abord ingénieur en mécanique, je suis devenu développeur full stack par goût de construire des choses utiles. Mon parcours m’a appris à écouter, comprendre le besoin, poser les bonnes questions, puis livrer un produit propre. Basé à Paris, mon objectif se résume à choisir les bons outils, tester, et livrer un produit dont je maîtrise chaque détail."
   },
   "Devs": {
-    "label": "(05) // pour les devs",
-    "title": "Sous le",
-    "titleAccent": "capot",
+    "tag": "pour-les-devs",
+    "title": "En",
+    "titleAccent": "coulisse",
     "intro": "Vous êtes développeur, CTO ou vous montez une équipe ? Voici ce avec quoi je travaille au quotidien.",
-    "github": "Voir le code de ce site",
+    "github": "Jeter un œil au repo",
     "carousel": "Compétences",
     "carouselRole": "carrousel",
     "previous": "Catégorie précédente",
     "next": "Catégorie suivante",
     "categories": {
-      "languages": "Langages",
-      "frameworks": "Frameworks & librairies",
-      "databases": "Bases de données",
-      "cloud": "Cloud & DevOps",
-      "tools": "Outils",
-      "ai": "IA",
-      "design": "Conception & CMS"
+      "frontend": "Front-end",
+      "backend": "Back-end",
+      "data": "Bases de données",
+      "devops": "Cloud & DevOps",
+      "cms": "CMS & design",
+      "workflow": "Outils & IA",
+      "scientific": "Programmation scientifique"
     }
   },
   "Contact": {

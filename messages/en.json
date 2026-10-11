@@ -5,6 +5,7 @@
   },
   "Profile": {
     "title": "Fullstack JS Developer",
+    "city": "Paris",
     "location": "Paris · remote"
   },
   "Nav": {
@@ -14,17 +15,13 @@
     "about": "About",
     "stack": "Stack",
     "switchLocale": "Lire en français",
-    "startProject": "Start a project"
+    "contact": "Get in touch"
   },
   "Hero": {
     "line1": "Web apps that are",
     "line2Accent": "fast,",
     "line2": "simple",
-    "line3": "& maintainable.",
-    "intro": "I’m <strong>{name}</strong>. An engineer turned developer, I’ve been turning business needs into web products for {years} years.",
-    "call": "Call me",
-    "write": "Email me",
-    "brief": "Describe my project"
+    "line3": "& maintainable."
   },
   "Marquee": ["Web applications", "APIs & back-end", "Redesigns", "Maintenance", "Interactive maps", "Performance"],
   "Services": {
@@ -56,9 +53,51 @@
     "titleAccent": "very real",
     "ongoing": "Ongoing",
     "items": {
+      "om": {
+        "name": "A whole club’s digital ecosystem",
+        "need": "Nine months rebuilding om.fr as part of the club’s rebrand: 30+ pages, a design system shared by four teams, headless Sanity and an API-first architecture built to absorb match-night traffic spikes.",
+        "stats": [
+          {
+            "value": "9 months",
+            "label": "full rebuild"
+          },
+          {
+            "value": "−75%",
+            "label": "infrastructure costs"
+          },
+          {
+            "value": "100/100",
+            "label": "Speed Index"
+          },
+          {
+            "value": "8+",
+            "label": "third-party services reconnected"
+          }
+        ],
+        "done": [
+          "Match Day block, match page and Live Match to follow every game as it happens",
+          "Memberships and upsell mechanics towards higher tiers",
+          "Fixtures, results and league table fed by sports data",
+          "Content driven from Sanity, with every block mapped to the CMS"
+        ]
+      },
       "ami": {
         "name": "AMI du quartier",
-        "need": "Bring the Marais flagship store to life: invite customers to share geotagged “friendship moments” around the neighborhood, building a bond with the brand and drawing people into the store.",
+        "need": "Ami Paris celebrates friendship in the neighborhoods it loves. Everyone shares their story (flowers on a Sunday, coffee at the same spot), pinned on a map and browsed like a roll of film rather than a feed.",
+        "stats": [
+          {
+            "value": "2",
+            "label": "map levels"
+          },
+          {
+            "value": "4",
+            "label": "types of moments"
+          },
+          {
+            "value": "FR · EN",
+            "label": "international platform"
+          }
+        ],
         "done": [
           "Two-level interactive map: neighborhood zones first, then individual places on zoom",
           "Private addresses anonymized and grouped by street, points of interest pinned individually",
@@ -67,25 +106,72 @@
         ]
       },
       "fcl": {
-        "name": "Depuis 1926",
-        "need": "Celebrate the club’s 100th anniversary with a site dedicated to its history and its fans.",
-        "done": ["Contributed to building the centenary website"]
+        "name": "A hundred years of Merlus",
+        "need": "FC Lorient was turning 100. Not just another anniversary site: a tribute to the fans, giving promotions, cup nights and names still quoted twenty years later the weight they carry in their memory.",
+        "stats": [
+          {
+            "value": "1926 → 2026",
+            "label": "a century of history"
+          },
+          {
+            "value": "6",
+            "label": "content types modeled"
+          },
+          {
+            "value": "100%",
+            "label": "run by the club"
+          }
+        ],
+        "done": [
+          "All the development work: pages, dynamic elements and CSS integration",
+          "Custom-built animations, micro-interactions and transitions",
+          "Headless WordPress: legends, kits, matches, goals, seasons and photos modeled as schemas",
+          "Cache-invalidation webhooks: every publish goes live immediately"
+        ]
       },
-      "adi": {
-        "name": "ADI Global",
-        "need": "An international website presenting the distributor’s products and services.",
-        "done": ["Contributed to building the website"]
+      "pgw": {
+        "name": "France’s biggest gaming show",
+        "need": "The event’s digital storefront: spark interest, inform fast and drive ticket sales, on desktop and mobile alike, while holding up under traffic spikes from announcements and ticket launches.",
+        "stats": [
+          {
+            "value": "161,000",
+            "label": "visitors in 2025"
+          },
+          {
+            "value": "4 days",
+            "label": "of show"
+          },
+          {
+            "value": "FR · EN",
+            "label": "bilingual site"
+          }
+        ],
+        "done": [
+          "Pages and dynamic elements, CSS integration",
+          "Animations and micro-interactions true to the gaming world",
+          "Headless Sanity: content mapped to the CMS so the team can work on its own",
+          "Cache-invalidation webhooks on every publish"
+        ]
       },
       "foncia": {
-        "name": "Real estate transactions",
-        "need": "Build tooling for the real estate sales business of one of Europe’s leading property managers.",
-        "done": ["Developing the real estate transaction module"]
+        "name": "Real-estate transaction ERP",
+        "need": "The central tool for Foncia group’s transaction teams, supporting the whole sale and purchase cycle of a property, from first contact to signature.",
+        "done": [
+          "React interfaces and reusable components, built to stay maintainable at scale",
+          "Node.js services in a microservices architecture, run and orchestrated with Docker",
+          "GitLab CI pipelines and review apps to validate each change in isolation before merge",
+          "Functional and technical acceptance testing (UAT) before every release",
+          "Internal packages published to a private npm registry (Verdaccio)"
+        ]
       }
-    }
+    },
+    "preview": "Preview of {site}",
+    "myPart": "My part",
+    "studio": "with {studio}"
   },
   "Method": {
     "label": "(03) Process",
-    "title": "Four steps,",
+    "title": "Five steps,",
     "titleAccent": "no surprises",
     "items": [
       {
@@ -95,6 +181,10 @@
       {
         "title": "Understand",
         "text": "I ask the right questions to clear up any grey areas before writing code."
+      },
+      {
+        "title": "Iterate",
+        "text": "You see the product take shape at every step. We refine it together, as many times as it takes, until it matches your vision."
       },
       {
         "title": "Test",
@@ -117,23 +207,23 @@
     "bio": "I started out as a mechanical engineer and became a full stack developer because I love building useful things. That path taught me to listen, understand the need, ask the right questions, then deliver a clean product. Based in Paris, my goal comes down to choosing the right tools, testing, and shipping a product where I own every detail."
   },
   "Devs": {
-    "label": "(05) // for developers",
-    "title": "Under the",
-    "titleAccent": "hood",
+    "tag": "for-developers",
+    "title": "Behind the",
+    "titleAccent": "scenes",
     "intro": "Are you a developer, a CTO, or building a team? Here’s what I work with every day.",
-    "github": "See this site’s source code",
+    "github": "Take a look at the repo",
     "carousel": "Skills",
     "carouselRole": "carousel",
     "previous": "Previous category",
     "next": "Next category",
     "categories": {
-      "languages": "Languages",
-      "frameworks": "Frameworks & libraries",
-      "databases": "Databases",
-      "cloud": "Cloud & DevOps",
-      "tools": "Tools",
-      "ai": "AI",
-      "design": "Design & CMS"
+      "frontend": "Front-end",
+      "backend": "Back-end",
+      "data": "Databases",
+      "devops": "Cloud & DevOps",
+      "cms": "CMS & design",
+      "workflow": "Tools & AI",
+      "scientific": "Scientific computing"
     }
   },
   "Contact": {
