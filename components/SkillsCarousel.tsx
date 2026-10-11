@@ -37,6 +37,18 @@ export default function SkillsCarousel({
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
+  // La hauteur suit la diapo active : pas de vide sous les catégories courtes
+  useEffect(() => {
+    const el = track.current;
+    const panel = el?.children[index] as HTMLElement | undefined;
+    if (!el || !panel) return;
+    const fit = () => (el.style.height = `${panel.offsetHeight}px`);
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(panel);
+    return () => observer.disconnect();
+  }, [index]);
+
   const arrow =
     "grid h-11 w-11 place-items-center rounded-full border border-white/15 transition hover:border-acid hover:text-acid";
   const arrows = (
@@ -48,6 +60,12 @@ export default function SkillsCarousel({
         →
       </button>
     </>
+  );
+
+  const counter = (
+    <span className="font-mono text-sm whitespace-nowrap text-muted">
+      {pad(index + 1)} / {pad(categories.length)}
+    </span>
   );
 
   return (
@@ -76,22 +94,18 @@ export default function SkillsCarousel({
           ))}
         </div>
         <div className="flex shrink-0 items-center gap-3">
-          <span className="font-mono text-sm text-muted">
-            {pad(index + 1)} / {pad(categories.length)}
-          </span>
+          {counter}
           {arrows}
         </div>
       </div>
 
-      <div ref={track} className="carousel-track flex snap-x snap-mandatory overflow-x-auto">
-        {categories.map((c, i) => (
+      <div
+        ref={track}
+        className="carousel-track flex snap-x snap-mandatory items-start overflow-x-auto overflow-y-hidden transition-[height] duration-500 ease-out motion-reduce:transition-none"
+      >
+        {categories.map((c) => (
           <div key={c.id} className="w-full shrink-0 snap-start" role="tabpanel" aria-label={c.title}>
-            <div className="mb-4 flex items-baseline justify-between gap-4 md:hidden">
-              <h3 className="font-display text-2xl font-semibold tracking-tight">{c.title}</h3>
-              <span className="font-mono text-xs text-muted">
-                {pad(i + 1)} / {pad(categories.length)}
-              </span>
-            </div>
+            <h3 className="mb-4 font-display text-2xl font-semibold tracking-tight md:hidden">{c.title}</h3>
             <ul className="grid grid-cols-3 gap-2 sm:gap-3 lg:grid-cols-4">
               {c.items.map((s) => (
                 <li
@@ -123,13 +137,16 @@ export default function SkillsCarousel({
       </div>
 
       <div className="mt-5 flex items-center justify-between gap-4 md:hidden">
-        <div className="flex gap-1.5" aria-hidden="true">
-          {categories.map((c, i) => (
-            <span
-              key={c.id}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-6 bg-acid" : "w-1.5 bg-white/20"}`}
-            />
-          ))}
+        <div className="flex items-center gap-4">
+          <div className="flex gap-1.5" aria-hidden="true">
+            {categories.map((c, i) => (
+              <span
+                key={c.id}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-6 bg-acid" : "w-1.5 bg-white/20"}`}
+              />
+            ))}
+          </div>
+          {counter}
         </div>
         <div className="flex items-center gap-3">{arrows}</div>
       </div>
