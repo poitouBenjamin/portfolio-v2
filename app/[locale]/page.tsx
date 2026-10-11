@@ -37,8 +37,8 @@ function SectionHead({
   accent?: boolean;
 }) {
   return (
-    <div data-reveal className="mb-16 grid gap-6 sm:mb-24 md:grid-cols-[1fr_2fr]">
-      <p className={`pt-3 font-mono text-sm ${accent ? "text-acid" : "text-muted"}`}>{label}</p>
+    <div data-reveal className="mb-16 grid gap-6 sm:mb-24 lg:grid-cols-[1fr_2fr]">
+      <p className={`font-mono text-sm lg:pt-3 ${accent ? "text-acid" : "text-muted"}`}>{label}</p>
       <div>{children}</div>
     </div>
   );
@@ -310,12 +310,12 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 {t("Method.title")} <em className={serifAccent}>{t("Method.titleAccent")}</em>
               </h2>
             </SectionHead>
-            <ol className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
               {method.map((m, i) => (
                 <li
                   key={m.title}
                   data-reveal
-                  className="spotlight bg-surface p-8"
+                  className="spotlight bg-surface p-8 last:sm:col-span-2 last:lg:col-span-1"
                 >
                   <span className="font-serif text-7xl text-acid italic">{i + 1}</span>
                   <h3 className="mt-6 font-display text-xl font-medium">{m.title}</h3>

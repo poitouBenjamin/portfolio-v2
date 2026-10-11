@@ -23,14 +23,7 @@
     "line2": "simple",
     "line3": "& maintainable."
   },
-  "Marquee": [
-    "Web applications",
-    "APIs & back-end",
-    "Redesigns",
-    "Maintenance",
-    "Interactive maps",
-    "Performance"
-  ],
+  "Marquee": ["Web applications", "APIs & back-end", "Redesigns", "Maintenance", "Interactive maps", "Performance"],
   "Services": {
     "label": "(01) Services",
     "title": "What I do",
@@ -116,7 +109,7 @@
   },
   "Method": {
     "label": "(03) Process",
-    "title": "Four steps,",
+    "title": "Five steps,",
     "titleAccent": "no surprises",
     "items": [
       {
@@ -126,6 +119,10 @@
       {
         "title": "Understand",
         "text": "I ask the right questions to clear up any grey areas before writing code."
+      },
+      {
+        "title": "Iterate",
+        "text": "You see the product take shape at every step. We refine it together, as many times as it takes, until it matches your vision."
       },
       {
         "title": "Test",

@@ -23,14 +23,7 @@
     "line2": "simples",
     "line3": "& maintenables."
   },
-  "Marquee": [
-    "Applications web",
-    "API & back-end",
-    "Refonte",
-    "Maintenance",
-    "Cartes interactives",
-    "Performance"
-  ],
+  "Marquee": ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"],
   "Services": {
     "label": "(01) Services",
     "title": "Ce que je fais",
@@ -116,7 +109,7 @@
   },
   "Method": {
     "label": "(03) Méthode",
-    "title": "Quatre temps,",
+    "title": "Cinq temps,",
     "titleAccent": "zéro surprise",
     "items": [
       {
@@ -126,6 +119,10 @@
       {
         "title": "Comprendre",
         "text": "Je pose les bonnes questions pour lever les zones d’ombre avant d’écrire du code."
+      },
+      {
+        "title": "Itérer",
+        "text": "Vous voyez le produit avancer à chaque étape. On l’ajuste ensemble, autant de fois qu’il le faut, jusqu’à ce qu’il colle à votre vision."
       },
       {
         "title": "Tester",
