@@ -51,7 +51,7 @@
     "label": "(02) Réalisations",
     "title": "Des projets",
     "titleAccent": "bien réels",
-    "ongoing": "Mission en cours",
+    "ongoing": "En cours",
     "items": {
       "ami": {
         "name": "AMI du quartier",
@@ -65,18 +65,34 @@
       },
       "fcl": {
         "name": "Depuis 1926",
-        "need": "Célébrer les 100 ans du club avec un site dédié à son histoire et à ses supporters.",
-        "done": ["Participation au développement du site du centenaire"]
+        "need": "Célébrer les 100 ans du club avec un site consacré à son histoire : personnalités, maillots, buts, matchs, chronologie et photothèque.",
+        "done": [
+          "Toute la partie développement : pages, éléments dynamiques et intégration CSS",
+          "WordPress en headless : connexion à l’API et mapping de chaque contenu vers le CMS",
+          "Webhooks d’invalidation du cache : chaque modification publiée dans WordPress est aussitôt en ligne",
+          "Textes de l’interface gérés par fichiers de traduction"
+        ]
       },
-      "adi": {
-        "name": "ADI Global",
-        "need": "Un site international pour présenter l’offre et les services du distributeur.",
-        "done": ["Participation au développement du site"]
+      "pgw": {
+        "name": "Le site du salon",
+        "need": "Le site officiel du rendez-vous incontournable du jeu vidéo en France : programme, informations pratiques et accès à la billetterie.",
+        "done": [
+          "Développement des pages et des éléments dynamiques, intégration CSS",
+          "Sanity en headless : mapping des contenus vers le CMS pour que l’équipe soit autonome",
+          "Webhooks d’invalidation du cache à chaque publication",
+          "Site bilingue français / anglais via fichiers de traduction"
+        ]
       },
       "foncia": {
-        "name": "Transaction immobilière",
-        "need": "Outiller l’activité de transaction immobilière d’un des leaders européens de la gestion immobilière.",
-        "done": ["Développement de la partie transaction immobilière"]
+        "name": "ERP transaction immobilière",
+        "need": "L’outil central des équipes de transaction du groupe Foncia : il accompagne tout le cycle de vente et d’achat d’un bien, de la mise en relation jusqu’à la signature.",
+        "done": [
+          "Interfaces React et composants réutilisables, pensés pour rester maintenables à grande échelle",
+          "Services Node.js dans une architecture microservices, lancés et orchestrés avec Docker",
+          "Pipelines GitLab CI et review apps pour valider chaque développement isolément avant le merge",
+          "Recette fonctionnelle et technique (UAT) avant chaque mise en production",
+          "Packages internes publiés sur un registre npm privé (Verdaccio)"
+        ]
       }
     },
     "preview": "Aperçu du site {site}"

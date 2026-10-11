@@ -1,5 +1,4 @@
 // Données indépendantes de la langue. Les textes traduits sont dans messages/{fr,en}.json.
-// Les valeurs marquées TODO sont à compléter.
 
 export const profile = {
   name: "Benjamin Poitou",
@@ -12,7 +11,7 @@ export const profile = {
 
 export type Project = {
   /** Clé dans messages/*.json → Projects.items */
-  id: "ami" | "fcl" | "adi" | "foncia";
+  id: "ami" | "fcl" | "pgw" | "foncia";
   client: string;
   ongoing?: boolean;
   stack: string[];
@@ -23,38 +22,39 @@ export type Project = {
   urlLabel: string;
 };
 
+// Les fichiers de traduction (i18n) sont communs à tous les projets
 export const projects: Project[] = [
   {
     id: "ami",
-    preview: "/projects/ami.webp",
     client: "AMI Paris",
-    stack: ["JavaScript", "Cartographie"], // TODO: stack exacte
+    stack: ["Next.js", "Tailwind", "shadcn/ui", "Custom back-office", "i18n", "Vercel"],
+    preview: "/projects/ami.webp",
     url: "https://family.amiparis.com/fr",
     urlLabel: "family.amiparis.com",
   },
   {
     id: "fcl",
-    preview: "/projects/fcl.webp",
     client: "FC Lorient",
-    stack: ["JavaScript"], // TODO
+    stack: ["Next.js", "Tailwind", "shadcn/ui", "WordPress headless", "i18n", "Vercel"],
+    preview: "/projects/fcl.webp",
     url: "https://depuis1926.fclorient.bzh/",
     urlLabel: "depuis1926.fclorient.bzh",
   },
   {
-    id: "adi",
-    preview: "/projects/adi.webp",
-    client: "ADI",
-    stack: ["JavaScript"], // TODO
-    url: "https://www.adiglobal.com/",
-    urlLabel: "adiglobal.com",
+    id: "pgw",
+    client: "Paris Games Week",
+    stack: ["Next.js", "Tailwind", "shadcn/ui", "Sanity", "i18n", "Vercel"],
+    preview: "/projects/pgw.webp",
+    url: "https://www.parisgamesweek.com/",
+    urlLabel: "parisgamesweek.com",
   },
   {
     id: "foncia",
-    preview: "/projects/foncia.webp",
-    client: "Foncia · Emeria group",
+    client: "Emeria · groupe Foncia",
     ongoing: true,
-    stack: ["JavaScript"], // TODO
-    // Module interne : pas de lien public, on illustre avec le site grand public
+    stack: ["React", "Node.js", "Microservices", "Docker", "GitLab CI", "Verdaccio"],
+    // ERP interne : pas de lien public, on illustre avec le site grand public
+    preview: "/projects/foncia.webp",
     urlLabel: "foncia.com",
   },
 ];
@@ -116,7 +116,9 @@ export const skills: SkillCategory[] = [
       { name: "AWS", logo: dev("amazonwebservices/amazonwebservices-original-wordmark"), mono: true },
       { name: "GCP", logo: dev("googlecloud/googlecloud-original") },
       { name: "Vercel", logo: dev("vercel/vercel-original"), invert: true },
+      { name: "GitLab CI", logo: dev("gitlab/gitlab-original") },
       { name: "Datadog", logo: dev("datadog/datadog-original"), mono: true },
+      { name: "Verdaccio", logo: si("verdaccio"), invert: true },
       { name: "Review apps" },
     ],
   },

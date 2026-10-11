@@ -64,19 +64,35 @@
         ]
       },
       "fcl": {
-        "name": "Depuis 1926",
-        "need": "Celebrate the club’s 100th anniversary with a site dedicated to its history and its fans.",
-        "done": ["Contributed to building the centenary website"]
+        "name": "Since 1926",
+        "need": "Celebrate the club’s 100th anniversary with a site devoted to its history: legends, kits, goals, matches, timeline and photo library.",
+        "done": [
+          "All the development work: pages, dynamic elements and CSS integration",
+          "Headless WordPress: API connection and mapping of every piece of content to the CMS",
+          "Cache-invalidation webhooks: every change published in WordPress goes live immediately",
+          "Interface copy managed through translation files"
+        ]
       },
-      "adi": {
-        "name": "ADI Global",
-        "need": "An international website presenting the distributor’s products and services.",
-        "done": ["Contributed to building the website"]
+      "pgw": {
+        "name": "The show’s website",
+        "need": "The official site of France’s must-attend video game event: programme, practical information and access to ticketing.",
+        "done": [
+          "Pages and dynamic elements, CSS integration",
+          "Headless Sanity: content mapped to the CMS so the team can work on its own",
+          "Cache-invalidation webhooks on every publish",
+          "French / English site through translation files"
+        ]
       },
       "foncia": {
-        "name": "Real estate transactions",
-        "need": "Build tooling for the real estate sales business of one of Europe’s leading property managers.",
-        "done": ["Developing the real estate transaction module"]
+        "name": "Real-estate transaction ERP",
+        "need": "The central tool for Foncia group’s transaction teams, supporting the whole sale and purchase cycle of a property, from first contact to signature.",
+        "done": [
+          "React interfaces and reusable components, built to stay maintainable at scale",
+          "Node.js services in a microservices architecture, run and orchestrated with Docker",
+          "GitLab CI pipelines and review apps to validate each change in isolation before merge",
+          "Functional and technical acceptance testing (UAT) before every release",
+          "Internal packages published to a private npm registry (Verdaccio)"
+        ]
       }
     },
     "preview": "Preview of {site}"

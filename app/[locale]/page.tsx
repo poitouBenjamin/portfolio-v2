@@ -14,7 +14,7 @@ const mail = `mailto:${profile.email}`;
 const covers = [
   "radial-gradient(60% 80% at 20% 30%, #8b6cff 0%, transparent 60%), radial-gradient(50% 70% at 80% 70%, #ff6ba8 0%, transparent 60%), #120d1f",
   "radial-gradient(60% 80% at 75% 25%, #ff5a36 0%, transparent 60%), radial-gradient(50% 60% at 20% 80%, #ffb03a 0%, transparent 60%), #1a0c08",
-  "radial-gradient(60% 80% at 30% 70%, #2bd2ff 0%, transparent 60%), radial-gradient(50% 60% at 80% 20%, #3b5bff 0%, transparent 60%), #07121c",
+  "radial-gradient(60% 80% at 30% 70%, #6a3cff 0%, transparent 60%), radial-gradient(50% 60% at 80% 20%, #ffd23f 0%, transparent 55%), #0e0820",
   "radial-gradient(60% 80% at 70% 70%, #c8ff4d 0%, transparent 55%), radial-gradient(50% 60% at 20% 20%, #1fd39a 0%, transparent 60%), #0b140a",
 ];
 const pad = (n: number) => String(n).padStart(2, "0");
