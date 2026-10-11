@@ -23,7 +23,14 @@
     "line2": "simple",
     "line3": "& maintainable."
   },
-  "Marquee": ["Web applications", "APIs & back-end", "Redesigns", "Maintenance", "Interactive maps", "Performance"],
+  "Marquee": [
+    "Web applications",
+    "APIs & back-end",
+    "Redesigns",
+    "Maintenance",
+    "Interactive maps",
+    "Performance"
+  ],
   "Services": {
     "label": "(01) Services",
     "title": "What I do",
@@ -53,6 +60,16 @@
     "titleAccent": "very real",
     "ongoing": "Ongoing",
     "items": {
+      "om": {
+        "name": "The club’s official website",
+        "need": "News, matches, ticketing, shop, membership offers: the whole OM world on one site. Within the team that built every functional block, I owned the features at the heart of the fan experience.",
+        "done": [
+          "Match Day block, match page and Live Match to follow every game",
+          "Memberships and upsell mechanics towards higher tiers",
+          "Fixtures, results and league table",
+          "Content driven from Sanity, with every block mapped to the CMS"
+        ]
+      },
       "ami": {
         "name": "AMI du quartier",
         "need": "Bring the Marais flagship store to life: invite customers to share geotagged “friendship moments” around the neighborhood, building a bond with the brand and drawing people into the store.",

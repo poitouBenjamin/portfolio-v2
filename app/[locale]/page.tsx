@@ -6,17 +6,19 @@ import { use } from "react";
 import HeroScene from "@/components/HeroScene";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { localePath, routing } from "@/i18n/routing";
-import { profile, projects, skills } from "@/lib/site";
+import { profile, projects, skills, type Project } from "@/lib/site";
 
 const tel = `tel:${profile.phone.replace(/\s/g, "")}`;
 const mail = `mailto:${profile.email}`;
-// Une ambiance de couleur par projet, faute de captures d'écran
-const covers = [
-  "radial-gradient(60% 80% at 20% 30%, #8b6cff 0%, transparent 60%), radial-gradient(50% 70% at 80% 70%, #ff6ba8 0%, transparent 60%), #120d1f",
-  "radial-gradient(60% 80% at 75% 25%, #ff5a36 0%, transparent 60%), radial-gradient(50% 60% at 20% 80%, #ffb03a 0%, transparent 60%), #1a0c08",
-  "radial-gradient(60% 80% at 30% 70%, #6a3cff 0%, transparent 60%), radial-gradient(50% 60% at 80% 20%, #ffd23f 0%, transparent 55%), #0e0820",
-  "radial-gradient(60% 80% at 70% 70%, #c8ff4d 0%, transparent 55%), radial-gradient(50% 60% at 20% 20%, #1fd39a 0%, transparent 60%), #0b140a",
-];
+// Une ambiance de couleur par projet, reprise pour teinter la capture du site
+const covers: Record<Project["id"], string> = {
+  om: "radial-gradient(60% 80% at 25% 30%, #2faee0 0%, transparent 60%), radial-gradient(50% 70% at 80% 70%, #1d4ed8 0%, transparent 60%), #061226",
+  ami: "radial-gradient(60% 80% at 20% 30%, #8b6cff 0%, transparent 60%), radial-gradient(50% 70% at 80% 70%, #ff6ba8 0%, transparent 60%), #120d1f",
+  fcl: "radial-gradient(60% 80% at 75% 25%, #ff5a36 0%, transparent 60%), radial-gradient(50% 60% at 20% 80%, #ffb03a 0%, transparent 60%), #1a0c08",
+  pgw: "radial-gradient(60% 80% at 30% 70%, #6a3cff 0%, transparent 60%), radial-gradient(50% 60% at 80% 20%, #ffd23f 0%, transparent 55%), #0e0820",
+  foncia:
+    "radial-gradient(60% 80% at 70% 70%, #c8ff4d 0%, transparent 55%), radial-gradient(50% 60% at 20% 20%, #1fd39a 0%, transparent 60%), #0b140a",
+};
 const pad = (n: number) => String(n).padStart(2, "0");
 
 const btnPrimary = "rounded-full bg-acid px-7 py-4 font-semibold text-void transition hover:bg-white";
@@ -200,12 +202,14 @@ export default function Home({ params }: PageProps<"/[locale]">) {
               <article
                 key={p.id}
                 data-reveal
-                className="spotlight group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface transition-colors duration-500 hover:border-white/25"
+                className={`spotlight group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface transition-colors duration-500 hover:border-white/25 ${p.featured ? "lg:col-span-2" : ""}`}
               >
-                <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
+                <div
+                  className={`relative aspect-[4/3] overflow-hidden sm:aspect-[16/10] ${p.featured ? "lg:aspect-[21/9]" : ""}`}
+                >
                   <div
                     className="absolute inset-0 scale-110 blur-2xl transition-transform duration-[1.2s] ease-out group-hover:scale-125 group-hover:rotate-3"
-                    style={{ background: covers[i % covers.length] }}
+                    style={{ background: covers[p.id] }}
                   />
                   <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-4 p-6 sm:p-8">
                     <div>
@@ -222,14 +226,16 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                   </div>
 
                   {/* Capture du site dans une fenêtre de navigateur, teintée aux couleurs de la carte */}
-                  <div className="absolute inset-x-6 top-[40%] -bottom-4 overflow-hidden rounded-t-xl border border-white/15 shadow-2xl shadow-black/60 transition-transform duration-700 ease-out group-hover:-translate-y-3 sm:inset-x-10 sm:top-[36%]">
+                  <div
+                    className={`absolute inset-x-6 top-[40%] -bottom-4 overflow-hidden rounded-t-xl border border-white/15 shadow-2xl shadow-black/60 transition-transform duration-700 ease-out group-hover:-translate-y-3 sm:inset-x-10 sm:top-[36%] ${p.featured ? "lg:inset-x-[14%] lg:top-[30%]" : ""}`}
+                  >
                     <div className="flex items-center gap-1.5 border-b border-white/10 bg-void/80 px-3 py-2">
                       <span className="h-2 w-2 rounded-full bg-white/20" />
                       <span className="h-2 w-2 rounded-full bg-white/20" />
                       <span className="h-2 w-2 rounded-full bg-white/20" />
                       <span className="ml-2 truncate font-mono text-[10px] text-white/50">{p.urlLabel}</span>
                     </div>
-                    <div className="relative h-full" style={{ background: covers[i % covers.length] }}>
+                    <div className="relative h-full" style={{ background: covers[p.id] }}>
                       <Image
                         src={p.preview}
                         alt={t("Projects.preview", { site: p.urlLabel })}
@@ -248,12 +254,16 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                   </div>
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-surface to-transparent" />
                 </div>
-                <div className="flex flex-1 flex-col p-6 sm:p-8">
-                  <h3 className="font-display text-2xl font-semibold tracking-tight">
-                    {t(`Projects.items.${p.id}.name`)}
-                  </h3>
-                  <p className="mt-3 text-fog/90">{t(`Projects.items.${p.id}.need`)}</p>
-                  <ul className="mt-5 space-y-2 text-sm text-muted">
+                <div
+                  className={`flex flex-1 flex-col p-6 sm:p-8 ${p.featured ? "lg:grid lg:grid-cols-2 lg:gap-x-12" : ""}`}
+                >
+                  <div>
+                    <h3 className="font-display text-2xl font-semibold tracking-tight">
+                      {t(`Projects.items.${p.id}.name`)}
+                    </h3>
+                    <p className="mt-3 text-fog/90">{t(`Projects.items.${p.id}.need`)}</p>
+                  </div>
+                  <ul className={`mt-5 space-y-2 text-sm text-muted ${p.featured ? "lg:mt-0" : ""}`}>
                     {(t.raw(`Projects.items.${p.id}.done`) as string[]).map((d) => (
                       <li key={d} className="flex gap-3">
                         <span className="mt-[0.55em] h-px w-3 shrink-0 bg-acid" />
@@ -261,7 +271,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8">
+                  <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8 lg:col-span-2">
                     <ul className="flex flex-wrap gap-2">
                       {p.stack.map((s) => (
                         <li
@@ -302,7 +312,11 @@ export default function Home({ params }: PageProps<"/[locale]">) {
             </SectionHead>
             <ol className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
               {method.map((m, i) => (
-                <li key={m.title} data-reveal className="spotlight bg-surface p-8">
+                <li
+                  key={m.title}
+                  data-reveal
+                  className="spotlight bg-surface p-8"
+                >
                   <span className="font-serif text-7xl text-acid italic">{i + 1}</span>
                   <h3 className="mt-6 font-display text-xl font-medium">{m.title}</h3>
                   <p className="mt-3 text-muted">{m.text}</p>

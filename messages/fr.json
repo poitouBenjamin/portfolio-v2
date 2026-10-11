@@ -23,7 +23,14 @@
     "line2": "simples",
     "line3": "& maintenables."
   },
-  "Marquee": ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"],
+  "Marquee": [
+    "Applications web",
+    "API & back-end",
+    "Refonte",
+    "Maintenance",
+    "Cartes interactives",
+    "Performance"
+  ],
   "Services": {
     "label": "(01) Services",
     "title": "Ce que je fais",
@@ -53,6 +60,16 @@
     "titleAccent": "bien réels",
     "ongoing": "En cours",
     "items": {
+      "om": {
+        "name": "Le site officiel du club",
+        "need": "Actualités, matchs, billetterie, boutique, offres membres : tout l’univers de l’OM réuni sur un seul site. Au sein de l’équipe qui a développé l’ensemble des blocs fonctionnels, j’ai pris en charge les features au cœur de l’expérience supporter.",
+        "done": [
+          "Bloc Match Day, fiche match et Live Match pour suivre chaque rencontre",
+          "Memberships et mécanique d’upsell vers les offres supérieures",
+          "Calendrier, résultats et classement",
+          "Contenus pilotés depuis Sanity, avec le mapping de chaque bloc vers le CMS"
+        ]
+      },
       "ami": {
         "name": "AMI du quartier",
         "need": "Faire vivre le flagship du Marais : inviter les clients à partager leurs « moments d’amitié » géolocalisés dans le quartier, pour créer du lien avec la marque et ramener du monde en boutique.",

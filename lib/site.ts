@@ -11,8 +11,10 @@ export const profile = {
 
 export type Project = {
   /** Clé dans messages/*.json → Projects.items */
-  id: "ami" | "fcl" | "pgw" | "foncia";
+  id: "om" | "ami" | "fcl" | "pgw" | "foncia";
   client: string;
+  /** Projet phare : carte pleine largeur en tête de section */
+  featured?: boolean;
   ongoing?: boolean;
   stack: string[];
   /** Capture du site, dans public/projects */
@@ -24,6 +26,15 @@ export type Project = {
 
 // Les fichiers de traduction (i18n) sont communs à tous les projets
 export const projects: Project[] = [
+  {
+    id: "om",
+    client: "Olympique de Marseille",
+    featured: true,
+    stack: ["Next.js", "Tailwind", "shadcn/ui", "Sanity", "i18n", "Vercel"],
+    preview: "/projects/om-match.webp",
+    url: "https://www.om.fr/",
+    urlLabel: "om.fr",
+  },
   {
     id: "ami",
     client: "AMI Paris",
