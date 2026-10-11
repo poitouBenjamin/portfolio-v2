@@ -83,7 +83,7 @@
       },
       "ami": {
         "name": "AMI du quartier",
-        "need": "Ami Paris célèbre l’amitié dans les quartiers qui lui sont chers. Chacun y dépose son histoire (un bouquet le dimanche, un café toujours au même endroit), épinglée sur une carte et parcourue comme une pellicule photo plutôt qu’un feed.",
+        "need": "Ami Paris célèbre l’amitié dans les quartiers qui lui sont chers. Chacun·e y dépose son histoire (un bouquet le dimanche, un café toujours au même endroit), épinglée sur une carte et parcourue comme une pellicule photo plutôt qu’un feed.",
         "stats": [
           {
             "value": "2",
@@ -102,7 +102,7 @@
           "Carte interactive à deux niveaux : les grandes zones du quartier, puis chaque lieu au zoom",
           "Adresses privées anonymisées et regroupées par rue, lieux d’intérêt épinglés individuellement",
           "Filtres par type de moment, pilotés depuis le back-office",
-          "Feed qui alterne contributions perso, communauté, sélection AMI et contenus de la marque selon le profil de l’utilisateur"
+          "Feed qui alterne contributions perso, communauté, sélection AMI et contenus de la marque selon le profil de l’utilisateur·rice"
         ]
       },
       "fcl": {
@@ -135,7 +135,7 @@
         "stats": [
           {
             "value": "161 000",
-            "label": "visiteurs en 2025"
+            "label": "visiteur·euses en 2025"
           },
           {
             "value": "4 jours",
@@ -210,7 +210,7 @@
     "tag": "pour-les-devs",
     "title": "En",
     "titleAccent": "coulisse",
-    "intro": "Vous êtes développeur, CTO ou vous montez une équipe ? Voici ce avec quoi je travaille au quotidien.",
+    "intro": "Vous êtes développeur·euse, CTO ou vous montez une équipe ? Voici ce avec quoi je travaille au quotidien.",
     "github": "Jeter un œil au repo",
     "carousel": "Compétences",
     "carouselRole": "carrousel",
@@ -290,7 +290,7 @@
         "placeholder": "Fondatrice, responsable marketing…"
       },
       "contactPreference": {
-        "label": "Comment préférez-vous être recontacté ?",
+        "label": "Comment préférez-vous être recontacté·e ?",
         "options": {
           "email": "Par email",
           "phone": "Par téléphone",
@@ -326,7 +326,7 @@
       },
       "audience": {
         "label": "À qui s’adresse le site ?",
-        "hint": "Vos utilisateurs : qui ils sont, sur quel appareil, ce qu’ils viennent chercher."
+        "hint": "Vos utilisateur·rices : leur profil, leurs appareils, ce qu’iels viennent chercher."
       },
       "hasWebsite": {
         "label": "Avez-vous déjà un site ?",
@@ -361,7 +361,7 @@
       "features": {
         "label": "Fonctionnalités souhaitées",
         "options": {
-          "accounts": "Comptes utilisateurs",
+          "accounts": "Comptes utilisateur·rices",
           "payment": "Paiement en ligne",
           "cms": "Back-office pour modifier le contenu",
           "multilingual": "Plusieurs langues",
