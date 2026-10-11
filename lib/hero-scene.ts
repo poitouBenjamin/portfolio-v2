@@ -85,13 +85,15 @@ void main(){
 // Monte la scène dans le canvas et renvoie une fonction de nettoyage
 export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Mobiles et tablettes : GPU modeste et écran dense, on allège tout le rendu
+  const light = window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 900;
   let renderer: THREE.WebGLRenderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: !light, alpha: true, powerPreference: "low-power" });
   } catch {
     return () => {};
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, light ? 1.25 : 1.5));
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
@@ -102,13 +104,15 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     uIntensity: { value: 0.32 },
     uMouse: { value: new THREE.Vector2() },
   };
-  const blobGeo = new THREE.IcosahedronGeometry(1.35, 160);
+  // Le vertex shader évalue le bruit 6 fois par sommet : le maillage est le poste le plus coûteux.
+  // detail 64 ≈ 85k triangles sur desktop, 28 ≈ 17k sur mobile où la sphère est petite à l'écran.
+  const blobGeo = new THREE.IcosahedronGeometry(1.35, light ? 28 : 64);
   const blobMat = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms });
   const blob = new THREE.Mesh(blobGeo, blobMat);
   scene.add(blob);
 
   // poussière d'étoiles autour de la sphère
-  const count = 900;
+  const count = light ? 400 : 900;
   const pos = new Float32Array(count * 3);
   for (let i = 0; i < count; i++) {
     const r = 2.2 + Math.random() * 3.5;
@@ -149,11 +153,15 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   visibilityObserver.observe(canvas);
 
   const start = performance.now();
+  // L'animation est lente : 30 images/s suffisent sur mobile et divisent le travail du GPU par deux
+  const minDelta = light ? 1000 / 30 : 0;
+  let last = 0;
   let raf = 0;
-  function frame() {
+  function frame(now: number) {
     raf = requestAnimationFrame(frame);
-    if (!visible) return;
-    const t = (performance.now() - start) / 1000;
+    if (!visible || now - last < minDelta) return;
+    last = now;
+    const t = (now - start) / 1000;
     mouse.lerp(target, 0.05);
     const scroll = Math.min(window.scrollY / window.innerHeight, 1);
     uniforms.uTime.value = t;
@@ -169,7 +177,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   if (reduce) {
     renderer.render(scene, camera);
   } else {
-    frame();
+    raf = requestAnimationFrame(frame);
   }
 
   return () => {
