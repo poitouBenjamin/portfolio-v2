@@ -139,9 +139,17 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     camera.aspect = w / h;
     // sur mobile la sphère se place au-dessus du titre, sur desktop à droite
     const wide = w > 900;
-    blob.position.x = wide ? 1.55 : 0;
-    blob.position.y = wide ? 0 : 1.9;
-    camera.position.z = wide ? 6 : 11.5;
+    if (wide) {
+      // desktop : à droite du titre, rognée par le bord de l'écran
+      blob.position.set(1.55, 0, 0);
+      camera.position.z = 6;
+    } else {
+      // mobile et tablette portrait : au-dessus du titre, décalée à droite et rognée par le bord
+      camera.position.z = 9.5;
+      const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+      const halfW = halfH * camera.aspect;
+      blob.position.set(halfW * 0.6, halfH * 0.2, 0);
+    }
     camera.updateProjectionMatrix();
   }
   const resizeObserver = new ResizeObserver(resize);
