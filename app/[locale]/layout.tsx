@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Inter, Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Inter_Tight, Instrument_Serif, JetBrains_Mono, Manrope } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Interactions from "@/components/Interactions";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 const interTight = Inter_Tight({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
@@ -52,7 +52,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+      className={`${manrope.variable} ${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
