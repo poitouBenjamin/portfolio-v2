@@ -78,7 +78,8 @@
         "need": "Build tooling for the real estate sales business of one of Europe’s leading property managers.",
         "done": ["Developing the real estate transaction module"]
       }
-    }
+    },
+    "preview": "Preview of {site}"
   },
   "Method": {
     "label": "(03) Process",

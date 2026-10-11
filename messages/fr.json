@@ -78,7 +78,8 @@
         "need": "Outiller l’activité de transaction immobilière d’un des leaders européens de la gestion immobilière.",
         "done": ["Développement de la partie transaction immobilière"]
       }
-    }
+    },
+    "preview": "Aperçu du site {site}"
   },
   "Method": {
     "label": "(03) Méthode",

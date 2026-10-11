@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { hasLocale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
@@ -201,27 +202,56 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 data-reveal
                 className="spotlight group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface transition-colors duration-500 hover:border-white/25"
               >
-                <div className="relative aspect-[16/9] overflow-hidden">
+                <div className="relative aspect-[4/3] overflow-hidden sm:aspect-[16/10]">
                   <div
                     className="absolute inset-0 scale-110 blur-2xl transition-transform duration-[1.2s] ease-out group-hover:scale-125 group-hover:rotate-3"
                     style={{ background: covers[i % covers.length] }}
                   />
-                  <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
-                    <div className="flex items-start justify-between font-mono text-xs text-white/70">
-                      <span>{pad(i + 1)}</span>
-                      {p.ongoing && (
-                        <span className="rounded-full border border-white/30 bg-black/20 px-3 py-1 backdrop-blur">
-                          {t("Projects.ongoing")}
-                        </span>
-                      )}
+                  <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-4 p-6 sm:p-8">
+                    <div>
+                      <span className="font-mono text-xs text-white/60">{pad(i + 1)}</span>
+                      <p className="mt-1 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                        {p.client}
+                      </p>
                     </div>
-                    <h3 className="font-display text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
-                      {t(`Projects.items.${p.id}.name`)}
-                    </h3>
+                    {p.ongoing && (
+                      <span className="rounded-full border border-white/30 bg-black/20 px-3 py-1 font-mono text-xs text-white/70 backdrop-blur">
+                        {t("Projects.ongoing")}
+                      </span>
+                    )}
                   </div>
+
+                  {/* Capture du site dans une fenêtre de navigateur, teintée aux couleurs de la carte */}
+                  <div className="absolute inset-x-6 top-[40%] -bottom-4 overflow-hidden rounded-t-xl border border-white/15 shadow-2xl shadow-black/60 transition-transform duration-700 ease-out group-hover:-translate-y-3 sm:inset-x-10 sm:top-[36%]">
+                    <div className="flex items-center gap-1.5 border-b border-white/10 bg-void/80 px-3 py-2">
+                      <span className="h-2 w-2 rounded-full bg-white/20" />
+                      <span className="h-2 w-2 rounded-full bg-white/20" />
+                      <span className="h-2 w-2 rounded-full bg-white/20" />
+                      <span className="ml-2 truncate font-mono text-[10px] text-white/50">{p.urlLabel}</span>
+                    </div>
+                    <div className="relative h-full" style={{ background: covers[i % covers.length] }}>
+                      <Image
+                        src={p.preview}
+                        alt={t("Projects.preview", { site: p.urlLabel })}
+                        fill
+                        sizes="(min-width: 1024px) 600px, 90vw"
+                        className="object-cover object-top opacity-90 mix-blend-luminosity grayscale"
+                      />
+                      <Image
+                        src={p.preview}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 600px, 90vw"
+                        className="object-cover object-top opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                      />
+                    </div>
+                  </div>
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-surface to-transparent" />
                 </div>
                 <div className="flex flex-1 flex-col p-6 sm:p-8">
-                  <p className="text-sm font-medium text-acid">{p.client}</p>
+                  <h3 className="font-display text-2xl font-semibold tracking-tight">
+                    {t(`Projects.items.${p.id}.name`)}
+                  </h3>
                   <p className="mt-3 text-fog/90">{t(`Projects.items.${p.id}.need`)}</p>
                   <ul className="mt-5 space-y-2 text-sm text-muted">
                     {(t.raw(`Projects.items.${p.id}.done`) as string[]).map((d) => (

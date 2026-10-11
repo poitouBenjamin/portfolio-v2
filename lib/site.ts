@@ -16,13 +16,17 @@ export type Project = {
   client: string;
   ongoing?: boolean;
   stack: string[];
+  /** Capture du site, dans public/projects */
+  preview: string;
   url?: string;
-  urlLabel?: string;
+  /** Domaine affiché dans la barre de la fenêtre et sur le lien */
+  urlLabel: string;
 };
 
 export const projects: Project[] = [
   {
     id: "ami",
+    preview: "/projects/ami.webp",
     client: "AMI Paris",
     stack: ["JavaScript", "Cartographie"], // TODO: stack exacte
     url: "https://family.amiparis.com/fr",
@@ -30,6 +34,7 @@ export const projects: Project[] = [
   },
   {
     id: "fcl",
+    preview: "/projects/fcl.webp",
     client: "FC Lorient",
     stack: ["JavaScript"], // TODO
     url: "https://depuis1926.fclorient.bzh/",
@@ -37,6 +42,7 @@ export const projects: Project[] = [
   },
   {
     id: "adi",
+    preview: "/projects/adi.webp",
     client: "ADI",
     stack: ["JavaScript"], // TODO
     url: "https://www.adiglobal.com/",
@@ -44,9 +50,12 @@ export const projects: Project[] = [
   },
   {
     id: "foncia",
+    preview: "/projects/foncia.webp",
     client: "Foncia · Emeria group",
     ongoing: true,
     stack: ["JavaScript"], // TODO
+    // Module interne : pas de lien public, on illustre avec le site grand public
+    urlLabel: "foncia.com",
   },
 ];
 
