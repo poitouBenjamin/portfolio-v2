@@ -24,10 +24,7 @@ export default function BriefPage({ params }: PageProps<"/[locale]/brief">) {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-40 bg-gradient-to-b from-void via-void/70 to-transparent">
-        <div className="mx-auto flex h-18 max-w-[1400px] items-center justify-between gap-6 px-4 sm:px-8">
-          <a href={home} className="font-display text-lg font-bold tracking-tight">
-            BP<span className="text-acid">.</span>
-          </a>
+        <div className="mx-auto flex h-18 max-w-[1400px] items-center justify-end gap-6 px-4 sm:px-8">
           <div className="flex items-center gap-2">
             <a
               href={localePath(otherLocale, "/brief")}
