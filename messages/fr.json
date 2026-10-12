@@ -10,6 +10,7 @@
   },
   "Nav": {
     "services": "Services",
+    "ai": "IA",
     "projects": "Projets",
     "method": "Méthode",
     "about": "À propos",
@@ -21,9 +22,21 @@
     "line1": "Des applis web",
     "line2Accent": "rapides,",
     "line2": "simples",
-    "line3": "& maintenables."
+    "line3": "& maintenables.",
+    "ai": "Augmenté par l’IA",
+    "aiTools": "Claude Code · Codex · agents · skills"
   },
-  "Marquee": ["Applications web", "API & back-end", "Refonte", "Maintenance", "Cartes interactives", "Performance"],
+  "Marquee": [
+    "Applications web",
+    "Augmenté par l’IA",
+    "API & back-end",
+    "Refonte",
+    "Agents & skills",
+    "Maintenance",
+    "Cartes interactives",
+    "Rapports mensuels IA",
+    "Performance"
+  ],
   "Services": {
     "label": "(01) Services",
     "title": "Ce que je fais",
@@ -44,11 +57,97 @@
       {
         "title": "Maintenance et évolution",
         "text": "Corrections, nouvelles fonctionnalités, performances : votre produit continue d’avancer."
+      },
+      {
+        "title": "Suivi mensuel et rapport IA",
+        "text": "Un rapport clair chaque mois, des alertes partagées et des suggestions SEO pour faire vivre votre site."
       }
     ]
   },
+  "AI": {
+    "label": "(02) IA",
+    "title": "Un développeur",
+    "titleAccent": "augmenté",
+    "intro": "Je travaille avec les meilleurs outils d’IA du moment. Ils accélèrent l’écriture du code ; je garde la main sur l’architecture, la qualité et chaque ligne livrée.",
+    "toolsLabel": "Mes outils au quotidien",
+    "speed": {
+      "title": "Livré plus vite",
+      "text": "J’orchestre des agents Claude Code et Codex en parallèle, équipés de skills que j’écris pour chaque projet : vos conventions, l’accessibilité, les tests. Vous cliquez sur une première version en quelques jours.",
+      "note": "Je relis et valide chaque ligne avant la mise en production."
+    },
+    "terminal": [
+      "$ claude \"ajoute le filtre par quartier\"",
+      "● agent front   → Filtres.tsx",
+      "● agent tests   → 12 tests ajoutés",
+      "● skill a11y    → contrastes vérifiés",
+      "✓ prêt pour ma relecture"
+    ],
+    "tests": {
+      "title": "Plus de tests, même budget",
+      "text": "Les tests et la documentation, souvent sacrifiés quand le temps manque, sont écrits avec l’aide de l’IA puis vérifiés. Votre produit est plus solide, sans surcoût."
+    },
+    "budget": {
+      "title": "Votre budget, là où ça compte",
+      "text": "Le temps gagné sur les tâches répétitives part dans ce qui fait la différence : vos fonctionnalités, le design, les détails."
+    },
+    "followup": {
+      "badge": "Offre de suivi",
+      "title": "Suivi mensuel + rapport IA",
+      "price": "Forfait mensuel",
+      "text": "Une fois le site en ligne, je ne disparais pas.",
+      "items": [
+        "Chaque mois, un rapport clair en français : visites, pages qui marchent, points de friction et trois actions conseillées",
+        "Des alertes intelligentes envoyées à vous et à moi : le même niveau d’info des deux côtés",
+        "Des suggestions SEO régulières pour gagner en visibilité",
+        "Une mesure d’audience sans cookies, conforme au RGPD : aucun bandeau à afficher"
+      ],
+      "cta": "En parler"
+    },
+    "report": {
+      "tag": "Exemple de rapport",
+      "from": "rapport@poitou.digital",
+      "subject": "Votre site en septembre",
+      "stats": [
+        {
+          "value": "2 340",
+          "label": "visites",
+          "delta": "+18 %"
+        },
+        {
+          "value": "1 min 52",
+          "label": "par visite",
+          "delta": "+9 %"
+        },
+        {
+          "value": "98",
+          "label": "score perf.",
+          "delta": "="
+        }
+      ],
+      "summaryTitle": "Ce que je retiens",
+      "summary": "La page Tarifs est la plus consultée, mais 42 % des visiteur·euses quittent le formulaire à l’étape 2.",
+      "actionsTitle": "Trois actions conseillées",
+      "actions": [
+        "Raccourcir le formulaire de contact",
+        "Ajouter une FAQ sur la page Tarifs",
+        "Compresser les images de l’accueil"
+      ],
+      "alert": "/contact répond 3× plus lentement que d’habitude. Vous et moi sommes prévenu·es."
+    },
+    "product": {
+      "title": "L’IA dans votre produit",
+      "text": "Quand elle sert vraiment vos utilisateur·rices, j’intègre l’IA directement dans votre site ou votre application.",
+      "items": [
+        "Un assistant qui répond à partir de vos contenus",
+        "Une recherche en langage naturel",
+        "Un back-office qui aide à rédiger et à trier",
+        "Des traductions générées puis relues",
+        "Des formulaires qui qualifient les demandes"
+      ]
+    }
+  },
   "Projects": {
-    "label": "(02) Réalisations",
+    "label": "(03) Réalisations",
     "title": "Des projets",
     "titleAccent": "bien réels",
     "ongoing": "En cours",
@@ -170,9 +269,10 @@
     "studio": "avec {studio}"
   },
   "Method": {
-    "label": "(03) Méthode",
+    "label": "(04) Méthode",
     "title": "Cinq temps,",
     "titleAccent": "zéro surprise",
+    "scrollHint": "Continuez à défiler",
     "items": [
       {
         "title": "Écouter",
@@ -197,7 +297,7 @@
     ]
   },
   "About": {
-    "label": "(04) À propos",
+    "label": "(05) À propos",
     "experience": "Expérience",
     "experienceValue": "{years} ans",
     "education": "Formation",
@@ -227,7 +327,7 @@
     }
   },
   "Contact": {
-    "label": "(06) Contact",
+    "label": "(07) Contact",
     "title": "Parlons",
     "titleAccent": "-en.",
     "intro": "Un appel de 20 minutes suffit pour comprendre votre besoin et vous dire comment je peux vous aider.",

@@ -47,6 +47,64 @@ export function initInteractions(): () => void {
     });
     gsap.from("[data-hero-fade]", { opacity: 0, y: 20, duration: 1, ease: "power3.out", stagger: 0.08, delay: 0.6 });
 
+    // Méthode : section épinglée, les étapes défilent de gauche à droite.
+    // Créée avant les autres déclencheurs pour qu'ils tiennent compte de l'espace d'épinglage.
+    const hscroll = document.querySelector<HTMLElement>("[data-hscroll]");
+    const track = hscroll?.querySelector<HTMLElement>("[data-hscroll-track]");
+    if (hscroll && track) {
+      const panels = gsap.utils.toArray<HTMLElement>("[data-hscroll-panel]", hscroll);
+      const count = hscroll.querySelector<HTMLElement>("[data-hscroll-count]");
+      const distance = () => track.scrollWidth - hscroll.clientWidth;
+      const slide = gsap.to(track, {
+        x: () => -distance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: hscroll,
+          start: "top top",
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: ({ progress }) => {
+            if (count) count.textContent = String(Math.round(progress * (panels.length - 1)) + 1).padStart(2, "0");
+          },
+        },
+      });
+      gsap.to("[data-hscroll-bar]", {
+        scaleX: 1,
+        ease: "none",
+        scrollTrigger: { trigger: hscroll, start: "top top", end: () => `+=${distance()}`, scrub: true },
+      });
+
+      panels.forEach((panel, i) => {
+        // Le grand chiffre glisse moins vite que la carte : effet de profondeur
+        gsap.fromTo(
+          panel.querySelector("[data-hscroll-num]"),
+          { xPercent: 35 },
+          {
+            xPercent: -35,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: slide,
+              start: "left right",
+              end: "right left",
+              scrub: true,
+            },
+          },
+        );
+        if (i === 0) return;
+        gsap.from(panel.querySelector("[data-hscroll-copy]"), {
+          opacity: 0,
+          x: 80,
+          duration: 1,
+          ease: "expo.out",
+          scrollTrigger: { trigger: panel, containerAnimation: slide, start: "left 75%" },
+        });
+      });
+    }
+
     // Apparitions au scroll
     gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
       gsap.from(el, {
@@ -55,6 +113,18 @@ export function initInteractions(): () => void {
         duration: 1.1,
         ease: "expo.out",
         scrollTrigger: { trigger: el, start: "top 88%" },
+      });
+    });
+
+    // IA : le terminal de l'agent s'écrit ligne par ligne
+    gsap.utils.toArray<HTMLElement>("[data-type-lines]").forEach((el) => {
+      gsap.from(el.children, {
+        opacity: 0,
+        x: -12,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: 0.45,
+        scrollTrigger: { trigger: el, start: "top 80%" },
       });
     });
 

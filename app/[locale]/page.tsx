@@ -4,7 +4,9 @@ import { hasLocale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import HeroScene from "@/components/HeroScene";
+import AiSection from "@/components/AiSection";
 import Marquee from "@/components/Marquee";
+import MethodSlides from "@/components/MethodSlides";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { localePath, routing } from "@/i18n/routing";
 import { profile, projects, skills, type Project } from "@/lib/site";
@@ -66,6 +68,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
 
   const nav = [
     [t("Nav.services"), "#services"],
+    [t("Nav.ai"), "#ia"],
     [t("Nav.projects"), "#projets"],
     [t("Nav.method"), "#methode"],
     [t("Nav.about"), "#a-propos"],
@@ -149,6 +152,18 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 <span>{t("Hero.line3")}</span>
               </span>
             </h1>
+            <p
+              data-hero-fade
+              className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-xs tracking-wider text-muted uppercase sm:text-sm"
+            >
+              <a
+                href="#ia"
+                className="inline-flex items-center gap-2 rounded-full border border-acid/40 bg-acid/10 px-3 py-1.5 text-acid transition hover:border-acid hover:bg-acid/20"
+              >
+                ✳ {t("Hero.ai")}
+              </a>
+              <span>{t("Hero.aiTools")}</span>
+            </p>
           </div>
         </section>
 
@@ -174,6 +189,18 @@ export default function Home({ params }: PageProps<"/[locale]">) {
             ))}
           </ul>
         </section>
+
+        {/* IA */}
+        <AiSection
+          head={
+            <SectionHead label={t("AI.label")} accent>
+              <h2 className={sectionTitle}>
+                {t("AI.title")} <em className={`${serifAccent} text-acid`}>{t("AI.titleAccent")}</em>
+              </h2>
+              <p className="mt-4 max-w-lg text-muted">{t("AI.intro")}</p>
+            </SectionHead>
+          }
+        />
 
         {/* Projets */}
         <section id="projets" className="mx-auto max-w-[1400px] px-4 pb-28 sm:px-8 sm:pb-40">
@@ -305,26 +332,14 @@ export default function Home({ params }: PageProps<"/[locale]">) {
 
         {/* Méthode */}
         <section id="methode" className="border-y border-white/10 bg-surface">
-          <div className="mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
+          <div className="mx-auto max-w-[1400px] px-4 pt-28 sm:px-8 sm:pt-40">
             <SectionHead label={t("Method.label")}>
               <h2 className={sectionTitle}>
                 {t("Method.title")} <em className={serifAccent}>{t("Method.titleAccent")}</em>
               </h2>
             </SectionHead>
-            <ol className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
-              {method.map((m, i) => (
-                <li
-                  key={m.title}
-                  data-reveal
-                  className="spotlight bg-surface p-8 last:sm:col-span-2 last:lg:col-span-1"
-                >
-                  <span className="font-serif text-7xl text-acid italic">{i + 1}</span>
-                  <h3 className="mt-6 font-display text-xl font-medium">{m.title}</h3>
-                  <p className="mt-3 text-muted">{m.text}</p>
-                </li>
-              ))}
-            </ol>
           </div>
+          <MethodSlides steps={method} hint={t("Method.scrollHint")} />
         </section>
 
         {/* À propos */}
