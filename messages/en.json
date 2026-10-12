@@ -173,6 +173,7 @@
     "label": "(03) Process",
     "title": "Five steps,",
     "titleAccent": "no surprises",
+    "scrollHint": "Keep scrolling",
     "items": [
       {
         "title": "Listen",

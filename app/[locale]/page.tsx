@@ -4,6 +4,7 @@ import { hasLocale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import HeroScene from "@/components/HeroScene";
+import MethodSlides from "@/components/MethodSlides";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { localePath, routing } from "@/i18n/routing";
 import { profile, projects, skills, type Project } from "@/lib/site";
@@ -320,26 +321,14 @@ export default function Home({ params }: PageProps<"/[locale]">) {
 
         {/* Méthode */}
         <section id="methode" className="border-y border-white/10 bg-surface">
-          <div className="mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
+          <div className="mx-auto max-w-[1400px] px-4 pt-28 sm:px-8 sm:pt-40">
             <SectionHead label={t("Method.label")}>
               <h2 className={sectionTitle}>
                 {t("Method.title")} <em className={serifAccent}>{t("Method.titleAccent")}</em>
               </h2>
             </SectionHead>
-            <ol className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
-              {method.map((m, i) => (
-                <li
-                  key={m.title}
-                  data-reveal
-                  className="spotlight bg-surface p-8 last:sm:col-span-2 last:lg:col-span-1"
-                >
-                  <span className="font-serif text-7xl text-acid italic">{i + 1}</span>
-                  <h3 className="mt-6 font-display text-xl font-medium">{m.title}</h3>
-                  <p className="mt-3 text-muted">{m.text}</p>
-                </li>
-              ))}
-            </ol>
           </div>
+          <MethodSlides steps={method} hint={t("Method.scrollHint")} />
         </section>
 
         {/* À propos */}
