@@ -153,7 +153,27 @@ section[id] {
   display: none;
 }
 
+/* curseur clignotant du terminal (section IA) */
+.terminal-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 0.4em;
+  vertical-align: text-bottom;
+  background: var(--color-acid);
+  animation: caret 1s steps(1) infinite;
+}
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .terminal-caret {
+    animation: none;
+  }
+
   .grain,
   .marquee {
     animation: none;
