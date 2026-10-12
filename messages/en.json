@@ -93,13 +93,27 @@
     "followup": {
       "badge": "Care plan",
       "title": "Monthly care + AI report",
-      "price": "Monthly plan",
+      "price": "From €99/month excl. VAT",
       "text": "Once your site is live, I don’t disappear.",
       "items": [
         "Every month, a clear report: visits, pages that work, friction points and three recommended actions",
         "Smart alerts sent to both of us: the same level of information on each side",
         "Regular SEO suggestions to grow your visibility",
         "Cookie-free, GDPR-compliant analytics: no consent banner needed"
+      ],
+      "plans": [
+        {
+          "name": "Essential",
+          "price": "€99",
+          "period": "/month excl. VAT",
+          "text": "Security updates, monitoring and shared alerts, monthly AI report, cookie-free analytics."
+        },
+        {
+          "name": "Growth",
+          "price": "€249",
+          "period": "/month excl. VAT",
+          "text": "Everything in Essential, plus SEO suggestions and 2 hours of small improvements every month."
+        }
       ],
       "cta": "Let’s talk"
     },
@@ -484,9 +498,10 @@
       "maintenance": {
         "label": "Would you like ongoing support after launch?",
         "options": {
-          "yes": "Yes",
-          "no": "No",
-          "unsure": "Maybe"
+          "essential": "Yes, Essential plan (€99/month excl. VAT)",
+          "growth": "Yes, Growth plan (€249/month excl. VAT)",
+          "unsure": "Not sure yet",
+          "no": "No"
         }
       },
       "budget": {

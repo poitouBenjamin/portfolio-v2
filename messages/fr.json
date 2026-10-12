@@ -93,13 +93,27 @@
     "followup": {
       "badge": "Offre de suivi",
       "title": "Suivi mensuel + rapport IA",
-      "price": "Forfait mensuel",
+      "price": "À partir de 99 € HT/mois",
       "text": "Une fois le site en ligne, je ne disparais pas.",
       "items": [
         "Chaque mois, un rapport clair en français : visites, pages qui marchent, points de friction et trois actions conseillées",
         "Des alertes intelligentes envoyées à vous et à moi : le même niveau d’info des deux côtés",
         "Des suggestions SEO régulières pour gagner en visibilité",
         "Une mesure d’audience sans cookies, conforme au RGPD : aucun bandeau à afficher"
+      ],
+      "plans": [
+        {
+          "name": "Essentiel",
+          "price": "99 €",
+          "period": "HT/mois",
+          "text": "Mises à jour de sécurité, monitoring et alertes partagées, rapport IA mensuel, mesure d’audience sans cookies."
+        },
+        {
+          "name": "Croissance",
+          "price": "249 €",
+          "period": "HT/mois",
+          "text": "Tout l’Essentiel, plus des suggestions SEO et 2 h de petites évolutions chaque mois."
+        }
       ],
       "cta": "En parler"
     },
@@ -488,9 +502,10 @@
       "maintenance": {
         "label": "Souhaitez-vous un suivi après la mise en ligne ?",
         "options": {
-          "yes": "Oui",
-          "no": "Non",
-          "unsure": "À voir"
+          "essential": "Oui, formule Essentiel (99 € HT/mois)",
+          "growth": "Oui, formule Croissance (249 € HT/mois)",
+          "unsure": "À voir",
+          "no": "Non"
         }
       },
       "budget": {
