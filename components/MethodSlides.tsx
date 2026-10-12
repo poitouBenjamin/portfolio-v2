@@ -66,7 +66,7 @@ export default function MethodSlides({ steps, hint }: { steps: Step[]; hint: str
   return (
     <div
       data-hscroll
-      className="flex flex-col gap-8 motion-safe:h-svh motion-safe:justify-center motion-safe:overflow-hidden motion-reduce:pb-28 sm:motion-reduce:pb-40"
+      className="flex flex-col gap-8 motion-safe:h-svh motion-safe:justify-center motion-safe:overflow-hidden motion-safe:pt-28 motion-safe:pb-10 motion-reduce:pb-28 sm:motion-reduce:pb-40"
     >
       <ol
         data-hscroll-track
@@ -76,7 +76,7 @@ export default function MethodSlides({ steps, hint }: { steps: Step[]; hint: str
           <li
             key={s.title}
             data-hscroll-panel
-            className="spotlight relative flex min-h-[420px] shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-void p-7 motion-safe:h-[min(70svh,640px)] motion-safe:w-[84vw] sm:p-12 lg:motion-safe:w-[60vw]"
+            className="spotlight relative flex shrink-0 flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-void p-7 motion-safe:h-[min(62svh,600px)] motion-safe:min-h-[340px] motion-safe:w-[84vw] motion-reduce:min-h-[420px] sm:p-12 lg:motion-safe:w-[60vw]"
           >
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
               <div className="method-glow" style={{ background: glows[i], animationDelay: `${-i * 3}s` }} />
