@@ -10,6 +10,7 @@
   },
   "Nav": {
     "services": "Services",
+    "ai": "AI",
     "projects": "Work",
     "method": "Process",
     "about": "About",
@@ -21,9 +22,21 @@
     "line1": "Web apps that are",
     "line2Accent": "fast,",
     "line2": "simple",
-    "line3": "& maintainable."
+    "line3": "& maintainable.",
+    "ai": "AI-augmented",
+    "aiTools": "Claude Code · Codex · agents · skills"
   },
-  "Marquee": ["Web applications", "APIs & back-end", "Redesigns", "Maintenance", "Interactive maps", "Performance"],
+  "Marquee": [
+    "Web applications",
+    "AI-augmented",
+    "APIs & back-end",
+    "Redesigns",
+    "Agents & skills",
+    "Maintenance",
+    "Interactive maps",
+    "Monthly AI reports",
+    "Performance"
+  ],
   "Services": {
     "label": "(01) Services",
     "title": "What I do",
@@ -44,11 +57,93 @@
       {
         "title": "Maintenance & evolution",
         "text": "Fixes, new features, performance: your product keeps moving forward."
+      },
+      {
+        "title": "Monthly care & AI report",
+        "text": "A clear report every month, shared alerts and SEO suggestions to keep your site growing."
       }
     ]
   },
+  "AI": {
+    "label": "(02) AI",
+    "title": "An AI-augmented",
+    "titleAccent": "developer",
+    "intro": "I work with today’s best AI tools. They speed up writing code; I stay in charge of the architecture, the quality and every line that ships.",
+    "toolsLabel": "My everyday tools",
+    "speed": {
+      "title": "Shipped faster",
+      "text": "I run Claude Code and Codex agents in parallel, equipped with skills I write for each project: your conventions, accessibility, tests. You’re clicking through a first version within days.",
+      "note": "I review and approve every line before it goes live."
+    },
+    "terminal": [
+      "$ claude \"add the neighbourhood filter\"",
+      "● front agent   → Filters.tsx",
+      "● tests agent   → 12 tests added",
+      "● a11y skill    → contrast checked",
+      "✓ ready for my review"
+    ],
+    "tests": {
+      "title": "More tests, same budget",
+      "text": "Tests and documentation, often the first things cut when time runs short, are written with AI help and then checked. Your product is sturdier at no extra cost."
+    },
+    "budget": {
+      "title": "Your budget, where it matters",
+      "text": "Time saved on repetitive tasks goes into what makes the difference: your features, the design, the details."
+    },
+    "followup": {
+      "badge": "Care plan",
+      "title": "Monthly care + AI report",
+      "price": "Monthly plan",
+      "text": "Once your site is live, I don’t disappear.",
+      "items": [
+        "Every month, a clear report: visits, pages that work, friction points and three recommended actions",
+        "Smart alerts sent to both of us: the same level of information on each side",
+        "Regular SEO suggestions to grow your visibility",
+        "Cookie-free, GDPR-compliant analytics: no consent banner needed"
+      ],
+      "cta": "Let’s talk"
+    },
+    "report": {
+      "tag": "Sample report",
+      "from": "report@poitou.digital",
+      "subject": "Your site in September",
+      "stats": [
+        {
+          "value": "2,340",
+          "label": "visits",
+          "delta": "+18%"
+        },
+        {
+          "value": "1 min 52",
+          "label": "per visit",
+          "delta": "+9%"
+        },
+        {
+          "value": "98",
+          "label": "perf. score",
+          "delta": "="
+        }
+      ],
+      "summaryTitle": "Key takeaway",
+      "summary": "The Pricing page gets the most views, but 42% of visitors drop off the form at step 2.",
+      "actionsTitle": "Three recommended actions",
+      "actions": ["Shorten the contact form", "Add an FAQ to the Pricing page", "Compress the homepage images"],
+      "alert": "/contact is responding 3× slower than usual. You and I have both been notified."
+    },
+    "product": {
+      "title": "AI inside your product",
+      "text": "When it genuinely helps your users, I build AI right into your site or app.",
+      "items": [
+        "An assistant that answers from your own content",
+        "Natural-language search",
+        "A back office that helps write and sort",
+        "Translations generated, then reviewed",
+        "Forms that qualify incoming requests"
+      ]
+    }
+  },
   "Projects": {
-    "label": "(02) Work",
+    "label": "(03) Work",
     "title": "Projects that are",
     "titleAccent": "very real",
     "ongoing": "Ongoing",
@@ -170,7 +265,7 @@
     "studio": "with {studio}"
   },
   "Method": {
-    "label": "(03) Process",
+    "label": "(04) Process",
     "title": "Five steps,",
     "titleAccent": "no surprises",
     "scrollHint": "Keep scrolling",
@@ -198,7 +293,7 @@
     ]
   },
   "About": {
-    "label": "(04) About",
+    "label": "(05) About",
     "experience": "Experience",
     "experienceValue": "{years} years",
     "education": "Background",
@@ -228,7 +323,7 @@
     }
   },
   "Contact": {
-    "label": "(06) Contact",
+    "label": "(07) Contact",
     "title": "Let’s",
     "titleAccent": " talk.",
     "intro": "A 20-minute call is all it takes to understand your needs and tell you how I can help.",

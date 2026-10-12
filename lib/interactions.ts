@@ -116,6 +116,18 @@ export function initInteractions(): () => void {
       });
     });
 
+    // IA : le terminal de l'agent s'écrit ligne par ligne
+    gsap.utils.toArray<HTMLElement>("[data-type-lines]").forEach((el) => {
+      gsap.from(el.children, {
+        opacity: 0,
+        x: -12,
+        duration: 0.5,
+        ease: "power2.out",
+        stagger: 0.45,
+        scrollTrigger: { trigger: el, start: "top 80%" },
+      });
+    });
+
     // À propos : les mots s'allument au fil du scroll
     const words = gsap.utils.toArray<HTMLElement>("[data-scrub-words] .w");
     if (words.length) {

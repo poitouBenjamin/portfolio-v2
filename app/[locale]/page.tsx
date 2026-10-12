@@ -4,6 +4,7 @@ import { hasLocale, useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import HeroScene from "@/components/HeroScene";
+import AiSection from "@/components/AiSection";
 import MethodSlides from "@/components/MethodSlides";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { localePath, routing } from "@/i18n/routing";
@@ -66,6 +67,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
 
   const nav = [
     [t("Nav.services"), "#services"],
+    [t("Nav.ai"), "#ia"],
     [t("Nav.projects"), "#projets"],
     [t("Nav.method"), "#methode"],
     [t("Nav.about"), "#a-propos"],
@@ -149,6 +151,18 @@ export default function Home({ params }: PageProps<"/[locale]">) {
                 <span>{t("Hero.line3")}</span>
               </span>
             </h1>
+            <p
+              data-hero-fade
+              className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-3 font-mono text-xs tracking-wider text-muted uppercase sm:text-sm"
+            >
+              <a
+                href="#ia"
+                className="inline-flex items-center gap-2 rounded-full border border-acid/40 bg-acid/10 px-3 py-1.5 text-acid transition hover:border-acid hover:bg-acid/20"
+              >
+                ✳ {t("Hero.ai")}
+              </a>
+              <span>{t("Hero.aiTools")}</span>
+            </p>
           </div>
         </section>
 
@@ -190,6 +204,18 @@ export default function Home({ params }: PageProps<"/[locale]">) {
             ))}
           </ul>
         </section>
+
+        {/* IA */}
+        <AiSection
+          head={
+            <SectionHead label={t("AI.label")} accent>
+              <h2 className={sectionTitle}>
+                {t("AI.title")} <em className={`${serifAccent} text-acid`}>{t("AI.titleAccent")}</em>
+              </h2>
+              <p className="mt-4 max-w-lg text-muted">{t("AI.intro")}</p>
+            </SectionHead>
+          }
+        />
 
         {/* Projets */}
         <section id="projets" className="mx-auto max-w-[1400px] px-4 pb-28 sm:px-8 sm:pb-40">
