@@ -95,18 +95,6 @@ section[id] {
   opacity: 1;
 }
 
-/* bandeau défilant */
-.marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee 32s linear infinite;
-}
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 /* curseur personnalisé (souris uniquement) */
 .cursor {
   position: fixed;
@@ -287,7 +275,6 @@ section[id] {
 
 @media (prefers-reduced-motion: reduce) {
   .grain,
-  .marquee,
   .method-glow,
   .method-ripple,
   .method-dots-lit,

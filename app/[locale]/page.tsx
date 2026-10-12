@@ -5,6 +5,7 @@ import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import HeroScene from "@/components/HeroScene";
 import AiSection from "@/components/AiSection";
+import Marquee from "@/components/Marquee";
 import MethodSlides from "@/components/MethodSlides";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { localePath, routing } from "@/i18n/routing";
@@ -167,23 +168,7 @@ export default function Home({ params }: PageProps<"/[locale]">) {
         </section>
 
         {/* Bandeau */}
-        <div className="overflow-hidden border-y border-white/10 bg-surface py-5" aria-hidden="true">
-          <div className="marquee">
-            {[0, 1].map((k) => (
-              <div key={k} className="flex shrink-0 items-center">
-                {marquee.map((m) => (
-                  <span
-                    key={m}
-                    className="flex items-center font-display text-2xl font-semibold tracking-tight sm:text-4xl"
-                  >
-                    <span className="px-8">{m}</span>
-                    <span className="text-acid">✳</span>
-                  </span>
-                ))}
-              </div>
-            ))}
-          </div>
-        </div>
+        <Marquee items={marquee} />
 
         {/* Services */}
         <section id="services" className="mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
