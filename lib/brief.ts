@@ -23,7 +23,7 @@ export const options = {
     "analytics",
   ],
   hosting: ["yes", "no", "unsure"],
-  maintenance: ["yes", "no", "unsure"],
+  maintenance: ["essential", "growth", "unsure", "no"],
   budget: ["lt5k", "5to10k", "10to20k", "20to40k", "gt40k", "unknown"],
   deadline: ["asap", "lt1m", "1to3m", "3to6m", "flexible"],
   decisionMaker: ["me", "shared", "other"],

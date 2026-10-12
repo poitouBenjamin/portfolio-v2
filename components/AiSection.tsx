@@ -101,6 +101,23 @@ export default function AiSection({ head }: { head: React.ReactNode }) {
                 </li>
               ))}
             </ul>
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {(t.raw("AI.followup.plans") as { name: string; price: string; period: string; text: string }[]).map(
+                (plan, i) => (
+                  <div
+                    key={plan.name}
+                    className={`rounded-2xl border p-5 ${i === 1 ? "border-acid/40 bg-acid/5" : "border-white/10 bg-white/[0.02]"}`}
+                  >
+                    <p className="font-mono text-xs tracking-wider text-muted uppercase">{plan.name}</p>
+                    <p className="mt-2 font-display text-3xl font-semibold tracking-tight">
+                      {plan.price}
+                      <span className="ml-1 font-sans text-xs font-normal text-muted">{plan.period}</span>
+                    </p>
+                    <p className="mt-3 text-sm text-muted">{plan.text}</p>
+                  </div>
+                ),
+              )}
+            </div>
             <a
               href="#contact"
               data-magnetic
