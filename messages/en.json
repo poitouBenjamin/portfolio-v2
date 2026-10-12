@@ -361,7 +361,8 @@
       "project": "The project",
       "existing": "What exists",
       "features": "Features",
-      "budget": "Budget & timeline"
+      "budget": "Budget & timeline",
+      "preview": "AI preview"
     },
     "previous": "Back",
     "next": "Next",
@@ -542,7 +543,76 @@
       },
       "consent": {
         "label": "I agree that this information may be used to contact me about my project. It is never sold or used for any other purpose."
+      },
+      "previewUrl": {
+        "label": "Your current website address",
+        "hint": "Optional. I use it to pick up your name, colours and tone.",
+        "placeholder": "https://"
+      },
+      "previewPrompt": {
+        "label": "Describe the website you have in mind",
+        "placeholder": "Mood, colours, websites you like, what should stand out…"
+      },
+      "previewStudio": {
+        "label": "Your visuals"
       }
+    },
+    "studio": {
+      "intro": "Optional step: based on your answers, AI suggests three visual directions for your future homepage. They are starting points for our conversation, not the final website.",
+      "uploadLabel": "Add your visuals",
+      "uploadHint": "Logo, photos, brand guide: up to {max} images. Name your logo file “logo” so it gets picked up.",
+      "uploadButton": "Choose images",
+      "remove": "Remove {name}",
+      "uploadError": "An image couldn’t be read. Try a JPG, PNG or WebP file.",
+      "generate": "Generate my 3 directions",
+      "regenerate": "Generate new directions",
+      "generating": [
+        "Reading your brief…",
+        "Looking for three different directions…",
+        "Laying out the pages…",
+        "Final touches…"
+      ],
+      "error": "Generation didn’t go through. Try again in a moment; you can also send the brief without a preview.",
+      "rateLimited": "You’ve generated a lot of directions in a short time. Try again in an hour, or send the brief as it is.",
+      "demoNote": "Demo mode: directions are built from templates; AI will be plugged in soon.",
+      "directions": {
+        "editorial": "Editorial",
+        "immersive": "Immersive",
+        "vivid": "Vivid"
+      },
+      "directionHints": {
+        "editorial": "Light, elegant, lots of air",
+        "immersive": "Dark, luminous, cinematic",
+        "vivid": "Colourful, warm, full of energy"
+      },
+      "piste": "Direction {n}",
+      "open": "Open full size",
+      "close": "Close",
+      "frameTitle": "Preview of the {name} direction",
+      "ratingLabel": "Do you like these directions?",
+      "ratingValues": {
+        "1": "Not at all",
+        "2": "Not really",
+        "3": "So-so",
+        "4": "Mostly yes",
+        "5": "Absolutely"
+      },
+      "favoriteLabel": "Your favourite direction",
+      "commentLabel": "Any comments on these directions?",
+      "commentPlaceholder": "What you’d keep, what you’d change…",
+      "emailNote": "You’ll also get these three directions by email with your summary."
+    },
+    "clientEmail": {
+      "subject": "Your 3 visual directions · {brand}",
+      "greeting": "Hi {name},",
+      "body": "Thanks for your brief! Attached are the three visual directions generated from your answers. Open them in your browser to look through them.",
+      "next": "I’ll read your brief carefully and get back to you within two business days to talk it through.",
+      "signature": "Benjamin Poitou, full-stack developer"
+    },
+    "previewEmailLabels": {
+      "previewRating": "Directions rating",
+      "previewFavorite": "Favourite direction",
+      "previewComment": "Comments on the directions"
     }
   }
 }

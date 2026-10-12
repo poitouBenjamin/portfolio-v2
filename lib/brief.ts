@@ -27,6 +27,8 @@ export const options = {
   budget: ["lt5k", "5to10k", "10to20k", "20to40k", "gt40k", "unknown"],
   deadline: ["asap", "lt1m", "1to3m", "3to6m", "flexible"],
   decisionMaker: ["me", "shared", "other"],
+  previewRating: ["1", "2", "3", "4", "5"],
+  previewFavorite: ["1", "2", "3"],
 } as const;
 
 type OptionKey = keyof typeof options;
@@ -35,9 +37,14 @@ export type Field =
   | { name: string; kind: "text" | "email" | "tel" | "url"; required?: boolean; autoComplete?: string }
   | { name: string; kind: "textarea"; required?: boolean }
   | { name: OptionKey; kind: "radio" | "checkboxes"; required?: boolean }
-  | { name: string; kind: "consent"; required: true };
+  | { name: string; kind: "consent"; required: true }
+  | { name: "previewStudio"; kind: "studio"; required?: false };
 
-export const steps: { id: string; fields: Field[] }[] = [
+export type Step = { id: string; fields: Field[] };
+
+const consent: Field = { name: "consent", kind: "consent", required: true };
+
+const allSteps: Step[] = [
   {
     id: "you",
     fields: [
@@ -85,10 +92,24 @@ export const steps: { id: string; fields: Field[] }[] = [
       { name: "deadlineReason", kind: "text" },
       { name: "decisionMaker", kind: "radio" },
       { name: "notes", kind: "textarea" },
-      { name: "consent", kind: "consent", required: true },
+    ],
+  },
+  {
+    // Aperçu IA : trois pistes visuelles générées à partir du brief (lib/previews)
+    id: "preview",
+    fields: [
+      { name: "previewUrl", kind: "url" },
+      { name: "previewPrompt", kind: "textarea" },
+      { name: "previewStudio", kind: "studio" },
     ],
   },
 ];
+
+// Étapes du parcours ; le consentement se place toujours sur la dernière
+export function briefSteps(withPreview: boolean): Step[] {
+  const list = allSteps.filter((s) => withPreview || s.id !== "preview");
+  return list.map((s, i) => (i === list.length - 1 ? { ...s, fields: [...s.fields, consent] } : s));
+}
 
 const text = (max: number) => z.string().trim().max(max);
 const required = (max: number) => text(max).min(1, "required");
@@ -125,19 +146,33 @@ export const briefSchema = z.object({
   deadlineReason: text(300),
   decisionMaker: optionalChoice("decisionMaker"),
   notes: text(4000),
+
+  previewUrl: z.union([z.string().trim().url("url").max(500), z.literal("")]),
+  previewPrompt: text(2000),
+  previewRating: optionalChoice("previewRating"),
+  previewFavorite: optionalChoice("previewFavorite"),
+  previewComment: text(2000),
+
   consent: z.literal(true, "consent"),
 });
 
 export type Brief = z.infer<typeof briefSchema>;
 export type BriefDraft = Record<string, string | string[] | boolean>;
 
-export const emptyBrief: BriefDraft = Object.fromEntries(
-  steps.flatMap((s) => s.fields.map((f) => [f.name, f.kind === "checkboxes" ? [] : f.kind === "consent" ? false : ""])),
-);
+export const emptyBrief: BriefDraft = {
+  ...Object.fromEntries(
+    briefSteps(true).flatMap((s) =>
+      s.fields.map((f) => [f.name, f.kind === "checkboxes" ? [] : f.kind === "consent" ? false : ""]),
+    ),
+  ),
+  previewRating: "",
+  previewFavorite: "",
+  previewComment: "",
+};
 
 // Erreurs d'une étape : { champ: code } où code ∈ required | email | url | consent | invalid
-export function validateStep(stepIndex: number, draft: BriefDraft): Record<string, string> {
-  const names = steps[stepIndex].fields.map((f) => f.name);
+export function validateStep(step: Step, draft: BriefDraft): Record<string, string> {
+  const names = step.fields.map((f) => f.name);
   const result = briefSchema.safeParse(draft);
   if (result.success) return {};
   const errors: Record<string, string> = {};
