@@ -75,13 +75,18 @@ function meta(html: string, key: string) {
   return decode(m?.[1] ?? m?.[2] ?? "");
 }
 
+// Une couleur de marque, pas un gris (ni le quasi-noir d'un thème sombre)
+function isColorful(hex: string) {
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+  return Math.max(r, g, b) - Math.min(r, g, b) >= 40;
+}
+
 // Couleurs les plus présentes dans le HTML et le CSS inline, hors gris
 function dominantColors(html: string) {
   const counts = new Map<string, number>();
   for (const [, hex] of html.matchAll(/#([0-9a-f]{6}|[0-9a-f]{3})\b/gi)) {
     const full = (hex.length === 3 ? [...hex].map((c) => c + c).join("") : hex).toLowerCase();
-    const [r, g, b] = [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16));
-    if (Math.max(r, g, b) - Math.min(r, g, b) < 40) continue;
+    if (!isColorful(`#${full}`)) continue;
     counts.set(`#${full}`, (counts.get(`#${full}`) ?? 0) + 1);
   }
   return [...counts.entries()]
@@ -117,7 +122,11 @@ export async function readSiteMeta(raw: string): Promise<SiteMeta | null> {
       description: meta(html, "description") || meta(html, "og:description"),
       siteName: meta(html, "og:site_name"),
       headline: decode((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "").replace(/<[^>]+>/g, " ")).slice(0, 160),
-      colors: [...new Set([themeColor, ...dominantColors(html)].filter((c) => /^#[0-9a-f]{6}$/i.test(c)))].slice(0, 4),
+      colors: [
+        ...new Set(
+          [themeColor.toLowerCase(), ...dominantColors(html)].filter((c) => /^#[0-9a-f]{6}$/.test(c) && isColorful(c)),
+        ),
+      ].slice(0, 4),
     };
   } catch {
     return null;
