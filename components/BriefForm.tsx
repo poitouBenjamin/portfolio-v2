@@ -3,7 +3,8 @@
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 import PreviewStudio from "@/components/PreviewStudio";
-import { briefSteps, emptyBrief, options, validateStep, type BriefDraft, type Field } from "@/lib/brief";
+import { briefSteps, emptyBrief, options, validateStep, type BriefDraft, type Field, type Step } from "@/lib/brief";
+import { briefSamples } from "@/lib/brief-samples";
 import type { Preview, PreviewImage } from "@/lib/previews/shared";
 import { profile } from "@/lib/site";
 
@@ -17,7 +18,15 @@ const input =
 const chip =
   "cursor-pointer rounded-full border border-white/10 px-4 py-2 text-sm text-muted transition select-none hover:border-white/30 hover:text-fog has-checked:border-acid has-checked:bg-acid has-checked:text-void has-focus-visible:outline-2 has-focus-visible:outline-acid";
 
-export default function BriefForm({ homeHref, withPreview }: { homeHref: string; withPreview: boolean }) {
+export default function BriefForm({
+  homeHref,
+  withPreview,
+  devFill,
+}: {
+  homeHref: string;
+  withPreview: boolean;
+  devFill: boolean;
+}) {
   const t = useTranslations();
   const locale = useLocale();
   const copy = t.raw("Brief.fields") as Record<string, FieldCopy>;
@@ -32,6 +41,7 @@ export default function BriefForm({ homeHref, withPreview }: { homeHref: string;
   const [images, setImages] = useState<PreviewImage[]>([]);
   const [previews, setPreviews] = useState<Preview[]>([]);
   const steps = useMemo(() => briefSteps(withPreview), [withPreview]);
+  const [filled, setFilled] = useState<Record<string, boolean>>({});
   const startedAt = useRef(0);
   const honeypot = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -62,6 +72,13 @@ export default function BriefForm({ homeHref, withPreview }: { homeHref: string;
       delete next[name];
       return next;
     });
+  };
+
+  // Outil de test (hors production) : remplit ou vide les champs de l'étape avec un exemple
+  const fillStep = (target: Step, on: boolean) => {
+    const sample = briefSamples[locale === "en" ? "en" : "fr"];
+    for (const f of target.fields) if (f.name in sample) update(f.name, on ? sample[f.name] : emptyBrief[f.name]);
+    setFilled((current) => ({ ...current, [target.id]: on }));
   };
 
   const goTo = (i: number) => {
@@ -154,6 +171,18 @@ export default function BriefForm({ homeHref, withPreview }: { homeHref: string;
           ))}
         </ol>
       </div>
+
+      {devFill && (
+        <label className="mb-8 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-amber-300/40 bg-amber-300/5 px-4 py-3 font-mono text-xs text-amber-100/90">
+          <input
+            type="checkbox"
+            checked={!!filled[step.id]}
+            onChange={(e) => fillStep(step, e.target.checked)}
+            className="h-4 w-4 accent-amber-300"
+          />
+          DEV · remplir cette étape avec un exemple
+        </label>
+      )}
 
       <fieldset key={step.id} className="space-y-8">
         <legend className="sr-only">{stepTitles[step.id]}</legend>

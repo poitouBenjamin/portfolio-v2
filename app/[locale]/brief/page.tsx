@@ -56,7 +56,11 @@ export default function BriefPage({ params }: PageProps<"/[locale]/brief">) {
             </h1>
             <p className="mt-6 max-w-md text-muted">{t("Brief.intro")}</p>
           </div>
-          <BriefForm homeHref={home} withPreview={previewsEnabled()} />
+          <BriefForm
+            homeHref={home}
+            withPreview={previewsEnabled()}
+            devFill={process.env.VERCEL_ENV !== "production"}
+          />
         </div>
       </main>
     </>

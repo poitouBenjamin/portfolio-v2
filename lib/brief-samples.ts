@@ -1,0 +1,68 @@
+import type { BriefDraft } from "@/lib/brief";
+
+// Réponses d'exemple pour remplir le brief en un clic pendant les tests.
+// Utilisées seulement hors production (voir devFill dans BriefForm).
+export const briefSamples: Record<"fr" | "en", BriefDraft> = {
+  fr: {
+    name: "Camille Martin",
+    email: "poitou.benjamin.dev@gmail.com",
+    phone: "06 12 34 56 78",
+    company: "Atelier Lumen",
+    role: "Fondatrice",
+    contactPreference: "email",
+    projectType: "showcase",
+    description:
+      "Atelier Lumen est un studio de céramique à Lyon. Nous donnons des cours d’initiation et de tournage, et nous vendons nos pièces faites main. Aujourd’hui tout passe par Instagram : nous voulons un site qui donne envie de venir à l’atelier et qui permette de réserver un cours en ligne.",
+    goals: ["leads", "sales", "brand"],
+    audience:
+      "Des adultes de 25 à 45 ans qui cherchent une activité manuelle pour déconnecter, et des entreprises pour des ateliers d’équipe.",
+    hasWebsite: "yes",
+    currentUrl: "https://family.amiparis.com/fr",
+    assets: ["logo", "photos"],
+    inspirations: "Astier de Villatte, Kinfolk",
+    competitors: "Les ateliers de poterie du quartier, Wecandoo",
+    features: ["payment", "cms", "blog", "booking"],
+    integrationsDetail: "Notre agenda Google et Instagram",
+    hosting: "unsure",
+    maintenance: "growth",
+    budget: "5to10k",
+    deadline: "1to3m",
+    deadlineReason: "Ouverture des inscriptions de la rentrée, début septembre",
+    decisionMaker: "me",
+    notes: "Brief de test rempli automatiquement.",
+    previewUrl: "https://family.amiparis.com/fr",
+    previewPrompt:
+      "Un site chaleureux et artisanal, dans des tons terre cuite et sable. On doit sentir la matière et trouver le bouton « Réserver un atelier » tout de suite.",
+    consent: true,
+  },
+  en: {
+    name: "Sam Taylor",
+    email: "poitou.benjamin.dev@gmail.com",
+    phone: "+44 20 7946 0000",
+    company: "Pulse",
+    role: "CEO",
+    contactPreference: "video",
+    projectType: "webapp",
+    description:
+      "Pulse helps small agencies track recurring revenue and churn. We need a marketing site that explains the product and drives free trial sign-ups.",
+    goals: ["leads", "audience"],
+    audience: "Founders and finance leads at agencies with 5 to 50 people.",
+    hasWebsite: "yes",
+    currentUrl: "https://poitou.digital",
+    assets: ["logo", "mockups"],
+    inspirations: "Linear, Stripe",
+    competitors: "ChartMogul, Baremetrics",
+    features: ["accounts", "analytics", "multilingual"],
+    integrationsDetail: "Stripe and HubSpot",
+    hosting: "yes",
+    maintenance: "growth",
+    budget: "20to40k",
+    deadline: "1to3m",
+    deadlineReason: "Product Hunt launch in March",
+    decisionMaker: "shared",
+    notes: "Test brief filled in automatically.",
+    previewUrl: "https://poitou.digital",
+    previewPrompt: "Clean, modern, product-led. Show the dashboard right away.",
+    consent: true,
+  },
+};
