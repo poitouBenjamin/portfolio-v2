@@ -3,9 +3,9 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { briefSchema, briefSteps, type Brief } from "@/lib/brief";
 import { prepareEsquisses } from "@/lib/esquisses";
-import { escape } from "@/lib/esquisses/emails";
+import { envTag, escape } from "@/lib/esquisses/emails";
 import { brandOf, newEsquisseId } from "@/lib/esquisses/links";
-import { previewsEnabled } from "@/lib/previews/flag";
+import { isTester, previewsEnabled } from "@/lib/previews/flag";
 import { imageSchema, MAX_IMAGES } from "@/lib/previews/shared";
 import { rateLimited, saveEsquisse, storeReady } from "@/lib/previews/store";
 import { profile } from "@/lib/site";
@@ -46,10 +46,18 @@ export async function POST(request: Request) {
 
   // Esquisses : la fiche est créée tout de suite, la génération tourne après la réponse
   let esquisseId = "";
-  if ((await previewsEnabled()) && storeReady()) {
+  let skipped = ""; // raison, pour l'email de Benjamin, si l'étape était active mais rien n'a été lancé
+  if (await previewsEnabled()) {
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-    if (await rateLimited(`esquisses:${ip}`, MAX_ESQUISSES_PER_HOUR, 60 * 60)) {
+    if (!storeReady()) {
+      skipped = "stockage non configuré";
+    } else if (
+      // Le mode testeur de Benjamin n'est pas limité, les visiteurs si
+      !(await isTester()) &&
+      (await rateLimited(`esquisses:${ip}`, MAX_ESQUISSES_PER_HOUR, 60 * 60))
+    ) {
       console.warn("[brief] trop de briefs depuis cette adresse, esquisses non générées", ip);
+      skipped = `limite de ${MAX_ESQUISSES_PER_HOUR} par heure atteinte pour cette connexion`;
     } else {
       esquisseId = newEsquisseId(brandOf({ brief }));
       await saveEsquisse({
@@ -67,7 +75,7 @@ export async function POST(request: Request) {
       after(() => prepareEsquisses(esquisseId, origin));
     }
   }
-  const html = renderEmail(brief, locale, esquisseId, images.length);
+  const html = renderEmail(brief, locale, esquisseId, images.length, skipped);
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -84,7 +92,7 @@ export async function POST(request: Request) {
     from: process.env.BRIEF_FROM ?? "Portfolio <onboarding@resend.dev>",
     to: process.env.BRIEF_TO ?? profile.email,
     replyTo: brief.email,
-    subject: `Nouveau brief : ${brief.name}${brief.company ? ` (${brief.company})` : ""}`,
+    subject: `${envTag()}Nouveau brief : ${brief.name}${brief.company ? ` (${brief.company})` : ""}`,
     html,
   });
   if (error) {
@@ -99,7 +107,7 @@ export async function POST(request: Request) {
 const fields: Record<string, { label: string; options?: Record<string, string> }> = fr.Brief.fields;
 const stepTitles: Record<string, string> = fr.Brief.steps;
 
-function renderEmail(brief: Brief, locale: string, esquisseId: string, imageCount: number) {
+function renderEmail(brief: Brief, locale: string, esquisseId: string, imageCount: number, skipped: string) {
   const value = (name: string, raw: unknown): string => {
     if (Array.isArray(raw)) return raw.map((v) => value(name, v)).join(", ");
     const s = String(raw ?? "");
@@ -108,7 +116,9 @@ function renderEmail(brief: Brief, locale: string, esquisseId: string, imageCoun
 
   const previewRows: [string, string][] = esquisseId
     ? [["Esquisses", `en préparation · ${imageCount} visuel(s) fourni(s) · un email de relecture suit (${esquisseId})`]]
-    : [];
+    : skipped
+      ? [["Esquisses", `non générées : ${skipped}`]]
+      : [];
 
   const sections = briefSteps(true)
     .map((step) => {
