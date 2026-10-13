@@ -27,8 +27,6 @@ export const options = {
   budget: ["lt5k", "5to10k", "10to20k", "20to40k", "gt40k", "unknown"],
   deadline: ["asap", "lt1m", "1to3m", "3to6m", "flexible"],
   decisionMaker: ["me", "shared", "other"],
-  previewRating: ["1", "2", "3", "4", "5"],
-  previewFavorite: ["1", "2", "3"],
 } as const;
 
 type OptionKey = keyof typeof options;
@@ -95,7 +93,7 @@ const allSteps: Step[] = [
     ],
   },
   {
-    // Aperçu IA : trois pistes visuelles générées à partir du brief (lib/previews)
+    // Esquisses : trois directions générées après l'envoi du brief (lib/esquisses)
     id: "preview",
     fields: [
       { name: "previewUrl", kind: "url" },
@@ -149,9 +147,6 @@ export const briefSchema = z.object({
 
   previewUrl: z.union([z.string().trim().url("url").max(500), z.literal("")]),
   previewPrompt: text(2000),
-  previewRating: optionalChoice("previewRating"),
-  previewFavorite: optionalChoice("previewFavorite"),
-  previewComment: text(2000),
 
   consent: z.literal(true, "consent"),
 });
@@ -159,16 +154,11 @@ export const briefSchema = z.object({
 export type Brief = z.infer<typeof briefSchema>;
 export type BriefDraft = Record<string, string | string[] | boolean>;
 
-export const emptyBrief: BriefDraft = {
-  ...Object.fromEntries(
-    briefSteps(true).flatMap((s) =>
-      s.fields.map((f) => [f.name, f.kind === "checkboxes" ? [] : f.kind === "consent" ? false : ""]),
-    ),
+export const emptyBrief: BriefDraft = Object.fromEntries(
+  briefSteps(true).flatMap((s) =>
+    s.fields.map((f) => [f.name, f.kind === "checkboxes" ? [] : f.kind === "consent" ? false : ""]),
   ),
-  previewRating: "",
-  previewFavorite: "",
-  previewComment: "",
-};
+);
 
 // Erreurs d'une étape : { champ: code } où code ∈ required | email | url | consent | invalid
 export function validateStep(step: Step, draft: BriefDraft): Record<string, string> {

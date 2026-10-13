@@ -362,7 +362,7 @@
       "existing": "What exists",
       "features": "Features",
       "budget": "Budget & timeline",
-      "preview": "AI preview"
+      "preview": "Sketches"
     },
     "previous": "Back",
     "next": "Next",
@@ -378,7 +378,8 @@
     "success": {
       "title": "Thanks, got it.",
       "text": "I’ll read your brief carefully and get back to you within 2 business days.",
-      "back": "Back to site"
+      "back": "Back to site",
+      "textSketches": "I’m preparing your sketches: you will receive them by email within two business days, along with my feedback on your brief."
     },
     "fields": {
       "name": {
@@ -557,77 +558,62 @@
         "label": "Your visuals"
       }
     },
-    "studio": {
-      "intro": "Optional step: based on your answers, AI designs three visual directions for your future homepage. The first one is free, the other two unlock for €{price}. They are starting points for our conversation, not the final site.",
+    "sketches": {
+      "intro": "Optional step: within two business days, you receive three sketches of your future homepage by email, based on your answers. The first one is free.",
       "uploadLabel": "Add your visuals",
-      "uploadHint": "Logo, photos, brand guide: up to {max} images. Name your logo file “logo” so it gets picked up.",
+      "uploadHint": "Logo, photos, brand guide: up to {max} images. Name your logo “logo” so it gets picked up.",
       "uploadButton": "Choose images",
       "remove": "Remove {name}",
-      "uploadError": "An image couldn’t be read. Try a JPG, PNG or WebP file.",
-      "generate": "Generate my 3 directions",
-      "regenerate": "Generate new directions",
-      "generating": [
-        "Reading your brief…",
-        "Looking for three different directions…",
-        "Laying out the pages…",
-        "Final touches…"
-      ],
-      "error": "Generation didn’t go through. Try again in a moment; you can also send the brief without a preview.",
-      "rateLimited": "You’ve generated a lot of directions in a short time. Try again in an hour, or send the brief as it is.",
-      "demoNote": "Demo mode: directions are built from templates; AI will be plugged in soon.",
-      "directions": {
-        "editorial": "Editorial",
-        "immersive": "Immersive",
-        "vivid": "Vivid"
-      },
-      "directionHints": {
-        "editorial": "Light, elegant, lots of air",
-        "immersive": "Dark, luminous, cinematic",
-        "vivid": "Colourful, warm, full of energy"
-      },
-      "piste": "Direction {n}",
-      "open": "Open full size",
-      "close": "Close",
-      "frameTitle": "Preview of the {name} direction",
-      "ratingLabel": "Do you like these directions?",
-      "ratingValues": {
-        "1": "Not at all",
-        "2": "Not really",
-        "3": "So-so",
-        "4": "Mostly yes",
-        "5": "Absolutely"
-      },
-      "favoriteLabel": "Your favourite direction",
-      "commentLabel": "Any comments on these directions?",
-      "commentPlaceholder": "What you’d keep, what you’d change…",
-      "emailNote": "You will also receive your directions by email with your summary.",
-      "locked": "Locked",
-      "unlockTitle": "See the other two directions",
-      "unlockText": "€{price}, deducted from your quote if we work together. Secure payment with Stripe, instant access.",
-      "unlockButton": "Unlock for €{price}",
-      "unlockDev": "DEV · unlock without paying",
-      "unlockOff": "Online unlocking is coming soon. Send your brief and I will walk you through all three directions when we talk.",
-      "unlockError": "We could not verify the payment. If you were charged, email me and I will send you the directions.",
-      "unlocked": "Thank you! All three directions are unlocked.",
-      "checkout": {
-        "title": "Unlock directions 2 and 3",
-        "product": "Visual directions 2 and 3",
-        "description": "Two homepage directions generated from your brief. Deducted from the quote if the project goes ahead."
-      }
+      "uploadError": "An image could not be read. Try a JPG, PNG or WebP file."
+    }
+  },
+  "Esquisses": {
+    "metaTitle": "Your sketches",
+    "eyebrow": "Sketches · {brand}",
+    "title": "Three directions",
+    "titleAccent": "for {brand}",
+    "intro": "Based on your brief, I prepared three directions for your future homepage. They are starting points for our conversation, not the final site.",
+    "aiNote": "Sketches prepared with my AI tools, then reviewed by me.",
+    "sketch": "Sketch {n}",
+    "directions": {
+      "editorial": "Editorial",
+      "immersive": "Immersive",
+      "vivid": "Vivid"
     },
-    "clientEmail": {
-      "subject": "Your visual direction · {brand}",
+    "directionHints": {
+      "editorial": "Clean, elegant, lots of white space",
+      "immersive": "Dark, luminous, cinematic",
+      "vivid": "Colourful, warm, full of energy"
+    },
+    "open": "Open full size",
+    "close": "Close",
+    "frameTitle": "Sketch {name}",
+    "locked": "Locked",
+    "unlockTitle": "See the other two directions",
+    "unlockText": "€{price}, deducted from your quote if we work together. Secure payment with Stripe, instant access.",
+    "unlockButton": "Unlock for €{price}",
+    "unlockDev": "DEV · unlock without paying",
+    "unlockOff": "Online unlocking is coming soon. Reply to my email and I will walk you through all three directions.",
+    "unlockError": "We could not verify the payment. If you were charged, reply to my email and I will send you the sketches.",
+    "unlocked": "Thank you! All three sketches are unlocked.",
+    "contact": "Any questions? Just reply to my email, or call me on {phone}.",
+    "checkout": {
+      "title": "Unlock sketches 2 and 3",
+      "product": "Sketches 2 and 3",
+      "description": "Two homepage directions based on your brief. Deducted from the quote if the project goes ahead."
+    },
+    "email": {
+      "subject": "Three directions for {brand}",
+      "eyebrow": "Your sketches",
+      "title": "Three directions for {brand}",
       "greeting": "Hi {name},",
-      "body": "Thank you for your brief! Attached is your free visual direction, generated from your answers. Open it in your browser to explore it.",
-      "next": "I’ll read your brief carefully and get back to you within two business days to talk it through.",
-      "signature": "Benjamin Poitou, full-stack developer",
-      "bodyAll": "Thanks for your brief! Attached are the three visual directions generated from your answers. Open them in your browser to look through them.",
-      "subjectAll": "Your 3 visual directions · {brand}"
-    },
-    "previewEmailLabels": {
-      "previewRating": "Directions rating",
-      "previewFavorite": "Favourite direction",
-      "previewComment": "Comments on the directions"
+      "intro": "Thank you for your brief! Based on your answers, I prepared three directions for your future website.",
+      "free": "The first one is yours: click it to explore the whole page.",
+      "allUnlocked": "All three are unlocked: click any of them to explore the whole page.",
+      "locked": "The other two unlock for €{price}, deducted from your quote if we work together.",
+      "cta": "See my sketches",
+      "next": "I’ll get back to you very soon to talk it through.",
+      "signature": "Benjamin Poitou, full-stack developer"
     }
   }
 }

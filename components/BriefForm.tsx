@@ -2,10 +2,10 @@
 
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
-import PreviewStudio from "@/components/PreviewStudio";
+import VisualsUpload from "@/components/VisualsUpload";
 import { briefSteps, emptyBrief, options, validateStep, type BriefDraft, type Field, type Step } from "@/lib/brief";
 import { briefSamples } from "@/lib/brief-samples";
-import type { PaymentMode, Preview, PreviewImage } from "@/lib/previews/shared";
+import type { PreviewImage } from "@/lib/previews/shared";
 import { profile } from "@/lib/site";
 
 type FieldCopy = { label: string; hint?: string; placeholder?: string; options?: Record<string, string> };
@@ -22,12 +22,10 @@ export default function BriefForm({
   homeHref,
   withPreview,
   devFill,
-  payment,
 }: {
   homeHref: string;
   withPreview: boolean;
   devFill: boolean;
-  payment: PaymentMode;
 }) {
   const t = useTranslations();
   const locale = useLocale();
@@ -39,11 +37,10 @@ export default function BriefForm({
   const [draft, setDraft] = useState<BriefDraft>(emptyBrief);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
-  // Visuels et pistes de l'étape Aperçu IA : trop lourds pour le brouillon en sessionStorage
+  // Visuels de l'étape Esquisses : trop lourds pour le brouillon en sessionStorage
   const [images, setImages] = useState<PreviewImage[]>([]);
-  const [previews, setPreviews] = useState<Preview[]>([]);
-  const [previewSession, setPreviewSession] = useState("");
-  const [previewsPaid, setPreviewsPaid] = useState(false);
+  // Le serveur a lancé la préparation des esquisses : le message de fin l'annonce
+  const [sketches, setSketches] = useState(false);
   const steps = useMemo(() => briefSteps(withPreview), [withPreview]);
   const [filled, setFilled] = useState<Record<string, boolean>>({});
   const startedAt = useRef(0);
@@ -113,13 +110,14 @@ export default function BriefForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...draft,
-          ...(previewSession ? { previewSession, images } : {}),
+          ...(images.length ? { images } : {}),
           website: honeypot.current?.value ?? "",
           startedAt: startedAt.current,
           locale,
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
+      setSketches(Boolean(((await res.json()) as { esquisses?: boolean }).esquisses));
       setStatus("success");
       try {
         sessionStorage.removeItem(DRAFT_KEY);
@@ -134,7 +132,9 @@ export default function BriefForm({
       <div role="status" className="rounded-3xl border border-acid/40 bg-surface p-8 sm:p-12">
         <p className="font-serif text-6xl text-acid italic">✓</p>
         <h2 className="mt-6 font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("Brief.success.title")}</h2>
-        <p className="mt-3 max-w-lg text-muted">{t("Brief.success.text")}</p>
+        <p className="mt-3 max-w-lg text-muted">
+          {sketches ? t("Brief.success.textSketches") : t("Brief.success.text")}
+        </p>
         <a
           href={homeHref}
           className="mt-8 inline-flex rounded-full bg-acid px-6 py-3 font-semibold text-void transition hover:bg-white"
@@ -192,20 +192,7 @@ export default function BriefForm({
         <legend className="sr-only">{stepTitles[step.id]}</legend>
         {step.fields.map((field) =>
           field.kind === "studio" ? (
-            <PreviewStudio
-              key={field.name}
-              draft={draft}
-              update={update}
-              images={images}
-              setImages={setImages}
-              previews={previews}
-              setPreviews={setPreviews}
-              session={previewSession}
-              setSession={setPreviewSession}
-              paid={previewsPaid}
-              setPaid={setPreviewsPaid}
-              payment={payment}
-            />
+            <VisualsUpload key={field.name} images={images} setImages={setImages} />
           ) : field.name === "currentUrl" && draft.hasWebsite !== "yes" ? null : (
             <FieldControl
               key={field.name}

@@ -21,15 +21,16 @@ export type DirectionKey = (typeof directions)[number]["key"];
 /** `locked` : piste payante pas encore débloquée, son texte est brouillé (voir lock.ts) */
 export type Preview = { id: string; direction: DirectionKey; html: string; locked?: boolean };
 
-// La première piste est offerte, les deux autres se débloquent en un paiement,
+// La première esquisse est offerte, les deux autres se débloquent en un paiement,
 // déduit du devis si le projet se fait.
 export const FREE_PREVIEW_ID = "1";
-export const UNLOCK_PRICE_EUR = 29;
+export const UNLOCK_PRICE_EUR = 49;
 
 /** Comment débloquer les pistes : Stripe, bouton de test (hors production), ou indisponible */
 export type PaymentMode = "stripe" | "dev" | "off";
 
-export const sessionIdSchema = z.string().uuid();
+/** Identifiant d'une fiche esquisses : nom du client + suffixe aléatoire, ex. atelier-lumen-k3x9q2m7wd */
+export const esquisseIdSchema = z.string().regex(/^[a-z0-9-]{12,80}$/);
 
 export const imageSchema = z.object({
   name: z.string().trim().max(120),
@@ -52,8 +53,6 @@ export const previewRequestSchema = z.object({
   goals: z.array(z.string().max(40)).max(10),
   features: z.array(z.string().max(40)).max(12),
   images: z.array(imageSchema).max(MAX_IMAGES),
-  /** Pistes précédentes : si elles étaient payées, les nouvelles le sont aussi */
-  previous: sessionIdSchema.optional(),
 });
 export type PreviewRequest = z.infer<typeof previewRequestSchema>;
 export type PreviewContext = PreviewRequest & { site: SiteMeta | null };

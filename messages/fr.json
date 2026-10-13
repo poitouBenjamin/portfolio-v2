@@ -366,7 +366,7 @@
       "existing": "L’existant",
       "features": "Fonctionnalités",
       "budget": "Budget & délais",
-      "preview": "Aperçu IA"
+      "preview": "Esquisses"
     },
     "previous": "Précédent",
     "next": "Suivant",
@@ -382,7 +382,8 @@
     "success": {
       "title": "Merci, c’est bien reçu.",
       "text": "Je lis votre brief attentivement et je reviens vers vous sous 48 h ouvrées.",
-      "back": "Retour au site"
+      "back": "Retour au site",
+      "textSketches": "Je prépare vos esquisses : vous les recevez par email sous 48 h ouvrées, avec mon retour sur votre brief."
     },
     "fields": {
       "name": {
@@ -561,77 +562,62 @@
         "label": "Vos visuels"
       }
     },
-    "studio": {
-      "intro": "Étape facultative : à partir de vos réponses, l’IA compose trois pistes visuelles pour votre future page d’accueil. La première est offerte, les deux autres se débloquent pour {price} €. Ce sont des points de départ pour en discuter, pas le site final.",
+    "sketches": {
+      "intro": "Étape facultative : sous 48 h ouvrées, vous recevez par email trois esquisses de votre future page d’accueil, préparées à partir de vos réponses. La première est offerte.",
       "uploadLabel": "Ajoutez vos visuels",
       "uploadHint": "Logo, photos, charte : jusqu’à {max} images. Nommez votre logo « logo » pour qu’il soit repéré.",
       "uploadButton": "Choisir des images",
       "remove": "Retirer {name}",
-      "uploadError": "Une image n’a pas pu être lue. Essayez un fichier JPG, PNG ou WebP.",
-      "generate": "Générer mes 3 pistes",
-      "regenerate": "Générer de nouvelles pistes",
-      "generating": [
-        "Je lis votre brief…",
-        "Je cherche trois directions différentes…",
-        "Je compose les pages…",
-        "Dernières retouches…"
-      ],
-      "error": "La génération n’a pas abouti. Réessayez dans un instant ; vous pouvez aussi envoyer le brief sans aperçu.",
-      "rateLimited": "Vous avez généré beaucoup de pistes en peu de temps. Réessayez dans une heure, ou envoyez le brief tel quel.",
-      "demoNote": "Mode démo : les pistes sont construites à partir de modèles, l’IA sera branchée prochainement.",
-      "directions": {
-        "editorial": "Éditoriale",
-        "immersive": "Immersive",
-        "vivid": "Vivante"
-      },
-      "directionHints": {
-        "editorial": "Claire, élégante, beaucoup d’air",
-        "immersive": "Sombre, lumineuse, cinématographique",
-        "vivid": "Colorée, chaleureuse, pleine d’énergie"
-      },
-      "piste": "Piste {n}",
-      "open": "Ouvrir en grand",
-      "close": "Fermer",
-      "frameTitle": "Aperçu de la piste {name}",
-      "ratingLabel": "Ces pistes vous plaisent ?",
-      "ratingValues": {
-        "1": "Pas du tout",
-        "2": "Pas vraiment",
-        "3": "Moyennement",
-        "4": "Plutôt oui",
-        "5": "Carrément"
-      },
-      "favoriteLabel": "Votre piste préférée",
-      "commentLabel": "Un commentaire sur ces pistes ?",
-      "commentPlaceholder": "Ce que vous gardez, ce que vous changeriez…",
-      "emailNote": "Vous recevrez aussi vos pistes par email avec votre récapitulatif.",
-      "locked": "Verrouillée",
-      "unlockTitle": "Découvrez les deux autres pistes",
-      "unlockText": "{price} €, déduits de votre devis si nous travaillons ensemble. Paiement sécurisé par Stripe, accès immédiat.",
-      "unlockButton": "Débloquer pour {price} €",
-      "unlockDev": "DEV · débloquer sans payer",
-      "unlockOff": "Le déblocage en ligne arrive bientôt. Envoyez le brief : je vous présenterai les trois pistes lors de notre échange.",
-      "unlockError": "Le paiement n’a pas pu être vérifié. Si vous avez été débité·e, écrivez-moi : je vous envoie les pistes.",
-      "unlocked": "Merci ! Les trois pistes sont débloquées.",
-      "checkout": {
-        "title": "Débloquer les pistes 2 et 3",
-        "product": "Pistes visuelles 2 et 3",
-        "description": "Deux pistes de page d’accueil générées à partir de votre brief. Montant déduit du devis si le projet se fait."
-      }
+      "uploadError": "Une image n’a pas pu être lue. Essayez un fichier JPG, PNG ou WebP."
+    }
+  },
+  "Esquisses": {
+    "metaTitle": "Vos esquisses",
+    "eyebrow": "Esquisses · {brand}",
+    "title": "Trois directions",
+    "titleAccent": "pour {brand}",
+    "intro": "À partir de votre brief, j’ai préparé trois directions pour votre future page d’accueil. Ce sont des points de départ pour en discuter, pas le site final.",
+    "aiNote": "Esquisses préparées avec mes outils IA, puis relues par moi.",
+    "sketch": "Esquisse {n}",
+    "directions": {
+      "editorial": "Éditoriale",
+      "immersive": "Immersive",
+      "vivid": "Vivante"
     },
-    "clientEmail": {
-      "subject": "Votre piste visuelle · {brand}",
+    "directionHints": {
+      "editorial": "Claire, élégante, beaucoup d’air",
+      "immersive": "Sombre, lumineuse, cinématographique",
+      "vivid": "Colorée, chaleureuse, pleine d’énergie"
+    },
+    "open": "Ouvrir en grand",
+    "close": "Fermer",
+    "frameTitle": "Esquisse {name}",
+    "locked": "Verrouillée",
+    "unlockTitle": "Découvrez les deux autres directions",
+    "unlockText": "{price} €, déduits de votre devis si nous travaillons ensemble. Paiement sécurisé par Stripe, accès immédiat.",
+    "unlockButton": "Débloquer pour {price} €",
+    "unlockDev": "DEV · débloquer sans payer",
+    "unlockOff": "Le déblocage en ligne arrive bientôt. Répondez à mon email : je vous présenterai les trois directions.",
+    "unlockError": "Le paiement n’a pas pu être vérifié. Si vous avez été débité·e, répondez à mon email : je vous envoie les esquisses.",
+    "unlocked": "Merci ! Les trois esquisses sont débloquées.",
+    "contact": "Une question ? Répondez simplement à mon email, ou appelez-moi au {phone}.",
+    "checkout": {
+      "title": "Débloquer les esquisses 2 et 3",
+      "product": "Esquisses 2 et 3",
+      "description": "Deux directions de page d’accueil préparées à partir de votre brief. Montant déduit du devis si le projet se fait."
+    },
+    "email": {
+      "subject": "Trois directions pour {brand}",
+      "eyebrow": "Vos esquisses",
+      "title": "Trois directions pour {brand}",
       "greeting": "Bonjour {name},",
-      "body": "Merci pour votre brief ! Vous trouverez en pièce jointe la piste visuelle offerte, générée à partir de vos réponses. Ouvrez-la dans votre navigateur pour la parcourir.",
-      "next": "Je lis votre brief attentivement et je reviens vers vous sous 48 h ouvrées pour en discuter.",
-      "signature": "Benjamin Poitou, développeur fullstack",
-      "bodyAll": "Merci pour votre brief ! Vous trouverez en pièces jointes les trois pistes visuelles générées à partir de vos réponses. Ouvrez-les dans votre navigateur pour les parcourir.",
-      "subjectAll": "Vos 3 pistes visuelles · {brand}"
-    },
-    "previewEmailLabels": {
-      "previewRating": "Note des pistes",
-      "previewFavorite": "Piste préférée",
-      "previewComment": "Commentaire sur les pistes"
+      "intro": "Merci pour votre brief ! À partir de vos réponses, j’ai préparé trois directions pour votre futur site.",
+      "free": "La première est pour vous : cliquez dessus pour la parcourir en entier.",
+      "allUnlocked": "Les trois sont débloquées : cliquez sur l’une d’elles pour la parcourir en entier.",
+      "locked": "Les deux autres se débloquent pour {price} €, déduits de votre devis si nous travaillons ensemble.",
+      "cta": "Voir mes esquisses",
+      "next": "Je reviens vers vous très vite pour en discuter.",
+      "signature": "Benjamin Poitou, développeur fullstack"
     }
   }
 }
