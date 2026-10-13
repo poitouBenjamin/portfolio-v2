@@ -15,8 +15,12 @@ export type PreviewSession = {
 
 const SESSION_TTL_S = 30 * 24 * 60 * 60;
 
-const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
-const token = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
+// L'intégration Vercel peut préfixer les variables (ex. porfolio_KV_REST_API_URL)
+const env = (name: string) =>
+  process.env[name] ?? Object.entries(process.env).find(([k, v]) => k.endsWith(`_${name}`) && v)?.[1];
+
+const url = env("UPSTASH_REDIS_REST_URL") ?? env("KV_REST_API_URL");
+const token = env("UPSTASH_REDIS_REST_TOKEN") ?? env("KV_REST_API_TOKEN");
 const redis = url && token ? new Redis({ url, token }) : null;
 
 const memory = new Map<string, { value: unknown; expires: number }>();
