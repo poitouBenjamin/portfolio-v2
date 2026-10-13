@@ -1,8 +1,11 @@
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
-import { emptyBrief, options, steps, validateStep, type BriefDraft, type Field } from "@/lib/brief";
+import { useEffect, useMemo, useRef, useState } from "react";
+import PreviewStudio from "@/components/PreviewStudio";
+import { briefSteps, emptyBrief, options, validateStep, type BriefDraft, type Field, type Step } from "@/lib/brief";
+import { briefSamples } from "@/lib/brief-samples";
+import type { Preview, PreviewImage } from "@/lib/previews/shared";
 import { profile } from "@/lib/site";
 
 type FieldCopy = { label: string; hint?: string; placeholder?: string; options?: Record<string, string> };
@@ -15,7 +18,15 @@ const input =
 const chip =
   "cursor-pointer rounded-full border border-white/10 px-4 py-2 text-sm text-muted transition select-none hover:border-white/30 hover:text-fog has-checked:border-acid has-checked:bg-acid has-checked:text-void has-focus-visible:outline-2 has-focus-visible:outline-acid";
 
-export default function BriefForm({ homeHref }: { homeHref: string }) {
+export default function BriefForm({
+  homeHref,
+  withPreview,
+  devFill,
+}: {
+  homeHref: string;
+  withPreview: boolean;
+  devFill: boolean;
+}) {
   const t = useTranslations();
   const locale = useLocale();
   const copy = t.raw("Brief.fields") as Record<string, FieldCopy>;
@@ -26,6 +37,11 @@ export default function BriefForm({ homeHref }: { homeHref: string }) {
   const [draft, setDraft] = useState<BriefDraft>(emptyBrief);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<Status>("idle");
+  // Visuels et pistes de l'étape Aperçu IA : trop lourds pour le brouillon en sessionStorage
+  const [images, setImages] = useState<PreviewImage[]>([]);
+  const [previews, setPreviews] = useState<Preview[]>([]);
+  const steps = useMemo(() => briefSteps(withPreview), [withPreview]);
+  const [filled, setFilled] = useState<Record<string, boolean>>({});
   const startedAt = useRef(0);
   const honeypot = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -58,14 +74,23 @@ export default function BriefForm({ homeHref }: { homeHref: string }) {
     });
   };
 
+  // Outil de test (hors production) : remplit ou vide les champs de l'étape avec un exemple
+  const fillStep = (target: Step, on: boolean) => {
+    const sample = briefSamples[locale === "en" ? "en" : "fr"];
+    for (const f of target.fields) if (f.name in sample) update(f.name, on ? sample[f.name] : emptyBrief[f.name]);
+    setFilled((current) => ({ ...current, [target.id]: on }));
+  };
+
   const goTo = (i: number) => {
+    // L'adresse du site actuel, déjà donnée plus tôt, sert de point de départ à l'aperçu
+    if (steps[i].id === "preview" && !draft.previewUrl && draft.currentUrl) update("previewUrl", draft.currentUrl);
     setStepIndex(i);
     formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   // Valide l'étape courante ; en cas d'erreur, place le focus sur le premier champ fautif
   const checkStep = () => {
-    const stepErrors = validateStep(stepIndex, draft);
+    const stepErrors = validateStep(step, draft);
     setErrors(stepErrors);
     const first = step.fields.find((f) => stepErrors[f.name]);
     if (first) document.getElementById(`field-${first.name}`)?.focus();
@@ -84,6 +109,7 @@ export default function BriefForm({ homeHref }: { homeHref: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...draft,
+          ...(previews.length ? { previews, images } : {}),
           website: honeypot.current?.value ?? "",
           startedAt: startedAt.current,
           locale,
@@ -122,7 +148,7 @@ export default function BriefForm({ homeHref }: { homeHref: string }) {
         <p className="font-mono text-sm text-muted" aria-live="polite">
           {t("Brief.stepOf", { current: stepIndex + 1, total: steps.length })} · {stepTitles[step.id]}
         </p>
-        <ol className="mt-4 grid grid-cols-5 gap-2">
+        <ol className="mt-4 grid gap-2" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}>
           {steps.map((s, i) => (
             <li key={s.id}>
               <button
@@ -146,10 +172,32 @@ export default function BriefForm({ homeHref }: { homeHref: string }) {
         </ol>
       </div>
 
+      {devFill && (
+        <label className="mb-8 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-amber-300/40 bg-amber-300/5 px-4 py-3 font-mono text-xs text-amber-100/90">
+          <input
+            type="checkbox"
+            checked={!!filled[step.id]}
+            onChange={(e) => fillStep(step, e.target.checked)}
+            className="h-4 w-4 accent-amber-300"
+          />
+          DEV · remplir cette étape avec un exemple
+        </label>
+      )}
+
       <fieldset key={step.id} className="space-y-8">
         <legend className="sr-only">{stepTitles[step.id]}</legend>
         {step.fields.map((field) =>
-          field.name === "currentUrl" && draft.hasWebsite !== "yes" ? null : (
+          field.kind === "studio" ? (
+            <PreviewStudio
+              key={field.name}
+              draft={draft}
+              update={update}
+              images={images}
+              setImages={setImages}
+              previews={previews}
+              setPreviews={setPreviews}
+            />
+          ) : field.name === "currentUrl" && draft.hasWebsite !== "yes" ? null : (
             <FieldControl
               key={field.name}
               field={field}

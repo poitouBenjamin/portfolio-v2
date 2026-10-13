@@ -4,6 +4,7 @@ import { hasLocale, useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import BriefForm from "@/components/BriefForm";
+import { previewsEnabled } from "@/lib/previews/flag";
 import { localePath, routing } from "@/i18n/routing";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/brief">): Promise<Metadata> {
@@ -55,7 +56,11 @@ export default function BriefPage({ params }: PageProps<"/[locale]/brief">) {
             </h1>
             <p className="mt-6 max-w-md text-muted">{t("Brief.intro")}</p>
           </div>
-          <BriefForm homeHref={home} />
+          <BriefForm
+            homeHref={home}
+            withPreview={previewsEnabled()}
+            devFill={process.env.VERCEL_ENV !== "production"}
+          />
         </div>
       </main>
     </>
