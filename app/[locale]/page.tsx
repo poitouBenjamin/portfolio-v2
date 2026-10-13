@@ -9,7 +9,7 @@ import Marquee from "@/components/Marquee";
 import MethodSlides from "@/components/MethodSlides";
 import SkillsCarousel from "@/components/SkillsCarousel";
 import { localePath, routing } from "@/i18n/routing";
-import { profile, projects, skills, type Project } from "@/lib/site";
+import { profile, projects, showPortfolio, skills, type Project } from "@/lib/site";
 
 const tel = `tel:${profile.phone.replace(/\s/g, "")}`;
 const mail = `mailto:${profile.email}`;
@@ -69,10 +69,10 @@ export default function Home({ params }: PageProps<"/[locale]">) {
   const nav = [
     [t("Nav.services"), "#services"],
     [t("Nav.ai"), "#ia"],
-    [t("Nav.projects"), "#projets"],
+    ...(showPortfolio ? [[t("Nav.projects"), "#projets"]] : []),
     [t("Nav.method"), "#methode"],
     [t("Nav.about"), "#a-propos"],
-    [t("Nav.stack"), "#devs"],
+    ...(showPortfolio ? [[t("Nav.stack"), "#devs"]] : []),
   ];
   const marquee = t.raw("Marquee") as string[];
   const services = t.raw("Services.items") as { title: string; text: string }[];
@@ -203,132 +203,136 @@ export default function Home({ params }: PageProps<"/[locale]">) {
         />
 
         {/* Projets */}
-        <section id="projets" className="mx-auto max-w-[1400px] px-4 pb-28 sm:px-8 sm:pb-40">
-          <SectionHead label={t("Projects.label")}>
-            <h2 className={sectionTitle}>
-              {t("Projects.title")} <em className={serifAccent}>{t("Projects.titleAccent")}</em>
-            </h2>
-          </SectionHead>
-          <div className="grid gap-6 lg:grid-cols-2">
-            {projects.map((p, i) => (
-              <article
-                key={p.id}
-                data-reveal
-                className={`spotlight group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface transition-colors duration-500 hover:border-white/25 ${p.featured ? "lg:col-span-2" : ""}`}
-              >
-                <div
-                  className={`relative aspect-[4/3] overflow-hidden sm:aspect-[16/10] ${p.featured ? "lg:aspect-[21/9]" : ""}`}
+        {showPortfolio && (
+          <section id="projets" className="mx-auto max-w-[1400px] px-4 pb-28 sm:px-8 sm:pb-40">
+            <SectionHead label={t("Projects.label")}>
+              <h2 className={sectionTitle}>
+                {t("Projects.title")} <em className={serifAccent}>{t("Projects.titleAccent")}</em>
+              </h2>
+            </SectionHead>
+            <div className="grid gap-6 lg:grid-cols-2">
+              {projects.map((p, i) => (
+                <article
+                  key={p.id}
+                  data-reveal
+                  className={`spotlight group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-surface transition-colors duration-500 hover:border-white/25 ${p.featured ? "lg:col-span-2" : ""}`}
                 >
                   <div
-                    className="absolute inset-0 scale-110 blur-2xl transition-transform duration-[1.2s] ease-out group-hover:scale-125 group-hover:rotate-3"
-                    style={{ background: covers[p.id] }}
-                  />
-                  <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-4 p-6 sm:p-8">
-                    <div>
-                      <span className="font-mono text-xs text-white/60">{pad(i + 1)}</span>
-                      <p className="mt-1 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                        {p.client}
-                      </p>
-                    </div>
-                    {(p.ongoing || p.studio) && (
-                      <span className="shrink-0 rounded-full border border-white/30 bg-black/20 px-3 py-1 font-mono text-xs text-white/70 backdrop-blur">
-                        {p.ongoing ? t("Projects.ongoing") : t("Projects.studio", { studio: p.studio ?? "" })}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Capture du site dans une fenêtre de navigateur, teintée aux couleurs de la carte */}
-                  <div
-                    className={`absolute inset-x-6 top-[40%] -bottom-4 overflow-hidden rounded-t-xl border border-white/15 shadow-2xl shadow-black/60 transition-transform duration-700 ease-out group-hover:-translate-y-3 sm:inset-x-10 sm:top-[36%] ${p.featured ? "lg:inset-x-[14%] lg:top-[30%]" : ""}`}
+                    className={`relative aspect-[4/3] overflow-hidden sm:aspect-[16/10] ${p.featured ? "lg:aspect-[21/9]" : ""}`}
                   >
-                    <div className="flex items-center gap-1.5 border-b border-white/10 bg-void/80 px-3 py-2">
-                      <span className="h-2 w-2 rounded-full bg-white/20" />
-                      <span className="h-2 w-2 rounded-full bg-white/20" />
-                      <span className="h-2 w-2 rounded-full bg-white/20" />
-                      <span className="ml-2 truncate font-mono text-[10px] text-white/50">{p.urlLabel}</span>
-                    </div>
-                    <div className="relative h-full" style={{ background: covers[p.id] }}>
-                      <Image
-                        src={p.preview}
-                        alt={t("Projects.preview", { site: p.urlLabel })}
-                        fill
-                        sizes="(min-width: 1024px) 600px, 90vw"
-                        className="object-cover object-top opacity-90 mix-blend-luminosity grayscale"
-                      />
-                      <Image
-                        src={p.preview}
-                        alt=""
-                        fill
-                        sizes="(min-width: 1024px) 600px, 90vw"
-                        className="object-cover object-top opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-                      />
-                    </div>
-                  </div>
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-surface to-transparent" />
-                </div>
-                <div
-                  className={`flex flex-1 flex-col p-6 sm:p-8 ${p.featured ? "lg:grid lg:grid-cols-2 lg:gap-x-12" : ""}`}
-                >
-                  <div>
-                    <h3 className="font-display text-2xl font-semibold tracking-tight">
-                      {t(`Projects.items.${p.id}.name`)}
-                    </h3>
-                    <p className="mt-3 text-fog/90">{t(`Projects.items.${p.id}.need`)}</p>
-                    {t.has(`Projects.items.${p.id}.stats`) && (
-                      <dl
-                        className={`mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-white/10 py-5 ${p.featured ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}
-                      >
-                        {(t.raw(`Projects.items.${p.id}.stats`) as { value: string; label: string }[]).map((st) => (
-                          <div key={st.label}>
-                            <dt className="sr-only">{st.label}</dt>
-                            <dd className="font-display text-2xl font-semibold tracking-tight text-acid">{st.value}</dd>
-                            <dd className="mt-1 text-xs text-muted">{st.label}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    )}
-                  </div>
-                  <div className={`mt-6 ${p.featured ? "lg:mt-0" : ""}`}>
-                    <p className="font-mono text-xs tracking-wider text-muted uppercase">{t("Projects.myPart")}</p>
-                    <ul className="mt-3 space-y-2 text-sm text-muted">
-                      {(t.raw(`Projects.items.${p.id}.done`) as string[]).map((d) => (
-                        <li key={d} className="flex gap-3">
-                          <span className="mt-[0.55em] h-px w-3 shrink-0 bg-acid" />
-                          <span>{d}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8 lg:col-span-2">
-                    <ul className="flex flex-wrap gap-2">
-                      {p.stack.map((s) => (
-                        <li
-                          key={s}
-                          className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-muted"
-                        >
-                          {s}
-                        </li>
-                      ))}
-                    </ul>
-                    {p.url && (
-                      <a
-                        href={p.url}
-                        target="_blank"
-                        rel="noopener"
-                        className="ml-auto inline-flex items-center gap-2 text-sm font-medium transition hover:text-acid"
-                      >
-                        {p.urlLabel}
-                        <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                          ↗
+                    <div
+                      className="absolute inset-0 scale-110 blur-2xl transition-transform duration-[1.2s] ease-out group-hover:scale-125 group-hover:rotate-3"
+                      style={{ background: covers[p.id] }}
+                    />
+                    <div className="absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-4 p-6 sm:p-8">
+                      <div>
+                        <span className="font-mono text-xs text-white/60">{pad(i + 1)}</span>
+                        <p className="mt-1 font-display text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                          {p.client}
+                        </p>
+                      </div>
+                      {(p.ongoing || p.studio) && (
+                        <span className="shrink-0 rounded-full border border-white/30 bg-black/20 px-3 py-1 font-mono text-xs text-white/70 backdrop-blur">
+                          {p.ongoing ? t("Projects.ongoing") : t("Projects.studio", { studio: p.studio ?? "" })}
                         </span>
-                      </a>
-                    )}
+                      )}
+                    </div>
+
+                    {/* Capture du site dans une fenêtre de navigateur, teintée aux couleurs de la carte */}
+                    <div
+                      className={`absolute inset-x-6 top-[40%] -bottom-4 overflow-hidden rounded-t-xl border border-white/15 shadow-2xl shadow-black/60 transition-transform duration-700 ease-out group-hover:-translate-y-3 sm:inset-x-10 sm:top-[36%] ${p.featured ? "lg:inset-x-[14%] lg:top-[30%]" : ""}`}
+                    >
+                      <div className="flex items-center gap-1.5 border-b border-white/10 bg-void/80 px-3 py-2">
+                        <span className="h-2 w-2 rounded-full bg-white/20" />
+                        <span className="h-2 w-2 rounded-full bg-white/20" />
+                        <span className="h-2 w-2 rounded-full bg-white/20" />
+                        <span className="ml-2 truncate font-mono text-[10px] text-white/50">{p.urlLabel}</span>
+                      </div>
+                      <div className="relative h-full" style={{ background: covers[p.id] }}>
+                        <Image
+                          src={p.preview}
+                          alt={t("Projects.preview", { site: p.urlLabel })}
+                          fill
+                          sizes="(min-width: 1024px) 600px, 90vw"
+                          className="object-cover object-top opacity-90 mix-blend-luminosity grayscale"
+                        />
+                        <Image
+                          src={p.preview}
+                          alt=""
+                          fill
+                          sizes="(min-width: 1024px) 600px, 90vw"
+                          className="object-cover object-top opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                        />
+                      </div>
+                    </div>
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-surface to-transparent" />
                   </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+                  <div
+                    className={`flex flex-1 flex-col p-6 sm:p-8 ${p.featured ? "lg:grid lg:grid-cols-2 lg:gap-x-12" : ""}`}
+                  >
+                    <div>
+                      <h3 className="font-display text-2xl font-semibold tracking-tight">
+                        {t(`Projects.items.${p.id}.name`)}
+                      </h3>
+                      <p className="mt-3 text-fog/90">{t(`Projects.items.${p.id}.need`)}</p>
+                      {t.has(`Projects.items.${p.id}.stats`) && (
+                        <dl
+                          className={`mt-6 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-white/10 py-5 ${p.featured ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}
+                        >
+                          {(t.raw(`Projects.items.${p.id}.stats`) as { value: string; label: string }[]).map((st) => (
+                            <div key={st.label}>
+                              <dt className="sr-only">{st.label}</dt>
+                              <dd className="font-display text-2xl font-semibold tracking-tight text-acid">
+                                {st.value}
+                              </dd>
+                              <dd className="mt-1 text-xs text-muted">{st.label}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
+                    </div>
+                    <div className={`mt-6 ${p.featured ? "lg:mt-0" : ""}`}>
+                      <p className="font-mono text-xs tracking-wider text-muted uppercase">{t("Projects.myPart")}</p>
+                      <ul className="mt-3 space-y-2 text-sm text-muted">
+                        {(t.raw(`Projects.items.${p.id}.done`) as string[]).map((d) => (
+                          <li key={d} className="flex gap-3">
+                            <span className="mt-[0.55em] h-px w-3 shrink-0 bg-acid" />
+                            <span>{d}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-8 lg:col-span-2">
+                      <ul className="flex flex-wrap gap-2">
+                        {p.stack.map((s) => (
+                          <li
+                            key={s}
+                            className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-muted"
+                          >
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+                      {p.url && (
+                        <a
+                          href={p.url}
+                          target="_blank"
+                          rel="noopener"
+                          className="ml-auto inline-flex items-center gap-2 text-sm font-medium transition hover:text-acid"
+                        >
+                          {p.urlLabel}
+                          <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                            ↗
+                          </span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Méthode */}
         <section id="methode" className="border-y border-white/10 bg-surface">
@@ -374,44 +378,46 @@ export default function Home({ params }: PageProps<"/[locale]">) {
         </section>
 
         {/* Développeurs */}
-        <section id="devs" className="relative overflow-hidden border-y border-white/10 bg-surface">
-          <div className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-violet/20 blur-[120px]" />
-          <div className="relative mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
-            <SectionHead label={<CodeTag name={t("Devs.tag")} />} accent>
-              <h2 className={sectionTitle}>
-                {t("Devs.title")} <em className={serifAccent}>{t("Devs.titleAccent")}</em>
-              </h2>
-              <p className="mt-4 max-w-lg text-muted">{t("Devs.intro")}</p>
-            </SectionHead>
+        {showPortfolio && (
+          <section id="devs" className="relative overflow-hidden border-y border-white/10 bg-surface">
+            <div className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-violet/20 blur-[120px]" />
+            <div className="relative mx-auto max-w-[1400px] px-4 py-28 sm:px-8 sm:py-40">
+              <SectionHead label={<CodeTag name={t("Devs.tag")} />} accent>
+                <h2 className={sectionTitle}>
+                  {t("Devs.title")} <em className={serifAccent}>{t("Devs.titleAccent")}</em>
+                </h2>
+                <p className="mt-4 max-w-lg text-muted">{t("Devs.intro")}</p>
+              </SectionHead>
 
-            <SkillsCarousel
-              categories={categories}
-              labels={{
-                carousel: t("Devs.carousel"),
-                carouselRole: t("Devs.carouselRole"),
-                previous: t("Devs.previous"),
-                next: t("Devs.next"),
-              }}
-            />
+              <SkillsCarousel
+                categories={categories}
+                labels={{
+                  carousel: t("Devs.carousel"),
+                  carouselRole: t("Devs.carouselRole"),
+                  previous: t("Devs.previous"),
+                  next: t("Devs.next"),
+                }}
+              />
 
-            <div data-reveal className="mt-16 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
-              <p className="font-mono text-sm whitespace-nowrap" aria-hidden="true">
-                <CodeTag name={t("Devs.tag")} closing />
-              </p>
-              <a
-                href={profile.github}
-                target="_blank"
-                rel="noopener"
-                className="ml-auto inline-flex items-center gap-2 font-mono text-xs whitespace-nowrap text-muted transition hover:text-acid"
-              >
-                <svg viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-                </svg>
-                {t("Devs.github")}
-              </a>
+              <div data-reveal className="mt-16 flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+                <p className="font-mono text-sm whitespace-nowrap" aria-hidden="true">
+                  <CodeTag name={t("Devs.tag")} closing />
+                </p>
+                <a
+                  href={profile.github}
+                  target="_blank"
+                  rel="noopener"
+                  className="ml-auto inline-flex items-center gap-2 font-mono text-xs whitespace-nowrap text-muted transition hover:text-acid"
+                >
+                  <svg viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                  </svg>
+                  {t("Devs.github")}
+                </a>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Contact */}
         <section id="contact" className="relative overflow-hidden">
