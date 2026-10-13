@@ -9,6 +9,11 @@ export const profile = {
   linkedin: "https://www.linkedin.com/in/benjamin-poitou-dev/",
 };
 
+// Réalisations et Stack sont mises de côté : le site se concentre sur la prestation.
+// Elles partiront sur un site portfolio à part. Pour les réafficher, repasser à true
+// et renuméroter les libellés (NN) des sections dans messages/{fr,en}.json.
+export const showPortfolio = false;
+
 export type Project = {
   /** Clé dans messages/*.json → Projects.items */
   id: "om" | "ami" | "fcl" | "pgw" | "foncia";
