@@ -78,13 +78,15 @@ npm run dev        # http://localhost:3000
 
 Copier `.env.example` en `.env.local`, puis renseigner :
 
-| Variable                                                   | Rôle                                                                               |
-| ---------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| `RESEND_API_KEY`                                           | clé API [Resend](https://resend.com) pour l'envoi du brief                         |
-| `BRIEF_TO`                                                 | destinataire (optionnel, par défaut l'email de `lib/site.ts`)                      |
-| `BRIEF_FROM`                                               | expéditeur (optionnel, il faut un domaine vérifié chez Resend pour le changer)     |
-| `UPSTASH_REDIS_REST_URL` / `_TOKEN`                        | stockage des pistes de l’Aperçu IA et limite anti-abus (obligatoire en production) |
-| `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | paiement du déblocage des pistes 2 et 3                                            |
+| Variable                                                   | Rôle                                                                                                  |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `RESEND_API_KEY`                                           | clé API [Resend](https://resend.com) pour l'envoi du brief                                            |
+| `BRIEF_TO`                                                 | destinataire (optionnel, par défaut l'email de `lib/site.ts`)                                         |
+| `BRIEF_FROM`                                               | expéditeur (optionnel, il faut un domaine vérifié chez Resend pour le changer)                        |
+| `UPSTASH_REDIS_REST_URL` / `_TOKEN`                        | stockage des esquisses et limite anti-abus (obligatoire en production)                                |
+| `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | paiement du déblocage des esquisses 2 et 3                                                            |
+| `ESQUISSES_SECRET`                                         | signe le lien de relecture des esquisses (obligatoire en production)                                  |
+| `BRIEF_TESTER_TOKEN`                                       | mode testeur : `/api/esquisses/tester?k=…` active les esquisses en production pour un seul navigateur |
 
 Sans clé, en développement, le brief est affiché dans la console du serveur. En production, l'API répond 503.
 

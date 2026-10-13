@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
   // Esquisses : la fiche est créée tout de suite, la génération tourne après la réponse
   let esquisseId = "";
-  if (previewsEnabled() && storeReady()) {
+  if ((await previewsEnabled()) && storeReady()) {
     const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
     if (await rateLimited(`esquisses:${ip}`, MAX_ESQUISSES_PER_HOUR, 60 * 60)) {
       console.warn("[brief] trop de briefs depuis cette adresse, esquisses non générées", ip);

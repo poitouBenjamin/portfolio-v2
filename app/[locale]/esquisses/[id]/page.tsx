@@ -5,14 +5,14 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import EsquissesView from "@/components/EsquissesView";
 import { localePath, routing } from "@/i18n/routing";
 import { brandOf, esquisseUrl, isAdmin } from "@/lib/esquisses/links";
-import { previewsEnabled } from "@/lib/previews/flag";
 import { present } from "@/lib/previews/lock";
 import { paymentMode } from "@/lib/previews/payment";
 import { esquisseIdSchema } from "@/lib/previews/shared";
 import { getEsquisse } from "@/lib/previews/store";
 import { profile } from "@/lib/site";
 
-// Page privée d'un client : jamais indexée
+// Page privée d'un client : jamais indexée. Elle n'existe que si une fiche a été créée,
+// donc pas besoin du drapeau des esquisses (le lien de l'email marche sur tous les appareils)
 export async function generateMetadata({ params }: PageProps<"/[locale]/esquisses/[id]">): Promise<Metadata> {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/esquisse
 
 export default async function EsquissesPage({ params, searchParams }: PageProps<"/[locale]/esquisses/[id]">) {
   const { locale, id } = await params;
-  if (!hasLocale(routing.locales, locale) || !previewsEnabled() || !esquisseIdSchema.safeParse(id).success) notFound();
+  if (!hasLocale(routing.locales, locale) || !esquisseIdSchema.safeParse(id).success) notFound();
   setRequestLocale(locale);
 
   const esquisse = await getEsquisse(id);
