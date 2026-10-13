@@ -558,7 +558,7 @@
       }
     },
     "studio": {
-      "intro": "Optional step: based on your answers, AI suggests three visual directions for your future homepage. They are starting points for our conversation, not the final website.",
+      "intro": "Optional step: based on your answers, AI designs three visual directions for your future homepage. The first one is free, the other two unlock for €{price}. They are starting points for our conversation, not the final site.",
       "uploadLabel": "Add your visuals",
       "uploadHint": "Logo, photos, brand guide: up to {max} images. Name your logo file “logo” so it gets picked up.",
       "uploadButton": "Choose images",
@@ -600,14 +600,29 @@
       "favoriteLabel": "Your favourite direction",
       "commentLabel": "Any comments on these directions?",
       "commentPlaceholder": "What you’d keep, what you’d change…",
-      "emailNote": "You’ll also get these three directions by email with your summary."
+      "emailNote": "You will also receive your directions by email with your summary.",
+      "locked": "Locked",
+      "unlockTitle": "See the other two directions",
+      "unlockText": "€{price}, deducted from your quote if we work together. Secure payment with Stripe, instant access.",
+      "unlockButton": "Unlock for €{price}",
+      "unlockDev": "DEV · unlock without paying",
+      "unlockOff": "Online unlocking is coming soon. Send your brief and I will walk you through all three directions when we talk.",
+      "unlockError": "We could not verify the payment. If you were charged, email me and I will send you the directions.",
+      "unlocked": "Thank you! All three directions are unlocked.",
+      "checkout": {
+        "title": "Unlock directions 2 and 3",
+        "product": "Visual directions 2 and 3",
+        "description": "Two homepage directions generated from your brief. Deducted from the quote if the project goes ahead."
+      }
     },
     "clientEmail": {
-      "subject": "Your 3 visual directions · {brand}",
+      "subject": "Your visual direction · {brand}",
       "greeting": "Hi {name},",
-      "body": "Thanks for your brief! Attached are the three visual directions generated from your answers. Open them in your browser to look through them.",
+      "body": "Thank you for your brief! Attached is your free visual direction, generated from your answers. Open it in your browser to explore it.",
       "next": "I’ll read your brief carefully and get back to you within two business days to talk it through.",
-      "signature": "Benjamin Poitou, full-stack developer"
+      "signature": "Benjamin Poitou, full-stack developer",
+      "bodyAll": "Thanks for your brief! Attached are the three visual directions generated from your answers. Open them in your browser to look through them.",
+      "subjectAll": "Your 3 visual directions · {brand}"
     },
     "previewEmailLabels": {
       "previewRating": "Directions rating",

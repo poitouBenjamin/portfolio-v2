@@ -78,13 +78,17 @@ npm run dev        # http://localhost:3000
 
 Copier `.env.example` en `.env.local`, puis renseigner :
 
-| Variable         | Rôle                                                                           |
-| ---------------- | ------------------------------------------------------------------------------ |
-| `RESEND_API_KEY` | clé API [Resend](https://resend.com) pour l'envoi du brief                     |
-| `BRIEF_TO`       | destinataire (optionnel, par défaut l'email de `lib/site.ts`)                  |
-| `BRIEF_FROM`     | expéditeur (optionnel, il faut un domaine vérifié chez Resend pour le changer) |
+| Variable                                                   | Rôle                                                                               |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `RESEND_API_KEY`                                           | clé API [Resend](https://resend.com) pour l'envoi du brief                         |
+| `BRIEF_TO`                                                 | destinataire (optionnel, par défaut l'email de `lib/site.ts`)                      |
+| `BRIEF_FROM`                                               | expéditeur (optionnel, il faut un domaine vérifié chez Resend pour le changer)     |
+| `UPSTASH_REDIS_REST_URL` / `_TOKEN`                        | stockage des pistes de l’Aperçu IA et limite anti-abus (obligatoire en production) |
+| `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | paiement du déblocage des pistes 2 et 3                                            |
 
 Sans clé, en développement, le brief est affiché dans la console du serveur. En production, l'API répond 503.
+
+Aperçu IA : la piste 1 est offerte, les pistes 2 et 3 se débloquent pour 29 € via Stripe Checkout intégré à la page. Les pistes restent côté serveur : le navigateur ne reçoit qu'une version floutée au texte brouillé tant que le paiement n'est pas vérifié auprès de Stripe.
 
 ## Déploiement
 

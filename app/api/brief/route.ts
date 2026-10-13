@@ -2,14 +2,17 @@ import { Resend } from "resend";
 import { z } from "zod";
 import { briefSchema, briefSteps, type Brief } from "@/lib/brief";
 import {
-  directions,
   fillImages,
   imageSchema,
   MAX_IMAGES,
+  UNLOCK_PRICE_EUR,
+  sessionIdSchema,
   stripScripts,
   type Preview,
   type PreviewImage,
 } from "@/lib/previews";
+import { unlocked } from "@/lib/previews/lock";
+import { getSession } from "@/lib/previews/store";
 import { profile } from "@/lib/site";
 import en from "@/messages/en.json";
 import fr from "@/messages/fr.json";
@@ -17,18 +20,10 @@ import fr from "@/messages/fr.json";
 // En dessous de ce délai, on considère que c'est un bot qui a rempli le formulaire
 const MIN_FILL_MS = 4000;
 
-// Pistes de l'étape Aperçu IA, renvoyées par le navigateur avec le brief
+// Étape Aperçu IA : le navigateur renvoie l'identifiant des pistes et les visuels du client.
+// Les pistes elles-mêmes sont relues côté serveur, avec leur statut de paiement.
 const previewsSchema = z.object({
-  previews: z
-    .array(
-      z.object({
-        id: z.enum(["1", "2", "3"]),
-        direction: z.enum(directions.map((d) => d.key) as [string, ...string[]]),
-        html: z.string().max(400_000),
-      }),
-    )
-    .max(3)
-    .default([]),
+  previewSession: sessionIdSchema,
   images: z.array(imageSchema).max(MAX_IMAGES).default([]),
 });
 
@@ -56,9 +51,14 @@ export async function POST(request: Request) {
   const brief = parsed.data;
   const locale = body.locale === "en" ? "en" : "fr";
   const extra = previewsSchema.safeParse(body);
-  const { previews, images } = extra.success ? extra.data : { previews: [], images: [] };
-  const attachments = previewAttachments(previews as Preview[], images, locale);
-  const html = renderEmail(brief, locale, previews as Preview[], images.length);
+  const session = extra.success ? await getSession(extra.data.previewSession).catch(() => null) : null;
+  const images = extra.success ? extra.data.images : [];
+  const previews = session?.previews ?? [];
+  const paid = Boolean(session?.paid);
+  // Benjamin reçoit toujours les trois pistes, le client seulement celles qu'il a débloquées
+  const attachments = previewAttachments(previews, images, locale);
+  const clientAttachments = previewAttachments(unlocked(previews, paid), images, locale);
+  const html = renderEmail(brief, locale, previews, images.length, paid);
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
@@ -85,16 +85,16 @@ export async function POST(request: Request) {
   }
 
   // Le client reçoit ses pistes ; un échec ici ne doit pas faire échouer le brief
-  if (attachments.length) {
+  if (clientAttachments.length) {
     const copy = (locale === "en" ? en : fr).Brief.clientEmail;
     const brand = brief.company || brief.name;
     const { error: clientError } = await resend.emails.send({
       from: process.env.BRIEF_FROM ?? "Portfolio <onboarding@resend.dev>",
       to: brief.email,
       replyTo: process.env.BRIEF_TO ?? profile.email,
-      subject: copy.subject.replace("{brand}", brand),
-      html: renderClientEmail(brief, locale),
-      attachments,
+      subject: (paid ? copy.subjectAll : copy.subject).replace("{brand}", brand),
+      html: renderClientEmail(brief, locale, paid),
+      attachments: clientAttachments,
     });
     if (clientError) console.error("[brief] pistes non envoyées au client", clientError);
   }
@@ -117,12 +117,12 @@ function previewAttachments(previews: Preview[], images: PreviewImage[], locale:
   }));
 }
 
-function renderClientEmail(brief: Brief, locale: string) {
+function renderClientEmail(brief: Brief, locale: string, paid: boolean) {
   const copy = (locale === "en" ? en : fr).Brief.clientEmail;
   const p = (text: string) => `<p style="margin:0 0 14px">${escape(text)}</p>`;
   return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"></head><body>
 <div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#111;max-width:560px">
-${p(copy.greeting.replace("{name}", brief.name))}${p(copy.body)}${p(copy.next)}
+${p(copy.greeting.replace("{name}", brief.name))}${p(paid ? copy.bodyAll : copy.body)}${p(copy.next)}
 <p style="margin:24px 0 0;color:#666">${escape(copy.signature)}<br>${escape(profile.phone)} · ${escape(profile.email)}</p>
 </div></body></html>`;
 }
@@ -131,7 +131,7 @@ ${p(copy.greeting.replace("{name}", brief.name))}${p(copy.body)}${p(copy.next)}
 const fields: Record<string, { label: string; options?: Record<string, string> }> = fr.Brief.fields;
 const stepTitles: Record<string, string> = fr.Brief.steps;
 
-function renderEmail(brief: Brief, locale: string, previews: Preview[], imageCount: number) {
+function renderEmail(brief: Brief, locale: string, previews: Preview[], imageCount: number, paid: boolean) {
   const value = (name: string, raw: unknown): string => {
     if (Array.isArray(raw)) return raw.map((v) => value(name, v)).join(", ");
     const s = String(raw ?? "");
@@ -145,6 +145,7 @@ function renderEmail(brief: Brief, locale: string, previews: Preview[], imageCou
   const previewRows: [string, string][] = previews.length
     ? [
         ["Pistes générées", `${previews.length} (en pièces jointes) · ${imageCount} visuel(s) fourni(s)`],
+        ["Pistes 2 et 3", paid ? `débloquées (${UNLOCK_PRICE_EUR} € payés, à déduire du devis)` : "non débloquées"],
         [
           labels.previewRating,
           brief.previewRating
