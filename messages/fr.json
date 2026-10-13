@@ -562,7 +562,7 @@
       }
     },
     "studio": {
-      "intro": "Étape facultative : à partir de vos réponses, l’IA vous propose trois pistes visuelles pour votre future page d’accueil. Ce sont des points de départ pour en discuter, pas le site final.",
+      "intro": "Étape facultative : à partir de vos réponses, l’IA compose trois pistes visuelles pour votre future page d’accueil. La première est offerte, les deux autres se débloquent pour {price} €. Ce sont des points de départ pour en discuter, pas le site final.",
       "uploadLabel": "Ajoutez vos visuels",
       "uploadHint": "Logo, photos, charte : jusqu’à {max} images. Nommez votre logo « logo » pour qu’il soit repéré.",
       "uploadButton": "Choisir des images",
@@ -604,14 +604,29 @@
       "favoriteLabel": "Votre piste préférée",
       "commentLabel": "Un commentaire sur ces pistes ?",
       "commentPlaceholder": "Ce que vous gardez, ce que vous changeriez…",
-      "emailNote": "Vous recevrez aussi ces trois pistes par email avec votre récapitulatif."
+      "emailNote": "Vous recevrez aussi vos pistes par email avec votre récapitulatif.",
+      "locked": "Verrouillée",
+      "unlockTitle": "Découvrez les deux autres pistes",
+      "unlockText": "{price} €, déduits de votre devis si nous travaillons ensemble. Paiement sécurisé par Stripe, accès immédiat.",
+      "unlockButton": "Débloquer pour {price} €",
+      "unlockDev": "DEV · débloquer sans payer",
+      "unlockOff": "Le déblocage en ligne arrive bientôt. Envoyez le brief : je vous présenterai les trois pistes lors de notre échange.",
+      "unlockError": "Le paiement n’a pas pu être vérifié. Si vous avez été débité·e, écrivez-moi : je vous envoie les pistes.",
+      "unlocked": "Merci ! Les trois pistes sont débloquées.",
+      "checkout": {
+        "title": "Débloquer les pistes 2 et 3",
+        "product": "Pistes visuelles 2 et 3",
+        "description": "Deux pistes de page d’accueil générées à partir de votre brief. Montant déduit du devis si le projet se fait."
+      }
     },
     "clientEmail": {
-      "subject": "Vos 3 pistes visuelles · {brand}",
+      "subject": "Votre piste visuelle · {brand}",
       "greeting": "Bonjour {name},",
-      "body": "Merci pour votre brief ! Vous trouverez en pièces jointes les trois pistes visuelles générées à partir de vos réponses. Ouvrez-les dans votre navigateur pour les parcourir.",
+      "body": "Merci pour votre brief ! Vous trouverez en pièce jointe la piste visuelle offerte, générée à partir de vos réponses. Ouvrez-la dans votre navigateur pour la parcourir.",
       "next": "Je lis votre brief attentivement et je reviens vers vous sous 48 h ouvrées pour en discuter.",
-      "signature": "Benjamin Poitou, développeur fullstack"
+      "signature": "Benjamin Poitou, développeur fullstack",
+      "bodyAll": "Merci pour votre brief ! Vous trouverez en pièces jointes les trois pistes visuelles générées à partir de vos réponses. Ouvrez-les dans votre navigateur pour les parcourir.",
+      "subjectAll": "Vos 3 pistes visuelles · {brand}"
     },
     "previewEmailLabels": {
       "previewRating": "Note des pistes",

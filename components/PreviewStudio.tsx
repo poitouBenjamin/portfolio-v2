@@ -3,9 +3,19 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import type { BriefDraft } from "@/lib/brief";
-import { fillImages, MAX_IMAGE_CHARS, MAX_IMAGES, type Preview, type PreviewImage } from "@/lib/previews/shared";
+import type { StripeEmbeddedCheckout } from "@stripe/stripe-js";
+import {
+  fillImages,
+  MAX_IMAGE_CHARS,
+  MAX_IMAGES,
+  UNLOCK_PRICE_EUR,
+  type PaymentMode,
+  type Preview,
+  type PreviewImage,
+} from "@/lib/previews/shared";
 
 type Status = "idle" | "loading" | "done" | "error" | "rateLimited";
+type UnlockStatus = "idle" | "paying" | "verifying" | "done" | "error";
 
 const chip =
   "cursor-pointer rounded-full border border-white/10 px-4 py-2 text-sm text-muted transition select-none hover:border-white/30 hover:text-fog has-checked:border-acid has-checked:bg-acid has-checked:text-void has-focus-visible:outline-2 has-focus-visible:outline-acid";
@@ -31,7 +41,7 @@ async function compress(file: File): Promise<string> {
 }
 
 // Page rendue à 1280 px puis réduite à la largeur de la carte
-function Frame({ html, title }: { html: string; title: string }) {
+function Frame({ html, title, locked }: { html: string; title: string; locked?: boolean }) {
   const box = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.25);
   useEffect(() => {
@@ -50,8 +60,18 @@ function Frame({ html, title }: { html: string; title: string }) {
         loading="lazy"
         tabIndex={-1}
         className="pointer-events-none absolute top-0 left-0 origin-top-left border-0"
-        style={{ width: 1280, height: 1600, transform: `scale(${scale})` }}
+        style={{ width: 1280, height: 1600, transform: `scale(${scale})`, filter: locked ? "blur(14px)" : undefined }}
       />
+      {locked && (
+        <div className="absolute inset-0 grid place-items-center bg-void/30">
+          <span className="flex items-center gap-2 rounded-full border border-white/20 bg-void/80 px-4 py-2 font-mono text-xs text-fog backdrop-blur">
+            <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+              <path d="M4 7V5a4 4 0 1 1 8 0v2h.5A1.5 1.5 0 0 1 14 8.5v6a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-6A1.5 1.5 0 0 1 3.5 7H4Zm2 0h4V5a2 2 0 1 0-4 0v2Z" />
+            </svg>
+            {title}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -63,6 +83,11 @@ export default function PreviewStudio({
   setImages,
   previews,
   setPreviews,
+  session,
+  setSession,
+  paid,
+  setPaid,
+  payment,
 }: {
   draft: BriefDraft;
   update: (name: string, value: BriefDraft[string]) => void;
@@ -70,6 +95,12 @@ export default function PreviewStudio({
   setImages: (images: PreviewImage[]) => void;
   previews: Preview[];
   setPreviews: (previews: Preview[]) => void;
+  /** Identifiant des pistes stockées côté serveur */
+  session: string;
+  setSession: (session: string) => void;
+  paid: boolean;
+  setPaid: (paid: boolean) => void;
+  payment: PaymentMode;
 }) {
   const t = useTranslations();
   const steps = t.raw("Brief.studio.generating") as string[];
@@ -79,6 +110,11 @@ export default function PreviewStudio({
   const [tick, setTick] = useState(0);
   const [open, setOpen] = useState<Preview | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
+  const [unlockStatus, setUnlockStatus] = useState<UnlockStatus>("idle");
+  const payDialog = useRef<HTMLDialogElement>(null);
+  const checkoutBox = useRef<HTMLDivElement>(null);
+  const checkout = useRef<StripeEmbeddedCheckout | null>(null);
+  const price = { price: UNLOCK_PRICE_EUR };
 
   // Messages d'attente qui se succèdent pendant la génération
   useEffect(() => {
@@ -125,13 +161,17 @@ export default function PreviewStudio({
           goals: draft.goals,
           features: draft.features,
           images,
+          previous: session || undefined,
         }),
       });
       if (res.status === 429) return setStatus("rateLimited");
       if (!res.ok) throw new Error(String(res.status));
-      const data = (await res.json()) as { mode: string; previews: Preview[] };
+      const data = (await res.json()) as { mode: string; session: string; paid: boolean; previews: Preview[] };
       setMode(data.mode);
+      setSession(data.session);
+      setPaid(data.paid);
       setPreviews(data.previews);
+      setUnlockStatus("idle");
       update("previewFavorite", "");
       setStatus("done");
     } catch {
@@ -139,6 +179,64 @@ export default function PreviewStudio({
     }
   };
 
+  // Le serveur vérifie le paiement auprès de Stripe avant de rendre les pistes complètes
+  const verify = async () => {
+    setUnlockStatus("verifying");
+    try {
+      const res = await fetch("/api/brief/previews/unlock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      const data = (await res.json()) as { previews: Preview[] };
+      setPreviews(data.previews);
+      setPaid(true);
+      setUnlockStatus("done");
+    } catch {
+      setUnlockStatus("error");
+    }
+  };
+
+  const closeCheckout = () => {
+    checkout.current?.destroy();
+    checkout.current = null;
+  };
+
+  // Stripe Checkout intégré dans une fenêtre : le brief en cours reste à l'écran
+  const unlock = async () => {
+    if (payment === "dev") return verify();
+    setUnlockStatus("paying");
+    payDialog.current?.showModal();
+    try {
+      const { loadStripe } = await import("@stripe/stripe-js/pure");
+      const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+      if (!stripe) throw new Error("stripe");
+      closeCheckout();
+      checkout.current = await stripe.createEmbeddedCheckoutPage({
+        fetchClientSecret: async () => {
+          const res = await fetch("/api/brief/previews/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ session, locale: document.documentElement.lang === "en" ? "en" : "fr" }),
+          });
+          if (!res.ok) throw new Error(String(res.status));
+          return ((await res.json()) as { clientSecret: string }).clientSecret;
+        },
+        onComplete: () => {
+          setUnlockStatus("verifying");
+          payDialog.current?.close();
+          verify();
+        },
+      });
+      checkout.current.mount(checkoutBox.current!);
+    } catch {
+      payDialog.current?.close();
+      setUnlockStatus("error");
+    }
+  };
+
+  const locked = previews.some((p) => p.locked);
   const name = (p: Preview) => t(`Brief.studio.directions.${p.direction}`);
 
   return (
@@ -230,24 +328,66 @@ export default function PreviewStudio({
           <ul className="grid gap-4 sm:grid-cols-3">
             {previews.map((p, i) => (
               <li key={p.id} className="overflow-hidden rounded-2xl border border-white/10 bg-surface">
-                <Frame html={fillImages(p.html, images)} title={t("Brief.studio.frameTitle", { name: name(p) })} />
+                <Frame
+                  html={fillImages(p.html, images)}
+                  title={p.locked ? t("Brief.studio.locked") : t("Brief.studio.frameTitle", { name: name(p) })}
+                  locked={p.locked}
+                />
                 <div className="flex flex-col items-start gap-3 p-4">
                   <div>
                     <p className="font-mono text-xs text-acid">{t("Brief.studio.piste", { n: i + 1 })}</p>
                     <p className="font-display text-lg font-semibold">{name(p)}</p>
                     <p className="text-xs text-muted">{t(`Brief.studio.directionHints.${p.direction}`)}</p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(p)}
-                    className="text-sm text-muted transition hover:text-acid"
-                  >
-                    {t("Brief.studio.open")} ↗
-                  </button>
+                  {!p.locked && (
+                    <button
+                      type="button"
+                      onClick={() => setOpen(p)}
+                      className="text-sm text-muted transition hover:text-acid"
+                    >
+                      {t("Brief.studio.open")} ↗
+                    </button>
+                  )}
                 </div>
               </li>
             ))}
           </ul>
+
+          {/* Déblocage des pistes 2 et 3 */}
+          {locked && (
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-acid/30 bg-acid/5 px-5 py-5">
+              <div className="max-w-md">
+                <p className="font-display text-lg font-semibold">{t("Brief.studio.unlockTitle")}</p>
+                <p className="mt-1 text-sm text-muted">
+                  {payment === "off" ? t("Brief.studio.unlockOff") : t("Brief.studio.unlockText", price)}
+                </p>
+              </div>
+              {payment !== "off" && (
+                <button
+                  type="button"
+                  onClick={unlock}
+                  disabled={unlockStatus === "paying" || unlockStatus === "verifying"}
+                  className={
+                    payment === "dev"
+                      ? "rounded-full border border-dashed border-amber-300/60 px-5 py-3 text-sm font-semibold text-amber-200 transition hover:bg-amber-300/10 disabled:opacity-60"
+                      : "rounded-full bg-acid px-6 py-3 font-semibold text-void transition hover:bg-white disabled:opacity-60"
+                  }
+                >
+                  {payment === "dev" ? t("Brief.studio.unlockDev") : t("Brief.studio.unlockButton", price)}
+                </button>
+              )}
+            </div>
+          )}
+          {unlockStatus === "error" && (
+            <p role="alert" className="text-sm text-red-300">
+              {t("Brief.studio.unlockError")}
+            </p>
+          )}
+          {unlockStatus === "done" && paid && (
+            <p role="status" className="text-sm text-acid">
+              {t("Brief.studio.unlocked")}
+            </p>
+          )}
 
           <fieldset>
             <legend className="mb-3 font-medium">{t("Brief.studio.ratingLabel")}</legend>
@@ -271,19 +411,21 @@ export default function PreviewStudio({
           <fieldset>
             <legend className="mb-3 font-medium">{t("Brief.studio.favoriteLabel")}</legend>
             <div className="flex flex-wrap gap-2">
-              {previews.map((p, i) => (
-                <label key={p.id} className={chip}>
-                  <input
-                    type="radio"
-                    name="previewFavorite"
-                    value={p.id}
-                    checked={draft.previewFavorite === p.id}
-                    onChange={() => update("previewFavorite", p.id)}
-                    className="sr-only"
-                  />
-                  {t("Brief.studio.piste", { n: i + 1 })} · {name(p)}
-                </label>
-              ))}
+              {previews.map((p, i) =>
+                p.locked ? null : (
+                  <label key={p.id} className={chip}>
+                    <input
+                      type="radio"
+                      name="previewFavorite"
+                      value={p.id}
+                      checked={draft.previewFavorite === p.id}
+                      onChange={() => update("previewFavorite", p.id)}
+                      className="sr-only"
+                    />
+                    {t("Brief.studio.piste", { n: i + 1 })} · {name(p)}
+                  </label>
+                ),
+              )}
             </div>
           </fieldset>
 
@@ -303,6 +445,29 @@ export default function PreviewStudio({
           <p className="text-sm text-muted">{t("Brief.studio.emailNote")}</p>
         </div>
       )}
+
+      {/* Paiement Stripe */}
+      <dialog
+        ref={payDialog}
+        onClose={() => {
+          closeCheckout();
+          setUnlockStatus((s) => (s === "paying" ? "idle" : s));
+        }}
+        aria-label={t("Brief.studio.checkout.title")}
+        className="m-auto max-h-[92vh] w-[min(560px,94vw)] max-w-none overflow-y-auto rounded-2xl border border-white/15 bg-white p-0 text-void backdrop:bg-black/80"
+      >
+        <div className="flex items-center justify-between border-b border-black/10 px-5 py-3">
+          <p className="font-display font-semibold">{t("Brief.studio.checkout.title")}</p>
+          <button
+            type="button"
+            onClick={() => payDialog.current?.close()}
+            className="rounded-full border border-black/15 px-4 py-2 text-sm font-semibold transition hover:border-black/40"
+          >
+            {t("Brief.studio.close")} ✕
+          </button>
+        </div>
+        <div ref={checkoutBox} className="min-h-80 py-4" />
+      </dialog>
 
       {/* Piste en grand */}
       <dialog

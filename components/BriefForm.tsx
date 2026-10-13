@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import PreviewStudio from "@/components/PreviewStudio";
 import { briefSteps, emptyBrief, options, validateStep, type BriefDraft, type Field, type Step } from "@/lib/brief";
 import { briefSamples } from "@/lib/brief-samples";
-import type { Preview, PreviewImage } from "@/lib/previews/shared";
+import type { PaymentMode, Preview, PreviewImage } from "@/lib/previews/shared";
 import { profile } from "@/lib/site";
 
 type FieldCopy = { label: string; hint?: string; placeholder?: string; options?: Record<string, string> };
@@ -22,10 +22,12 @@ export default function BriefForm({
   homeHref,
   withPreview,
   devFill,
+  payment,
 }: {
   homeHref: string;
   withPreview: boolean;
   devFill: boolean;
+  payment: PaymentMode;
 }) {
   const t = useTranslations();
   const locale = useLocale();
@@ -40,6 +42,8 @@ export default function BriefForm({
   // Visuels et pistes de l'étape Aperçu IA : trop lourds pour le brouillon en sessionStorage
   const [images, setImages] = useState<PreviewImage[]>([]);
   const [previews, setPreviews] = useState<Preview[]>([]);
+  const [previewSession, setPreviewSession] = useState("");
+  const [previewsPaid, setPreviewsPaid] = useState(false);
   const steps = useMemo(() => briefSteps(withPreview), [withPreview]);
   const [filled, setFilled] = useState<Record<string, boolean>>({});
   const startedAt = useRef(0);
@@ -109,7 +113,7 @@ export default function BriefForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...draft,
-          ...(previews.length ? { previews, images } : {}),
+          ...(previewSession ? { previewSession, images } : {}),
           website: honeypot.current?.value ?? "",
           startedAt: startedAt.current,
           locale,
@@ -196,6 +200,11 @@ export default function BriefForm({
               setImages={setImages}
               previews={previews}
               setPreviews={setPreviews}
+              session={previewSession}
+              setSession={setPreviewSession}
+              paid={previewsPaid}
+              setPaid={setPreviewsPaid}
+              payment={payment}
             />
           ) : field.name === "currentUrl" && draft.hasWebsite !== "yes" ? null : (
             <FieldControl
