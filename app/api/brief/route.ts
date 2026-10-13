@@ -1,34 +1,25 @@
+import { after } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import { briefSchema, briefSteps, type Brief } from "@/lib/brief";
-import {
-  fillImages,
-  imageSchema,
-  MAX_IMAGES,
-  UNLOCK_PRICE_EUR,
-  sessionIdSchema,
-  stripScripts,
-  type Preview,
-  type PreviewImage,
-} from "@/lib/previews";
-import { unlocked } from "@/lib/previews/lock";
-import { getSession } from "@/lib/previews/store";
+import { prepareEsquisses } from "@/lib/esquisses";
+import { escape } from "@/lib/esquisses/emails";
+import { brandOf, newEsquisseId } from "@/lib/esquisses/links";
+import { previewsEnabled } from "@/lib/previews/flag";
+import { imageSchema, MAX_IMAGES } from "@/lib/previews/shared";
+import { rateLimited, saveEsquisse, storeReady } from "@/lib/previews/store";
 import { profile } from "@/lib/site";
-import en from "@/messages/en.json";
 import fr from "@/messages/fr.json";
+
+// Les esquisses sont générées après la réponse (after) : Claude puis captures, quelques minutes
+export const maxDuration = 300;
 
 // En dessous de ce délai, on considère que c'est un bot qui a rempli le formulaire
 const MIN_FILL_MS = 4000;
+// Chaque brief lance une génération payante : quelques-unes par heure et par adresse au plus
+const MAX_ESQUISSES_PER_HOUR = 3;
 
-// Étape Aperçu IA : le navigateur renvoie l'identifiant des pistes et les visuels du client.
-// Les pistes elles-mêmes sont relues côté serveur, avec leur statut de paiement.
-const previewsSchema = z.object({
-  previewSession: sessionIdSchema,
-  images: z.array(imageSchema).max(MAX_IMAGES).default([]),
-});
-
-const escape = (s: string) =>
-  s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+const imagesSchema = z.object({ images: z.array(imageSchema).max(MAX_IMAGES).default([]) });
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
@@ -50,21 +41,39 @@ export async function POST(request: Request) {
   }
   const brief = parsed.data;
   const locale = body.locale === "en" ? "en" : "fr";
-  const extra = previewsSchema.safeParse(body);
-  const session = extra.success ? await getSession(extra.data.previewSession).catch(() => null) : null;
+  const extra = imagesSchema.safeParse(body);
   const images = extra.success ? extra.data.images : [];
-  const previews = session?.previews ?? [];
-  const paid = Boolean(session?.paid);
-  // Benjamin reçoit toujours les trois pistes, le client seulement celles qu'il a débloquées
-  const attachments = previewAttachments(previews, images, locale);
-  const clientAttachments = previewAttachments(unlocked(previews, paid), images, locale);
-  const html = renderEmail(brief, locale, previews, images.length, paid);
+
+  // Esquisses : la fiche est créée tout de suite, la génération tourne après la réponse
+  let esquisseId = "";
+  if (previewsEnabled() && storeReady()) {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
+    if (await rateLimited(`esquisses:${ip}`, MAX_ESQUISSES_PER_HOUR, 60 * 60)) {
+      console.warn("[brief] trop de briefs depuis cette adresse, esquisses non générées", ip);
+    } else {
+      esquisseId = newEsquisseId(brandOf({ brief }));
+      await saveEsquisse({
+        id: esquisseId,
+        locale,
+        brief,
+        images,
+        previews: [],
+        thumbs: {},
+        status: "generating",
+        paid: false,
+        createdAt: Date.now(),
+      });
+      const origin = new URL(request.url).origin;
+      after(() => prepareEsquisses(esquisseId, origin));
+    }
+  }
+  const html = renderEmail(brief, locale, esquisseId, images.length);
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     if (process.env.NODE_ENV !== "production") {
       console.info("[brief] RESEND_API_KEY absente, email non envoyé :\n", brief);
-      return Response.json({ ok: true, delivered: false });
+      return Response.json({ ok: true, delivered: false, esquisses: Boolean(esquisseId) });
     }
     console.error("[brief] RESEND_API_KEY manquante en production");
     return Response.json({ error: "not_configured" }, { status: 503 });
@@ -77,89 +86,28 @@ export async function POST(request: Request) {
     replyTo: brief.email,
     subject: `Nouveau brief : ${brief.name}${brief.company ? ` (${brief.company})` : ""}`,
     html,
-    attachments,
   });
   if (error) {
     console.error("[brief] échec Resend", error);
     return Response.json({ error: "send_failed" }, { status: 502 });
   }
 
-  // Le client reçoit ses pistes ; un échec ici ne doit pas faire échouer le brief
-  if (clientAttachments.length) {
-    const copy = (locale === "en" ? en : fr).Brief.clientEmail;
-    const brand = brief.company || brief.name;
-    const { error: clientError } = await resend.emails.send({
-      from: process.env.BRIEF_FROM ?? "Portfolio <onboarding@resend.dev>",
-      to: brief.email,
-      replyTo: process.env.BRIEF_TO ?? profile.email,
-      subject: (paid ? copy.subjectAll : copy.subject).replace("{brand}", brand),
-      html: renderClientEmail(brief, locale, paid),
-      attachments: clientAttachments,
-    });
-    if (clientError) console.error("[brief] pistes non envoyées au client", clientError);
-  }
-  return Response.json({ ok: true, delivered: true });
-}
-
-const slug = (s: string) =>
-  s
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-");
-
-// Une pièce jointe HTML autonome par piste, images incluses
-function previewAttachments(previews: Preview[], images: PreviewImage[], locale: string) {
-  const names = (locale === "en" ? en : fr).Brief.studio.directions as Record<string, string>;
-  return previews.map((p) => ({
-    filename: `piste-${p.id}-${slug(names[p.direction] ?? p.direction)}.html`,
-    content: Buffer.from(fillImages(stripScripts(p.html), images), "utf-8"),
-  }));
-}
-
-function renderClientEmail(brief: Brief, locale: string, paid: boolean) {
-  const copy = (locale === "en" ? en : fr).Brief.clientEmail;
-  const p = (text: string) => `<p style="margin:0 0 14px">${escape(text)}</p>`;
-  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"></head><body>
-<div style="font-family:system-ui,sans-serif;font-size:15px;line-height:1.6;color:#111;max-width:560px">
-${p(copy.greeting.replace("{name}", brief.name))}${p(paid ? copy.bodyAll : copy.body)}${p(copy.next)}
-<p style="margin:24px 0 0;color:#666">${escape(copy.signature)}<br>${escape(profile.phone)} · ${escape(profile.email)}</p>
-</div></body></html>`;
+  return Response.json({ ok: true, delivered: true, esquisses: Boolean(esquisseId) });
 }
 
 // Email lisible : une section par étape, libellés et options en français
 const fields: Record<string, { label: string; options?: Record<string, string> }> = fr.Brief.fields;
 const stepTitles: Record<string, string> = fr.Brief.steps;
 
-function renderEmail(brief: Brief, locale: string, previews: Preview[], imageCount: number, paid: boolean) {
+function renderEmail(brief: Brief, locale: string, esquisseId: string, imageCount: number) {
   const value = (name: string, raw: unknown): string => {
     if (Array.isArray(raw)) return raw.map((v) => value(name, v)).join(", ");
     const s = String(raw ?? "");
     return fields[name]?.options?.[s] ?? s;
   };
 
-  // Note, piste préférée et commentaire complètent la section Aperçu IA
-  const studio = fr.Brief.studio;
-  const labels = fr.Brief.previewEmailLabels;
-  const favorite = previews.find((p) => p.id === brief.previewFavorite);
-  const previewRows: [string, string][] = previews.length
-    ? [
-        ["Pistes générées", `${previews.length} (en pièces jointes) · ${imageCount} visuel(s) fourni(s)`],
-        ["Pistes 2 et 3", paid ? `débloquées (${UNLOCK_PRICE_EUR} € payés, à déduire du devis)` : "non débloquées"],
-        [
-          labels.previewRating,
-          brief.previewRating
-            ? `${brief.previewRating}/5 · ${studio.ratingValues[brief.previewRating as keyof typeof studio.ratingValues]}`
-            : "",
-        ],
-        [
-          labels.previewFavorite,
-          favorite
-            ? `Piste ${favorite.id} · ${studio.directions[favorite.direction as keyof typeof studio.directions]}`
-            : "",
-        ],
-        [labels.previewComment, brief.previewComment],
-      ]
+  const previewRows: [string, string][] = esquisseId
+    ? [["Esquisses", `en préparation · ${imageCount} visuel(s) fourni(s) · un email de relecture suit (${esquisseId})`]]
     : [];
 
   const sections = briefSteps(true)

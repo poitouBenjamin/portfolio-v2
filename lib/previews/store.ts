@@ -1,19 +1,33 @@
 import { Redis } from "@upstash/redis";
-import type { Preview } from "./shared";
+import type { Brief } from "@/lib/brief";
+import type { Preview, PreviewImage } from "./shared";
 
-// Les pistes générées restent côté serveur : le navigateur ne reçoit les pistes payantes
-// qu'une fois le paiement vérifié. Upstash Redis en ligne (via le Marketplace Vercel),
-// mémoire du processus en local, où il n'y a qu'une instance.
+// Une fiche par brief : les esquisses générées restent côté serveur, le navigateur ne reçoit
+// les esquisses payantes qu'une fois le paiement vérifié. Upstash Redis en ligne (via le
+// Marketplace Vercel), mémoire du processus en local, où il n'y a qu'une instance.
 
-export type PreviewSession = {
+/** generating → draft (à relire par Benjamin) → sent (le client a reçu son email) */
+export type EsquisseStatus = "generating" | "draft" | "sent" | "failed";
+
+/** Vignettes JPEG en base64, par esquisse : nette, et floutée pour les esquisses payantes */
+export type Thumbs = Record<string, { clear: string; blurred: string }>;
+
+export type Esquisse = {
+  id: string;
+  locale: "fr" | "en";
+  brief: Brief;
+  images: PreviewImage[];
   previews: Preview[];
+  thumbs: Thumbs;
+  status: EsquisseStatus;
   paid: boolean;
   createdAt: number;
-  /** Dernière session Stripe Checkout ouverte pour ces pistes */
+  sentAt?: number;
+  /** Dernière session Stripe Checkout ouverte pour ces esquisses */
   checkout?: string;
 };
 
-const SESSION_TTL_S = 30 * 24 * 60 * 60;
+const ESQUISSE_TTL_S = 90 * 24 * 60 * 60;
 
 // L'intégration Vercel peut préfixer les variables (ex. porfolio_KV_REST_API_URL)
 const env = (name: string) =>
@@ -23,7 +37,10 @@ const url = env("UPSTASH_REDIS_REST_URL") ?? env("KV_REST_API_URL");
 const token = env("UPSTASH_REDIS_REST_TOKEN") ?? env("KV_REST_API_TOKEN");
 const redis = url && token ? new Redis({ url, token }) : null;
 
-const memory = new Map<string, { value: unknown; expires: number }>();
+// Partagée via globalThis : en local, pages et routes API peuvent charger chacune leur copie du module
+const memory = ((
+  globalThis as { esquissesMemory?: Map<string, { value: unknown; expires: number }> }
+).esquissesMemory ??= new Map());
 
 export const storeReady = () => Boolean(redis) || process.env.VERCEL_ENV !== "production";
 
@@ -45,10 +62,10 @@ async function set(key: string, value: unknown, ttlSeconds: number) {
   memory.set(key, { value, expires: Date.now() + ttlSeconds * 1000 });
 }
 
-const sessionKey = (id: string) => `previews:${id}`;
+const esquisseKey = (id: string) => `esquisses:${id}`;
 
-export const getSession = (id: string) => get<PreviewSession>(sessionKey(id));
-export const saveSession = (id: string, session: PreviewSession) => set(sessionKey(id), session, SESSION_TTL_S);
+export const getEsquisse = (id: string) => get<Esquisse>(esquisseKey(id));
+export const saveEsquisse = (esquisse: Esquisse) => set(esquisseKey(esquisse.id), esquisse, ESQUISSE_TTL_S);
 
 /** Compte un appel et dit si la limite est dépassée sur la fenêtre */
 export async function rateLimited(key: string, max: number, windowSeconds: number) {
