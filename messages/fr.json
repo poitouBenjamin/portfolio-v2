@@ -283,7 +283,7 @@
     "studio": "avec {studio}"
   },
   "Method": {
-    "label": "(04) Méthode",
+    "label": "(03) Méthode",
     "title": "Cinq temps,",
     "titleAccent": "zéro surprise",
     "scrollHint": "Continuez à défiler",
@@ -311,7 +311,7 @@
     ]
   },
   "About": {
-    "label": "(05) À propos",
+    "label": "(04) À propos",
     "experience": "Expérience",
     "experienceValue": "{years} ans",
     "education": "Formation",
@@ -341,7 +341,7 @@
     }
   },
   "Contact": {
-    "label": "(07) Contact",
+    "label": "(05) Contact",
     "title": "Parlons",
     "titleAccent": "-en.",
     "intro": "Un appel de 20 minutes suffit pour comprendre votre besoin et vous dire comment je peux vous aider.",

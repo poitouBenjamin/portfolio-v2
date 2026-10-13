@@ -279,7 +279,7 @@
     "studio": "with {studio}"
   },
   "Method": {
-    "label": "(04) Process",
+    "label": "(03) Process",
     "title": "Five steps,",
     "titleAccent": "no surprises",
     "scrollHint": "Keep scrolling",
@@ -307,7 +307,7 @@
     ]
   },
   "About": {
-    "label": "(05) About",
+    "label": "(04) About",
     "experience": "Experience",
     "experienceValue": "{years} years",
     "education": "Background",
@@ -337,7 +337,7 @@
     }
   },
   "Contact": {
-    "label": "(07) Contact",
+    "label": "(05) Contact",
     "title": "Let’s",
     "titleAccent": " talk.",
     "intro": "A 20-minute call is all it takes to understand your needs and tell you how I can help.",
