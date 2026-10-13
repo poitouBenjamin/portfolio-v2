@@ -28,6 +28,8 @@ export async function POST(request: Request) {
       // Carte, Apple Pay et Google Pay : aucun ne quitte la page, le brief reste à l'écran
       redirect_on_completion: "never",
       allowed_payment_method_types: ["card"],
+      // Benjamin reste le vendeur : les 29 € sont déduits de son devis, pas un produit vendu par Stripe
+      managed_payments: { enabled: false },
       mode: "payment",
       locale,
       line_items: [
