@@ -18,6 +18,10 @@ const fill = (text: string, values: Record<string, string | number>) =>
 type Mail = { to: string; replyTo: string; subject: string; html: string; attachments?: InlineImage[] };
 type InlineImage = { filename: string; content: Buffer; contentId: string; contentType: string };
 
+// Emails hors production marqués dans l'objet : en test, ils ne se mélangent pas à ceux du site en ligne
+export const envTag = () =>
+  process.env.VERCEL_ENV === "production" ? "" : process.env.VERCEL_ENV === "preview" ? "[preview] " : "[local] ";
+
 // Sans clé Resend en local, l'email est seulement résumé dans la console
 async function send(mail: Mail) {
   const apiKey = process.env.RESEND_API_KEY;
@@ -28,7 +32,7 @@ async function send(mail: Mail) {
     }
     throw new Error("RESEND_API_KEY manquante en production");
   }
-  const { error } = await new Resend(apiKey).emails.send({ from: FROM(), ...mail });
+  const { error } = await new Resend(apiKey).emails.send({ from: FROM(), ...mail, subject: envTag() + mail.subject });
   if (error) throw new Error(`Resend : ${error.message}`);
 }
 
