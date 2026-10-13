@@ -88,7 +88,7 @@ Copier `.env.example` en `.env.local`, puis renseigner :
 
 Sans clé, en développement, le brief est affiché dans la console du serveur. En production, l'API répond 503.
 
-Aperçu IA : la piste 1 est offerte, les pistes 2 et 3 se débloquent pour 29 € via Stripe Checkout intégré à la page. Les pistes restent côté serveur : le navigateur ne reçoit qu'une version floutée au texte brouillé tant que le paiement n'est pas vérifié auprès de Stripe.
+Esquisses : à l'envoi du brief, trois directions de page d'accueil sont générées en arrière-plan ([`lib/esquisses`](lib/esquisses)), avec leurs vignettes capturées dans un Chrome sans interface. Benjamin reçoit un email de relecture avec un lien signé, puis envoie au client l'email « Trois directions pour … » : la première esquisse nette, les deux autres floutées, qui mènent à `/esquisses/[id]`. Les esquisses 2 et 3 s'y débloquent pour 49 € via Stripe Checkout intégré à la page. Les esquisses restent côté serveur : le navigateur ne reçoit qu'une version floutée au texte brouillé tant que le paiement n'est pas vérifié auprès de Stripe.
 
 ## Déploiement
 
