@@ -4,7 +4,7 @@ import { hasLocale, useTranslations } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import BriefForm from "@/components/BriefForm";
-import { previewsEnabled } from "@/lib/previews/flag";
+import { isTester, previewsEnabled, previewsOpen } from "@/lib/previews/flag";
 import { localePath, routing } from "@/i18n/routing";
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/brief">): Promise<Metadata> {
@@ -12,6 +12,29 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/brief">)
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale });
   return { title: t("Brief.metaTitle"), description: t("Brief.metaDescription") };
+}
+
+// Lit le cookie du mode testeur : seule cette partie de la page dépend de la requête
+async function Form({ homeHref }: { homeHref: string }) {
+  const tester = !previewsOpen() && (await isTester());
+  return (
+    <div>
+      {tester && (
+        <p className="mb-6 rounded-full border border-dashed border-amber-300/50 px-4 py-2 font-mono text-xs text-amber-200">
+          Mode testeur : esquisses actives pour ce navigateur seulement ·{" "}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- route API qui retire le cookie puis redirige, pas une page */}
+          <a href="/api/esquisses/tester?off" className="underline">
+            désactiver
+          </a>
+        </p>
+      )}
+      <BriefForm
+        homeHref={homeHref}
+        withPreview={await previewsEnabled()}
+        devFill={process.env.VERCEL_ENV !== "production" || tester}
+      />
+    </div>
+  );
 }
 
 export default function BriefPage({ params }: PageProps<"/[locale]/brief">) {
@@ -56,11 +79,7 @@ export default function BriefPage({ params }: PageProps<"/[locale]/brief">) {
             </h1>
             <p className="mt-6 max-w-md text-muted">{t("Brief.intro")}</p>
           </div>
-          <BriefForm
-            homeHref={home}
-            withPreview={previewsEnabled()}
-            devFill={process.env.VERCEL_ENV !== "production"}
-          />
+          <Form homeHref={home} />
         </div>
       </main>
     </>

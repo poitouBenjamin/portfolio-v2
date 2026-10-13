@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { brandOf } from "@/lib/esquisses/links";
-import { previewsEnabled } from "@/lib/previews/flag";
 import { stripe } from "@/lib/previews/payment";
 import { esquisseIdSchema, UNLOCK_PRICE_EUR } from "@/lib/previews/shared";
 import { getEsquisse, saveEsquisse } from "@/lib/previews/store";
@@ -11,7 +10,6 @@ const bodySchema = z.object({ id: esquisseIdSchema, locale: z.enum(["fr", "en"])
 
 // Ouvre un paiement Stripe Checkout pour débloquer les esquisses 2 et 3
 export async function POST(request: Request) {
-  if (!previewsEnabled()) return Response.json({ error: "disabled" }, { status: 404 });
   if (!stripe) return Response.json({ error: "not_configured" }, { status: 503 });
 
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
